@@ -33,7 +33,7 @@ class TuyaReactPackage : ReactPackage {
 //        return Collections.emptyList();
 //    }
 
-    override fun createNativeModules(reactContext: ReactApplicationContext): MutableList<NativeModule>? {
+    override fun createNativeModules(reactContext: ReactApplicationContext): MutableList<NativeModule> {
         val module: ArrayList<NativeModule> = ArrayList()
         module.add(TuyaActivatorModule(reactContext))
         module.add(TuyaCoreModule(reactContext))

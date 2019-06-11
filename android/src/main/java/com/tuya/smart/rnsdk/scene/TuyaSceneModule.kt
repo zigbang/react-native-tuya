@@ -319,15 +319,15 @@ class TuyaSceneModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
                     if (condition.getString(TYPE) == "temp") {
                         val weatherCondition = SceneCondition.createWeatherCondition(
                                 placeFacadeBean, //城市
-                                conditionLists.getMap(k).getString(TYPE), //类别
-                                getTempRule(condition.getString(TYPE), condition.getString(RANGE), condition.getString(RULE))            //规则
+                                (conditionLists.getMap(k) as ReadableMap).getString(TYPE) as String, //类别
+                                getTempRule(condition.getString(TYPE) as String, condition.getString(RANGE) as String, condition.getString(RULE) as String)            //规则
                         )
                         sceneConditionList.add(weatherCondition)
                     } else {
                         val weatherCondition = SceneCondition.createWeatherCondition(
                                 placeFacadeBean, //城市
-                                conditionLists.getMap(k).getString(TYPE), //类别
-                                getEnumRule(condition.getString(TYPE), condition.getString(RULE))            //规则
+                                (conditionLists.getMap(k) as ReadableMap).getString(TYPE) as String, //类别
+                                getEnumRule(condition.getString(TYPE) as String, condition.getString(RULE) as String)            //规则
                         )
                         sceneConditionList.add(weatherCondition)
                     }
@@ -430,28 +430,28 @@ class TuyaSceneModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
                                     var sceneConditionList = ArrayList<SceneCondition>()
                                     while (k < conditionLists.size()) {
                                         val condition = conditionLists.getMap(k) as ReadableMap
-                                        var placeBean = conditionLists.getMap(k).getMap("placeBean")  as ReadableMap
+                                        var placeBean = condition.getMap("placeBean") as ReadableMap
                                         var placeFacadeBean = PlaceFacadeBean();
                                         placeFacadeBean.area = placeBean.getString("area")
                                         placeFacadeBean.city = placeBean.getString("city")
                                         placeFacadeBean.isChoose = placeBean.getBoolean("choose")
                                         placeFacadeBean.province = placeBean.getString("province")
-                                        placeFacadeBean.cityId = placeBean.getString("cityId").toLong();
+                                        placeFacadeBean.cityId = (placeBean.getString("cityId") as String).toLong();
                                         placebeanList.add(placeFacadeBean)
                                         // 自动化条件创建方式有三个方法 四种类型 首先根据方法来排除 然后根据type来对weather排除
                                         if (condition.getInt(ENTITY_TYPE) == ENTITY_TYPE_WEATHER) {
                                             if (condition.getString(TYPE) == "temp") {
                                                 val weatherCondition = SceneCondition.createWeatherCondition(
                                                         placeFacadeBean, //城市
-                                                        conditionLists.getMap(k).getString(TYPE), //类别
-                                                        getTempRule(condition.getString(TYPE), condition.getString(RANGE), condition.getString(RULE))            //规则
+                                                        (conditionLists.getMap(k) as ReadableMap).getString(TYPE) as String, //类别
+                                                        getTempRule(condition.getString(TYPE) as String, condition.getString(RANGE) as String, condition.getString(RULE) as String)            //规则
                                                 )
                                                 sceneConditionList.add(weatherCondition)
                                             } else {
                                                 val weatherCondition = SceneCondition.createWeatherCondition(
                                                         placeFacadeBean, //城市
-                                                        conditionLists.getMap(k).getString(TYPE), //类别
-                                                        getEnumRule(condition.getString(TYPE), condition.getString(RULE))            //规则
+                                                        (conditionLists.getMap(k) as ReadableMap).getString(TYPE), //类别
+                                                        getEnumRule(condition.getString(TYPE) as String, condition.getString(RULE) as String)            //规则
                                                 )
                                                 sceneConditionList.add(weatherCondition)
                                             }
@@ -505,28 +505,28 @@ class TuyaSceneModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
     @ReactMethod
     fun executeScene(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(SCENEID), params)) {
-            getScene(params.getString(SCENEID))?.executeScene(Constant.getIResultCallback(promise))
+            getScene(params.getString(SCENEID) as String)?.executeScene(Constant.getIResultCallback(promise))
         }
     }
 
     @ReactMethod
     fun deleteScene(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(SCENEID), params)) {
-            getScene(params.getString(SCENEID))?.deleteScene(Constant.getIResultCallback(promise))
+            getScene(params.getString(SCENEID) as String)?.deleteScene(Constant.getIResultCallback(promise))
         }
     }
 
     @ReactMethod
     fun enableScene(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(SCENEID), params)) {
-            getScene(params.getString(SCENEID))?.enableScene(params.getString(SCENEID), Constant.getIResultCallback(promise))
+            getScene(params.getString(SCENEID) as String)?.enableScene(params.getString(SCENEID), Constant.getIResultCallback(promise))
         }
     }
 
     @ReactMethod
     fun disableScene(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(SCENEID), params)) {
-            getScene(params.getString(SCENEID))?.disableScene(params.getString(SCENEID), Constant.getIResultCallback(promise))
+            getScene(params.getString(SCENEID) as String)?.disableScene(params.getString(SCENEID), Constant.getIResultCallback(promise))
         }
     }
 
@@ -541,9 +541,9 @@ class TuyaSceneModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
     fun sortSceneList(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, SCENEIDS), params)) {
             var list = java.util.ArrayList<String>()
-            var length = params.getArray(SCENEIDS).size()-1
+            var length = (params.getArray(SCENEIDS) as ReadableArray).size()-1
             for (index in 0..length) {
-                list.add(params.getArray(Constant.SCENEIDS).getString(index))
+                list.add((params.getArray(Constant.SCENEIDS) as ReadableArray).getString(index) as String)
             }
             TuyaHomeSdk.getSceneManagerInstance().sortSceneList(
                     params.getDouble(HOMEID).toLong(), //家庭列表
@@ -574,10 +574,10 @@ class TuyaSceneModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
         var j = 0
         while (j < array.size()) {
             while (i < devidsArray.size()) {
-                if (array.getMap(i).getString(DEVID) == devidsArray.getString(i)) {
+                if ((array.getMap(i) as ReadableMap).getString(DEVID) == devidsArray.getString(i)) {
                     val hashMap = hashMapOf<String, Any>()
-                    hashMap.put(array.getMap(i).getDouble(DPID).toInt().toString(), array.getMap(i).getBoolean(VALUE))
-                    tasks.add(createTask(array.getMap(i).getString(DEVID), hashMap))
+                    hashMap.put((array.getMap(i) as ReadableMap).getDouble(DPID).toInt().toString(), (array.getMap(i) as ReadableMap).getBoolean(VALUE))
+                    tasks.add(createTask((array.getMap(i) as ReadableMap).getString(DEVID) as String, hashMap))
                 }
                 i++;
             }

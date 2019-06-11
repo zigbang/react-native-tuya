@@ -69,7 +69,7 @@ class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
                     params.getString(TASKNAME),
                     params.getString(DEVID),
                     params.getString(LOOPS),
-                    TuyaReactUtils.parseToMap(params.getMap(DPS)),
+                    TuyaReactUtils.parseToMap(params.getMap(DPS) as ReadableMap),
                     params.getString(TIME),
                     getIResultStatusCallback(promise)
             )

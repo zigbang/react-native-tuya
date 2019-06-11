@@ -54,9 +54,9 @@ class TuyaShareModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
     fun addShareWithMemberId(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(MEMBERID, DEVIDS), params)) {
             var list = ArrayList<String>()
-            var length = params.getArray(Constant.DEVIDS).size()
+            var length = (params.getArray(Constant.DEVIDS) as ReadableArray).size()
             for (index in 0..length) {
-                list.add(params.getArray(Constant.DEVIDS).getString(index))
+                list.add((params.getArray(Constant.DEVIDS) as ReadableArray).getString(index) as String)
             }
             TuyaHomeSdk.getDeviceShareInstance().addShareWithMemberId(params.getDouble(MEMBERID).toLong(),
                     list,

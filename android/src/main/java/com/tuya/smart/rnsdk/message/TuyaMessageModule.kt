@@ -35,9 +35,9 @@ class TuyaMessageModule(reactContext: ReactApplicationContext) : ReactContextBas
     fun deleteMessage(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(IDS), params)) {
             var list = ArrayList<String>()
-            var length = params.getArray(Constant.IDS)?.size()-1
+            var length = (params.getArray(Constant.IDS) as ReadableArray).size()-1
             for (index in 0..length) {
-                list.add(params.getArray(Constant.IDS)?.getString(index) as String)
+                list.add((params.getArray(Constant.IDS) as ReadableArray).getString(index) as String)
             }
             TuyaHomeSdk.getMessageInstance().deleteMessages(list,object :IBooleanCallback{
                 override fun onSuccess(){
