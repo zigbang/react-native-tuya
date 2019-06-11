@@ -5,7 +5,7 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk
 import com.tuya.smart.rnsdk.utils.Constant
 import com.tuya.smart.rnsdk.utils.ReactParamsCheck
 
-class TuyaPushModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaPushModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
         return "TuyaPushModule"
     }

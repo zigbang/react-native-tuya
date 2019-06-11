@@ -25,7 +25,7 @@ import com.tuya.smart.rnsdk.utils.Constant.getIResultCallback
 import com.tuya.smart.sdk.bean.GroupDeviceBean
 
 
-class TuyaHomeModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
         return "TuyaHomeModule"
     }

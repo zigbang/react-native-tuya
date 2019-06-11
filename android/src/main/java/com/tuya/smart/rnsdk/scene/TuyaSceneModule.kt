@@ -59,7 +59,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class TuyaSceneModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaSceneModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
         return "TuyaSceneModule"
     }
@@ -300,21 +300,21 @@ class TuyaSceneModule(reactContext: ReactApplicationContext?) : ReactContextBase
             } else if (params.getString(MATCHTYPE).equals("MATCH_TYPE_BY_EXPR")) {
                 mathType = SceneBean.MATCH_TYPE_BY_EXPR
             }
-            var conditionLists = params.getArray(CONDITIONLISTS)
+            var conditionLists = params.getArray(CONDITIONLISTS) as ReadableArray
             var placebeanList = ArrayList<PlaceFacadeBean>();
             var k = 0
             var sceneConditionList = ArrayList<SceneCondition>()
             while (k < conditionLists.size()) {
-                val condition = conditionLists.getMap(k)
+                val condition = conditionLists.getMap(k) as ReadableMap
                 // 自动化条件创建方式有三个方法 四种类型 首先根据方法来排除 然后根据type来对weather排除
                 if (condition.getInt(ENTITY_TYPE) == ENTITY_TYPE_WEATHER) {
-                    val placeBean = condition.getMap("placeBean")
+                    val placeBean = condition.getMap("placeBean") as ReadableMap
                     val placeFacadeBean = PlaceFacadeBean();
                     placeFacadeBean.area = placeBean.getString("area")
                     placeFacadeBean.city = placeBean.getString("city")
                     placeFacadeBean.isChoose = placeBean.getBoolean("choose")
                     placeFacadeBean.province = placeBean.getString("province")
-                    placeFacadeBean.cityId = placeBean.getString("cityId").toLong();
+                    placeFacadeBean.cityId = (placeBean.getString("cityId") as String).toLong();
                     placebeanList.add(placeFacadeBean)
                     if (condition.getString(TYPE) == "temp") {
                         val weatherCondition = SceneCondition.createWeatherCondition(
@@ -424,13 +424,13 @@ class TuyaSceneModule(reactContext: ReactApplicationContext?) : ReactContextBase
                                     if (params.hasKey(BACKGROUND)) {
                                         item.background = params.getString(BACKGROUND)
                                     }
-                                    var conditionLists = params.getArray(CONDITIONLISTS)
+                                    var conditionLists = params.getArray(CONDITIONLISTS) as ReadableArray
                                     var placebeanList = ArrayList<PlaceFacadeBean>();
                                     var k = 0
                                     var sceneConditionList = ArrayList<SceneCondition>()
                                     while (k < conditionLists.size()) {
-                                        val condition = conditionLists.getMap(k)
-                                        var placeBean = conditionLists.getMap(k).getMap("placeBean")
+                                        val condition = conditionLists.getMap(k) as ReadableMap
+                                        var placeBean = conditionLists.getMap(k).getMap("placeBean")  as ReadableMap
                                         var placeFacadeBean = PlaceFacadeBean();
                                         placeFacadeBean.area = placeBean.getString("area")
                                         placeFacadeBean.city = placeBean.getString("city")
@@ -557,7 +557,7 @@ class TuyaSceneModule(reactContext: ReactApplicationContext?) : ReactContextBase
     fun onDestroy(params: ReadableMap) {
         TuyaHomeSdk.getSceneManagerInstance().onDestroy();
         if (ReactParamsCheck.checkParams(arrayOf(SCENEID), params)) {
-            getScene(params.getString(SCENEID))?.onDestroy()
+            getScene(params.getString(SCENEID) as String)?.onDestroy()
         }
     }
 
@@ -567,8 +567,8 @@ class TuyaSceneModule(reactContext: ReactApplicationContext?) : ReactContextBase
     }
 
     fun createTasks(params: ReadableMap): ArrayList<SceneTask> {
-        var array = params.getArray(TASKS)
-        var devidsArray = params.getArray(DEVIDS)
+        var array = params.getArray(TASKS) as ReadableArray
+        var devidsArray = params.getArray(DEVIDS) as ReadableArray
         var tasks = ArrayList<SceneTask>()
         var i = 0
         var j = 0

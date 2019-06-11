@@ -11,7 +11,7 @@ import com.tuya.smart.sdk.api.IOtaListener
 import com.tuya.smart.sdk.api.ITuyaOta
 
 
-class TuyaOTAModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaOTAModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
        return "TuyaOTAModule"
     }
@@ -21,7 +21,7 @@ class TuyaOTAModule(reactContext: ReactApplicationContext?) : ReactContextBaseJa
     @ReactMethod
     fun getOtaInfo(params: ReadableMap,promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(DEVID), params)) {
-            getIoat(params.getString(DEVID)).getOtaInfo(object :IGetOtaInfoCallback{
+            getIoat(params.getString(DEVID) as String).getOtaInfo(object :IGetOtaInfoCallback{
                 override fun onSuccess(list: List<UpgradeInfoBean>) {
                     promise.resolve(TuyaReactUtils.parseToWritableArray(
                             JsonUtils.toJsonArray(list)))
@@ -37,13 +37,13 @@ class TuyaOTAModule(reactContext: ReactApplicationContext?) : ReactContextBaseJa
     @ReactMethod
     fun startOta(params: ReadableMap) {
         if (ReactParamsCheck.checkParams(arrayOf(DEVID), params)) {
-            iTuyaOta = getIoat(params.getString(DEVID))
+            iTuyaOta = getIoat(params.getString(DEVID) as String)
             iTuyaOta?.setOtaListener(object : IOtaListener {
                 override fun onSuccess(otaType: Int) {
                     var map=Arguments.createMap();
                     map.putInt("otaType",otaType)
                     map.putString("type","onSuccess")
-                    BridgeUtils.hardwareUpgradeListener(reactApplicationContext,map,params.getString(DEVID))
+                    BridgeUtils.hardwareUpgradeListener(reactApplicationContext,map,params.getString(DEVID) as String)
                 }
 
                 override fun onFailure(otaType: Int, code: String, error: String) {
@@ -52,7 +52,7 @@ class TuyaOTAModule(reactContext: ReactApplicationContext?) : ReactContextBaseJa
                     map.putString("error",error)
                     map.putString("code",code)
                     map.putString("type","onFailure")
-                    BridgeUtils.hardwareUpgradeListener(reactApplicationContext,map,params.getString(DEVID))
+                    BridgeUtils.hardwareUpgradeListener(reactApplicationContext,map,params.getString(DEVID) as String)
                 }
 
                 override fun onProgress(otaType: Int, progress: Int) {
@@ -60,7 +60,7 @@ class TuyaOTAModule(reactContext: ReactApplicationContext?) : ReactContextBaseJa
                     map.putInt("otaType",otaType)
                     map.putInt("progress",progress)
                     map.putString("type","onProgress")
-                    BridgeUtils.hardwareUpgradeListener(reactApplicationContext,map,params.getString(DEVID))
+                    BridgeUtils.hardwareUpgradeListener(reactApplicationContext,map,params.getString(DEVID) as String)
                 }
             })
             iTuyaOta?.startOta()

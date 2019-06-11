@@ -26,7 +26,7 @@ import com.tuya.smart.rnsdk.utils.TuyaReactUtils
 import com.tuya.smart.sdk.enums.TempUnitEnum
 import java.io.File
 
-class TuyaUserModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaUserModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     override fun getName(): String {
         return "TuyaUserModule"
@@ -301,7 +301,7 @@ class TuyaUserModule(reactContext: ReactApplicationContext?) : ReactContextBaseJ
     @ReactMethod
     fun setTempUnit(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(TEMPUNITENUM), params)) {
-            TuyaHomeSdk.getUserInstance().setTempUnit(TempUnitEnum.valueOf(params.getString(TEMPUNITENUM)), getIResultCallback(promise))
+            TuyaHomeSdk.getUserInstance().setTempUnit(TempUnitEnum.valueOf(params.getString(TEMPUNITENUM) as String), getIResultCallback(promise))
         }
     }
 

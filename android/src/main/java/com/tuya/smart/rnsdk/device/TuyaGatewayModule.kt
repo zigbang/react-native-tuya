@@ -5,7 +5,7 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk
 import com.tuya.smart.rnsdk.utils.*
 import com.tuya.smart.sdk.api.ISubDevListener
 
-class TuyaGatewayModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaGatewayModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
         return "TuyaGatewayModule"
     }
@@ -44,28 +44,28 @@ class TuyaGatewayModule(reactContext: ReactApplicationContext?) : ReactContextBa
                     map.putString("devId", var1)
                     map.putString("dpStr", var2)
                     map.putString("type", "onSubDevDpUpdate");
-                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID))
+                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID) as String)
                 }
 
                 override fun onSubDevRemoved(var1: String){
                     val map = Arguments.createMap()
                     map.putString("devId", var1)
                     map.putString("type", "onSubDevRemoved");
-                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID))
+                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID) as String)
                 }
 
                 override fun onSubDevAdded(var1: String){
                     val map = Arguments.createMap()
                     map.putString("devId", var1)
                     map.putString("type", "onSubDevAdded");
-                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID))
+                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID) as String)
                 }
 
                 override fun onSubDevInfoUpdate(var1: String){
                     val map = Arguments.createMap()
                     map.putString("devId", var1)
                     map.putString("type", "onSubDevInfoUpdate");
-                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID))
+                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID) as String)
                 }
 
                 override fun onSubDevStatusChanged(var1: List<String>, var2: List<String>){
@@ -75,7 +75,7 @@ class TuyaGatewayModule(reactContext: ReactApplicationContext?) : ReactContextBa
                     map.putArray("data2", TuyaReactUtils.parseToWritableArray(
                             JsonUtils.toJsonArray(var2)));
                     map.putString("type", "onSubDevStatusChanged");
-                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID))
+                    BridgeUtils.subDevListener(reactApplicationContext, map, params.getString(Constant.DEVID) as String)
                 }
             })
         }

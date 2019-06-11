@@ -10,7 +10,7 @@ import com.tuya.smart.rnsdk.utils.ReactParamsCheck
 import com.tuya.smart.rnsdk.utils.TuyaReactUtils
 import com.tuya.smart.sdk.api.ITuyaDataCallback
 
-class TuyaSingleTransferModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaSingleTransferModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
         return "TuyaSingleTransferModule"
     }
@@ -61,7 +61,7 @@ class TuyaSingleTransferModule(reactContext: ReactApplicationContext?) : ReactCo
                     map.putString("devId", params.getString(DEVID))
                     map.putMap("data", TuyaReactUtils.parseToWritableMap(var1))
                     map.putString("type", "onSuccess");
-                    BridgeUtils.singleTransferListener(reactApplicationContext, map, params.getString(DEVID))
+                    BridgeUtils.singleTransferListener(reactApplicationContext, map, params.getString(DEVID) as String)
                 }
 
                 override fun onError(var1: String, var2: String){
@@ -70,7 +70,7 @@ class TuyaSingleTransferModule(reactContext: ReactApplicationContext?) : ReactCo
                     map.putString("var1", var1)
                     map.putString("var2", var2)
                     map.putString("type", "onError");
-                    BridgeUtils.singleTransferListener(reactApplicationContext, map, params.getString(DEVID))
+                    BridgeUtils.singleTransferListener(reactApplicationContext, map, params.getString(DEVID) as String)
                 }
             })
         }

@@ -27,7 +27,7 @@ import com.tuya.smart.sdk.bean.TimerTaskStatus
 import java.util.ArrayList
 
 
-class TuyaTimerModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     override fun getName(): String {
         return "TuyaTimerModule"

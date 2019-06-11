@@ -15,7 +15,7 @@ import com.tuya.smart.sdk.bean.feedback.FeedbackMsgBean
 import com.tuya.smart.sdk.bean.feedback.FeedbackTypeRespBean
 
 
-class TuyaFeedBackModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaFeedBackModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
         return "TuyaFeedBackModule"
     }

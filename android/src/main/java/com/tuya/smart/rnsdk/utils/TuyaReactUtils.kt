@@ -43,8 +43,8 @@ object TuyaReactUtils {
 
                 }
                 ReadableType.String -> deconstructedMap[key] = readableMap.getString(key)
-                ReadableType.Map -> deconstructedMap[key] = parseToMap(readableMap.getMap(key))
-                ReadableType.Array -> deconstructedMap[key] = parseToList(readableMap.getArray(key))
+                ReadableType.Map -> deconstructedMap[key] = parseToMap(readableMap.getMap(key) as ReadableMap)
+                ReadableType.Array -> deconstructedMap[key] = parseToList(readableMap.getArray(key) as ReadableArray)
             }
 
         }
@@ -75,8 +75,8 @@ object TuyaReactUtils {
 
                 }
                 ReadableType.String -> deconstructedMap[key] = readableMap.getString(key)
-                ReadableType.Map -> deconstructedMap[key] = parseToMap(readableMap.getMap(key))
-                ReadableType.Array -> deconstructedMap[key] = parseToList(readableMap.getArray(key))
+                ReadableType.Map -> deconstructedMap[key] = parseToMap(readableMap.getMap(key) as ReadableMap)
+                ReadableType.Array -> deconstructedMap[key] = parseToList(readableMap.getArray(key) as ReadableArray)
             }
 
         }
@@ -105,8 +105,8 @@ object TuyaReactUtils {
 
                 }
                 ReadableType.String -> deconstructedList.add(i, readableArray.getString(i))
-                ReadableType.Map -> deconstructedList.add(i, parseToMap(readableArray.getMap(i)))
-                ReadableType.Array -> deconstructedList.add(i, parseToList(readableArray.getArray(i)))
+                ReadableType.Map -> deconstructedList.add(i, parseToMap(readableArray.getMap(i) as ReadableMap))
+                ReadableType.Array -> deconstructedList.add(i, parseToList(readableArray.getArray(i) as ReadableArray))
             }
         }
         return deconstructedList

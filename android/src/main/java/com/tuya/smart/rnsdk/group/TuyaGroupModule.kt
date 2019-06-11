@@ -18,7 +18,7 @@ import com.tuya.smart.sdk.bean.GroupDeviceBean
 
 
 
-class TuyaGroupModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaGroupModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
         return "TuyaGroupModule"
     }
@@ -30,7 +30,7 @@ class TuyaGroupModule(reactContext: ReactApplicationContext?) : ReactContextBase
             getITuyaHome(params.getDouble(HOMEID).toLong()).createGroup(
                     params.getString((PRODUCTID)),
                             params.getString(NAME),
-                            JsonUtils.parserArraybyMap(params.getArray(DEVIDS),
+                            JsonUtils.parserArraybyMap(params.getArray(DEVIDS) as ReadableArray,
                                     String::class.java) as MutableList<String>?,
                             object : ITuyaResultCallback<Long> {
                                 override fun onSuccess(p0: Long) {
@@ -124,7 +124,7 @@ class TuyaGroupModule(reactContext: ReactApplicationContext?) : ReactContextBase
     fun publishDps(params: ReadableMap,promise: Promise){
         if (ReactParamsCheck.checkParams(arrayOf(GROUPID,COMMAND), params)) {
             getITuyaGroup(params.getDouble(GROUPID).toLong())
-                    ?.publishDps(JsonUtils.toString(TuyaReactUtils.parseToMap(params.getMap(COMMAND))), getIResultCallback(promise))
+                    ?.publishDps(JsonUtils.toString(TuyaReactUtils.parseToMap(params.getMap(COMMAND) as ReadableMap)), getIResultCallback(promise))
         }
     }
 

@@ -24,7 +24,7 @@ import com.tuya.smart.rnsdk.utils.Constant.DEVID
 import com.tuya.smart.rnsdk.utils.Constant.TYPE
 
 
-class TuyaActivatorModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     var mITuyaActivator: ITuyaActivator?=null
     var mTuyaGWActivator: ITuyaActivator?=null
@@ -60,7 +60,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext?) : ReactContext
                             .setSsid(params.getString(SSID))
                             .setContext(reactApplicationContext.applicationContext)
                             .setPassword(params.getString(PASSWORD))
-                            .setActivatorModel(ActivatorModelEnum.valueOf(params.getString(TYPE)))
+                            .setActivatorModel(ActivatorModelEnum.valueOf(params.getString(TYPE) as String))
                             .setTimeOut(params.getInt(TIME).toLong())
                             .setToken(token).setListener(getITuyaSmartActivatorListener(promise)))
                     mITuyaActivator?.start()

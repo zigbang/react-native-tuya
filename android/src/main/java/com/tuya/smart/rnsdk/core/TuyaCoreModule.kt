@@ -18,7 +18,7 @@ import com.tuya.smart.sdk.api.ITuyaDataCallback
 import java.util.HashMap
 
 
-class TuyaCoreModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaCoreModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     companion object {
         fun initTuyaSDk(appKey:String,appSecret:String,application: Application){

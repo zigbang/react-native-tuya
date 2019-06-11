@@ -14,7 +14,7 @@ import java.util.ArrayList
 
 
 
-class TuyaMessageModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaMessageModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
         return "TuyaMessageModule"
     }
@@ -35,9 +35,9 @@ class TuyaMessageModule(reactContext: ReactApplicationContext?) : ReactContextBa
     fun deleteMessage(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(IDS), params)) {
             var list = ArrayList<String>()
-            var length = params.getArray(Constant.IDS).size()-1
+            var length = params.getArray(Constant.IDS)?.size()-1
             for (index in 0..length) {
-                list.add(params.getArray(Constant.IDS).getString(index))
+                list.add(params.getArray(Constant.IDS)?.getString(index) as String)
             }
             TuyaHomeSdk.getMessageInstance().deleteMessages(list,object :IBooleanCallback{
                 override fun onSuccess(){

@@ -10,7 +10,7 @@ import com.tuya.smart.rnsdk.utils.*
 import com.tuya.smart.sdk.bean.DeviceBean
 import com.tuya.smart.sdk.bean.GroupBean
 
-class TuyaHomeManagerModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
+class TuyaHomeManagerModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
         return "TuyaHomeManagerModule"
     }
@@ -35,9 +35,9 @@ class TuyaHomeManagerModule(reactContext: ReactApplicationContext?) : ReactConte
     fun createHome(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(Constant.NAME, Constant.LON, Constant.LAT, Constant.GEONAME, Constant.ROMMS), params)) {
             var list = ArrayList<String>()
-            var length = params.getArray(Constant.ROMMS).size()
+            var length = params.getArray(Constant.ROMMS)?.size()
             for (index in 0 until length) {
-                list.add(params.getArray(Constant.ROMMS).getString(index))
+                list.add(params.getArray(Constant.ROMMS)?.getString(index) as String)
             }
             TuyaHomeSdk.getHomeManagerInstance().createHome(
                     params.getString(Constant.NAME),
