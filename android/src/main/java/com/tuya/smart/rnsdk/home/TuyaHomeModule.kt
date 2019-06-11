@@ -107,7 +107,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
             var list = ArrayList<String>()
             var length = (params.getArray(DEVIDLIST) as ReadableArray).size()
             for (index in 0..length) {
-                list.add((params.getArray(DEVIDLIST) as ReadableArray).getString(index))
+                list.add((params.getArray(DEVIDLIST) as ReadableArray).getString(index) as String)
             }
             getHomeInstance(params.getDouble(HOMEID))?.createGroup(
                     params.getString(PRODUCTID),
