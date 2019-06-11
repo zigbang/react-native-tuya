@@ -1,5 +1,6 @@
 package com.tuya.smart.rnsdk.share
 
+import android.util.Log
 import com.facebook.react.bridge.*
 import com.tuya.smart.home.sdk.TuyaHomeSdk
 import com.tuya.smart.home.sdk.bean.ShareReceivedUserDetailBean
@@ -19,6 +20,7 @@ import com.tuya.smart.rnsdk.utils.Constant.getIResultCallback
 import com.tuya.smart.rnsdk.utils.JsonUtils
 import com.tuya.smart.rnsdk.utils.ReactParamsCheck
 import com.tuya.smart.rnsdk.utils.TuyaReactUtils
+import com.tuya.smart.sdk.bean.ShareIdBean
 
 
 class TuyaShareModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
@@ -27,14 +29,17 @@ class TuyaShareModule(reactContext: ReactApplicationContext?) : ReactContextBase
         return "TuyaShareModule"
     }
 
+
     /*添加多个设备共享（追加）*/
     @ReactMethod
     fun addShareWithHomeId(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, COUNTRYCODE, USERACCOUNT, DEVIDS), params)) {
             var list = ArrayList<String>()
-            var length = params.getArray(Constant.DEVIDS).size()
-            for (index in 0..length) {
-                list.add(params.getArray(Constant.DEVIDS).getString(index))
+            var length = params.getArray(Constant.DEVIDS).size()-1
+            var array = params.getArray(Constant.DEVIDS)
+            var newlist= TuyaReactUtils.parseToList(array);
+            for(index in 0..length){
+                list.add(newlist.get(index).toString())
             }
             TuyaHomeSdk.getDeviceShareInstance().addShareWithHomeId(params.getDouble(HOMEID).toLong()
                     , params.getString(COUNTRYCODE),

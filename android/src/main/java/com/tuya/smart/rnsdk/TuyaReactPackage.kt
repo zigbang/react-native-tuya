@@ -28,9 +28,10 @@ import com.tuya.smart.rnsdk.user.TuyaUserModule
 import java.util.*
 
 class TuyaReactPackage : ReactPackage {
-    override fun createJSModules(): MutableList<Class<out JavaScriptModule>> {
-        return Collections.emptyList();
-    }
+
+//    override fun createJSModules(): MutableList<Class<out JavaScriptModule>> {
+//        return Collections.emptyList();
+//    }
 
     override fun createNativeModules(reactContext: ReactApplicationContext): MutableList<NativeModule>? {
         val module: ArrayList<NativeModule> = ArrayList()

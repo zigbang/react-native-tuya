@@ -48,6 +48,14 @@ class TuyaRoomModule(reactContext: ReactApplicationContext?) : ReactContextBaseJ
         }
     }
 
+    /* 添加群组  */
+    @ReactMethod
+    fun addGroup(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(ROOMID, GROUPID), params)) {
+            getRoomInstance(params.getDouble(ROOMID)).addGroup(params.getDouble(GROUPID).toLong(), getIResultCallback(promise))
+        }
+    }
+
     fun getRoomInstance(roomId: Double): ITuyaRoom {
         return TuyaHomeSdk.newRoomInstance(roomId.toLong())
     }

@@ -45,13 +45,13 @@ class TuyaGroupModule(reactContext: ReactApplicationContext?) : ReactContextBase
         }
     }
 
-    /**
+    /**onNetworkStatusChanged
      * 此接口主要是从云端拉取最新群组列表 根据产品ID
      */
     @ReactMethod
     fun queryDeviceListToAddGroup(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID,PRODUCTID), params)) {
-            getITuyaHome(params.getDouble(HOMEID).toLong()).queryDeviceListToAddGroup(params.getString(PRODUCTID),
+            getITuyaHome(params.getDouble(HOMEID).toLong()).queryDeviceListToAddGroup(params.getDouble(HOMEID).toLong(),params.getString(PRODUCTID),
                     object : ITuyaResultCallback<List<GroupDeviceBean>>{
                 override fun onSuccess(bizResult: List<GroupDeviceBean>) {
                     promise.resolve(TuyaReactUtils.parseToWritableArray(JsonUtils.toJsonArray(bizResult)))
@@ -69,6 +69,16 @@ class TuyaGroupModule(reactContext: ReactApplicationContext?) : ReactContextBase
         if (ReactParamsCheck.checkParams(arrayOf(GROUPID), params)) {
             getITuyaGroup(params.getDouble(GROUPID).toLong())
                     ?.dismissGroup(getIResultCallback(promise)
+                    )
+        }
+    }
+
+    @ReactMethod
+    fun updateGroupName(params: ReadableMap, promise: Promise){
+        if (ReactParamsCheck.checkParams(arrayOf(GROUPID, NAME), params)) {
+            getITuyaGroup(params.getDouble(GROUPID).toLong())
+                    ?.renameGroup( params.getString(NAME)
+                            ,getIResultCallback(promise)
                     )
         }
     }

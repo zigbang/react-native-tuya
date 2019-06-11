@@ -18,9 +18,9 @@ class TuyaHomeDataManagerModule(reactContext: ReactApplicationContext?) : ReactC
     }
 
 
-    /* 获取家庭列表 */
+    /*  家庭下面的房间列表 */
     @ReactMethod
-    fun queryHomeList(params: ReadableMap, promise: Promise) {
+    fun getHomeRoomList(params: ReadableMap, promise: Promise) {
         promise.resolve(TuyaReactUtils.parseToWritableArray(
                 JsonUtils.toJsonArray(TuyaHomeSdk.getDataInstance().getHomeRoomList(params.getDouble(HOMEID).toLong()))))
     }

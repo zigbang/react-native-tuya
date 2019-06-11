@@ -1,5 +1,6 @@
 package com.tuya.smart.rnsdk.utils
 
+import android.util.Log
 import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.WritableMap
 
@@ -33,8 +34,8 @@ object BridgeUtils {
         TuyaReactUtils.sendEvent(context, bindEventname(HOMESTATUS, devId), map)
     }
 
-    fun homeChange(context: ReactContext, map: WritableMap, devId: String){
-        TuyaReactUtils.sendEvent(context, bindEventname(HOMECHANGE, devId), map)
+    fun homeChange(context: ReactContext, map: WritableMap, homeId: Double){
+        TuyaReactUtils.sendEvent(context, HOMECHANGE, map)
     }
 
     private fun bindEventname(key: String, id: Any): String {

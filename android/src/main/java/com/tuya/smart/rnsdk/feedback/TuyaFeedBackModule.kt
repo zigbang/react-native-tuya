@@ -13,7 +13,7 @@ import com.tuya.smart.sdk.api.ITuyaDataCallback
 import com.tuya.smart.sdk.bean.feedback.FeedbackBean
 import com.tuya.smart.sdk.bean.feedback.FeedbackMsgBean
 import com.tuya.smart.sdk.bean.feedback.FeedbackTypeRespBean
-import io.netty.handler.codec.stomp.StompHeaders.MESSAGE
+
 
 class TuyaFeedBackModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
     override fun getName(): String {
@@ -71,7 +71,7 @@ class TuyaFeedBackModule(reactContext: ReactApplicationContext?) : ReactContextB
 
     /*获取反馈消息列表*/
     @ReactMethod
-    fun getMsgList(params: ReadableMap, promise: Promise) {
+    fun getFeedbackMsg(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(Constant.HDID, Constant.HDTYPE), params)) {
             TuyaHomeSdk.getTuyaFeekback().getFeedbackMsg(params.getString(HDID), params.getInt(HDTYPE))
                     .getMsgList(

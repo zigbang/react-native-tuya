@@ -1,5 +1,6 @@
 package com.tuya.smart.rnsdk.device
 
+import android.util.Log
 import com.alibaba.fastjson.JSONObject
 import com.facebook.react.bridge.*
 import com.tuya.smart.android.device.api.IGetDataPointStatCallback
@@ -23,6 +24,7 @@ import com.tuya.smart.sdk.api.ITuyaDevice
 
 class TuyaDeviceModule(reactContext: ReactApplicationContext?) : ReactContextBaseJavaModule(reactContext) {
 
+    var device: ITuyaDevice? = null
 
     override fun getName(): String {
         return "TuyaDeviceModule"
@@ -36,10 +38,19 @@ class TuyaDeviceModule(reactContext: ReactApplicationContext?) : ReactContextBas
     }
 
     @ReactMethod
+    fun getDeviceData(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(DEVID), params)) {
+            promise.resolve(TuyaReactUtils.parseToWritableMap(TuyaHomeSdk.getDataInstance().getDeviceBean(params.getString(DEVID))))
+        }
+    }
+
+    @ReactMethod
     fun registerDevListener(params: ReadableMap) {
         if (ReactParamsCheck.checkParams(arrayOf(DEVID), params)) {
-            getDevice(params.getString(DEVID))?.registerDevListener(object : IDevListener {
+            device = getDevice(params.getString(DEVID))
+            device?.registerDevListener(object : IDevListener {
                 override fun onDpUpdate(devId: String, dpStr: String) {
+                    //dp数据更新:devId 和相应dp数据
                     val map = Arguments.createMap()
                     map.putString("devId", devId)
                     map.putString("dpStr", dpStr)
@@ -89,7 +100,9 @@ class TuyaDeviceModule(reactContext: ReactApplicationContext?) : ReactContextBas
     @ReactMethod
     fun unRegisterDevListener(params: ReadableMap) {
         if (ReactParamsCheck.checkParams(arrayOf(DEVID), params)) {
-            getDevice(params.getString(DEVID))?.unRegisterDevListener()
+            if (device != null) {
+                device!!.unRegisterDevListener()
+            }
         }
     }
 

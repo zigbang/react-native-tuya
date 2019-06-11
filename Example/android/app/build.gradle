@@ -135,7 +135,7 @@ android {
 
 repositories {
     flatDir {
-        dirs '../tuyasmart-sdk-react-native/libs'
+        dirs '../../../android/libs'
     }
 }
 

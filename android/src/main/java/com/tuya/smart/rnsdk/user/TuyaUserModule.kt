@@ -70,7 +70,7 @@ class TuyaUserModule(reactContext: ReactApplicationContext?) : ReactContextBaseJ
 
     /* 注册手机密码账户*/
     @ReactMethod
-    fun registerWithPhone(params: ReadableMap, promise: Promise) {
+    fun registerAccountWithPhone(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(COUNTRYCODE, PHONENUMBER, PASSWORD, VALIDATECODE), params)) {
             TuyaHomeSdk.getUserInstance().registerAccountWithPhone(
                     params.getString(COUNTRYCODE),

@@ -35,7 +35,7 @@ class TuyaMessageModule(reactContext: ReactApplicationContext?) : ReactContextBa
     fun deleteMessage(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(IDS), params)) {
             var list = ArrayList<String>()
-            var length = params.getArray(Constant.IDS).size()
+            var length = params.getArray(Constant.IDS).size()-1
             for (index in 0..length) {
                 list.add(params.getArray(Constant.IDS).getString(index))
             }
@@ -49,5 +49,18 @@ class TuyaMessageModule(reactContext: ReactApplicationContext?) : ReactContextBa
                 }
             })
         }
+    }
+
+    @ReactMethod
+    fun getMessageMaxTime(promise: Promise){
+        TuyaHomeSdk.getMessageInstance().getMessageMaxTime(object : ITuyaDataCallback<Int> {
+            override fun onSuccess(p0: Int) {
+                promise.resolve(p0)
+            }
+
+            override fun onError(p0: String?, p1: String?) {
+                promise.reject(p0,p1)
+            }
+        })
     }
 }

@@ -51,6 +51,38 @@ object TuyaReactUtils {
         return deconstructedMap
     }
 
+    fun parseToLongMap(readableMap: ReadableMap): HashMap<String, Any?> {
+        val iterator = readableMap.keySetIterator()
+        val deconstructedMap = HashMap<String, Any?>()
+        while (iterator.hasNextKey()) {
+            val key = iterator.nextKey()
+            val type = readableMap.getType(key)
+            when (type) {
+                ReadableType.Null -> deconstructedMap[key] = null
+                ReadableType.Boolean -> deconstructedMap[key] = readableMap.getBoolean(key)
+                ReadableType.Number -> {
+                    val value = readableMap.getDouble(key)
+                    try {
+                        // Long型支持，如果数字大于int, 且是整数,转化成long
+                        if (value > Integer.MAX_VALUE && value % 1 == 0.0) {
+                            deconstructedMap[key] = value.toLong()
+                        } else {
+                            deconstructedMap[key] = value.toLong()
+                        }
+                    } catch (e: Exception) {
+                        deconstructedMap[key] = value
+                    }
+
+                }
+                ReadableType.String -> deconstructedMap[key] = readableMap.getString(key)
+                ReadableType.Map -> deconstructedMap[key] = parseToMap(readableMap.getMap(key))
+                ReadableType.Array -> deconstructedMap[key] = parseToList(readableMap.getArray(key))
+            }
+
+        }
+        return deconstructedMap
+    }
+
     fun parseToList(readableArray: ReadableArray): ArrayList<Any?> {
         val deconstructedList = ArrayList<Any?>(readableArray.size())
         for (i in 0 until readableArray.size()) {
@@ -99,6 +131,7 @@ object TuyaReactUtils {
                 is String -> map.putString(key, obv)
                 is Boolean -> map.putBoolean(key, obv)
                 is Double -> map.putDouble(key, obv)
+                is Long ->map.putString(key,obv.toString())
                 else -> map.putNull(key)
             }
         }
@@ -115,6 +148,7 @@ object TuyaReactUtils {
                 is String -> list.pushString(obv)
                 is Boolean -> list.pushBoolean(obv)
                 is Double -> list.pushDouble(obv)
+                is Long -> list.pushString(obv.toString())
                 else -> list.pushNull()
             }
         }
