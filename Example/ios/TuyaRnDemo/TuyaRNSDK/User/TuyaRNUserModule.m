@@ -20,7 +20,6 @@
 #define kTuyaRNUserModulePassword @"password"
 #define kTuyaRNUserModuleNewPassword @"newPassword"
 #define kTuyaRNUserModuleEmail @"email"
-#define kTuyaRNUserModuleEmailCode @"emailCode"
 #define kTuyaRNUserModuleUid @"uid"
 
 
@@ -258,17 +257,17 @@ RCT_EXPORT_METHOD(getEmailValidateCode:(NSDictionary *)params resolver:(RCTPromi
 
 /* 邮箱重置密码
 * @param email     用户账户
-* @param emailCode 邮箱验证码
+* @param validateCode 邮箱验证码
 * @param passwd    新密码
 */
 RCT_EXPORT_METHOD(resetEmailPassword:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *email = params[kTuyaRNUserModuleEmail];
-  NSString *emailCode = params[kTuyaRNUserModuleEmailCode];
+  NSString *validateCode = params[kTuyaRNUserModuleValidateCode];
   NSString *password = params[kTuyaRNUserModulePassword];
   
-  [[TuyaSmartUser sharedInstance] resetPasswordByEmail:countryCode email:email newPassword:password code:emailCode success:^{
+  [[TuyaSmartUser sharedInstance] resetPasswordByEmail:countryCode email:email newPassword:password code:validateCode success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
