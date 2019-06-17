@@ -265,7 +265,7 @@ RCT_EXPORT_METHOD(resetEmailPassword:(NSDictionary *)params resolver:(RCTPromise
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *email = params[kTuyaRNUserModuleEmail];
   NSString *validateCode = params[kTuyaRNUserModuleValidateCode];
-  NSString *password = params[kTuyaRNUserModulePassword];
+  NSString *password = params[kTuyaRNUserModuleNewPassword];
   
   [[TuyaSmartUser sharedInstance] resetPasswordByEmail:countryCode email:email newPassword:password code:validateCode success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
