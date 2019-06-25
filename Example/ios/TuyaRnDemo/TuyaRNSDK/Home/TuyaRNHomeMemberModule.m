@@ -17,7 +17,7 @@
 #define kTuyaRNHomeMemberModuleUserAccount @"userAccount"
 #define kTuyaRNHomeMemberModuleName @"name"
 #define kTuyaRNHomeMemberModuleAdmin @"admin"
-#define kTuyaRNHomeMemberModuleMemberId @"id"
+#define kTuyaRNHomeMemberModuleMemberId @"memberId"
 //#define kTuyaRNHomeMemberModule
 
 @interface TuyaRNHomeMemberModule()
