@@ -16,6 +16,7 @@ import com.tuya.smart.rnsdk.feedback.TuyaFeedBackModule
 import com.tuya.smart.rnsdk.group.TuyaGroupModule
 import com.tuya.smart.rnsdk.home.TuyaHomeDataManagerModule
 import com.tuya.smart.rnsdk.home.TuyaHomeManagerModule
+import com.tuya.smart.rnsdk.home.TuyaHomeMemberModule
 import com.tuya.smart.rnsdk.home.TuyaHomeModule
 import com.tuya.smart.rnsdk.home.TuyaRoomModule
 import com.tuya.smart.rnsdk.message.TuyaMessageModule
@@ -45,6 +46,7 @@ class TuyaReactPackage : ReactPackage {
         module.add(TuyaGroupModule(reactContext))
         module.add(TuyaHomeDataManagerModule(reactContext))
         module.add(TuyaHomeManagerModule(reactContext))
+        module.add(TuyaHomeMemberModule(reactContext))
         module.add(TuyaHomeModule(reactContext))
         module.add(TuyaRoomModule(reactContext))
         module.add(TuyaMessageModule(reactContext))
