@@ -123,12 +123,12 @@ class TuyaUserModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
     /* 邮箱密码注册 */
     @ReactMethod
     fun registerAccountWithEmail(params: ReadableMap, promise: Promise) {
-        if (ReactParamsCheck.checkParams(arrayOf(COUNTRYCODE, EMAIL, PASSWORD, CODE), params)) {
+        if (ReactParamsCheck.checkParams(arrayOf(COUNTRYCODE, EMAIL, PASSWORD, VALIDATECODE), params)) {
             TuyaHomeSdk.getUserInstance().registerAccountWithEmail(
                     params.getString(COUNTRYCODE),
                     params.getString(EMAIL),
                     params.getString(PASSWORD),
-                    params.getString(CODE),
+                    params.getString(VALIDATECODE),
                     getRegisterCallback(promise)
             )
         }

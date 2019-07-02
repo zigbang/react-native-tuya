@@ -209,8 +209,9 @@ RCT_EXPORT_METHOD(registerAccountWithEmail:(NSDictionary *)params resolver:(RCTP
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *email = params[kTuyaRNUserModuleEmail];
   NSString *password = params[kTuyaRNUserModulePassword];
+  NSString *validateCode = params[kTuyaRNUserModuleValidateCode];
   
-  [[TuyaSmartUser sharedInstance] registerByEmail:countryCode email:email password:password success:^{
+  [[TuyaSmartUser sharedInstance] registerByEmail:countryCode email:email password:password code:validateCode success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
