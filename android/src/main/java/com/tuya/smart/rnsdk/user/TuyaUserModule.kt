@@ -283,7 +283,7 @@ class TuyaUserModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         if (TuyaHomeSdk.getUserInstance().user != null) {
             promise.resolve(TuyaReactUtils.parseToWritableMap(TuyaHomeSdk.getUserInstance().user))
         } else {
-            promise.reject("user null", "user null")
+            promise.resolve(null)
         }
     }
 
