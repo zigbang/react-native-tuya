@@ -284,7 +284,7 @@ RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRe
   }];
 }
 
-RCT_EXPORT_METHOD(cancelAccount:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+RCT_EXPORT_METHOD(cancelAccount:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
   [[TuyaSmartUser sharedInstance] cancelAccount:^{
     [TuyaRNUtils resolverWithHandler:resolver];
