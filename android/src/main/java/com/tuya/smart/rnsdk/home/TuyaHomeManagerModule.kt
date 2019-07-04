@@ -52,6 +52,19 @@ class TuyaHomeManagerModule(reactContext: ReactApplicationContext) : ReactContex
     }
 
 
+    @ReactMethod
+    fun joinFamily(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(Constant.HOMEID, Constant.ACTION), params)) {
+            TuyaHomeSdk.getMemberInstance().processInvitation(
+                    params.getDouble(Constant.HOMEID).toLong(),
+                    params.getBoolean(Constant.ACTION),
+                    Constant.getIResultCallback(promise)
+            )
+
+        }
+    }
+
+
     /* 注册家庭信息的变更
      * 有：家庭的增加、删除、信息变更、分享列表的变更和服务器连接成功的监听 */
     @ReactMethod

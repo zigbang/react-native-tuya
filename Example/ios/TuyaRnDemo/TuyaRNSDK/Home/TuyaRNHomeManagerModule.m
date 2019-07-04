@@ -21,6 +21,7 @@
 #define kTuyaHomeManagerModuleGeoName @"geoName"
 #define kTuyaHomeManagerModuleRooms @"rooms"
 #define kTuyaHomeManagerModuleHomeId @"homeId"
+#define kTuyaHomeManagerModuleAction @"action"
 
 
 @interface TuyaRNHomeManagerModule()
@@ -40,7 +41,7 @@ RCT_EXPORT_MODULE(TuyaHomeManagerModule)
  * @param listener
  */
 RCT_EXPORT_METHOD(queryHomeList:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   [self.homeManager getHomeListWithSuccess:^(NSArray<TuyaSmartHomeModel *> *homes) {
     
     if (homes.count == 0) {
@@ -121,6 +122,17 @@ RCT_EXPORT_METHOD(unregisterTuyaHomeChangeListener:(NSDictionary *)params resolv
   [[TuyaRNHomeManagerListener sharedInstance] removeSmartHomeManager];
   [[TuyaRNHomeListener shareInstance] removeHomeChangeSmartHome];
   
+}
+
+RCT_EXPORT_METHOD(joinFamily:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  NSNumber *homeIdNum = params[kTuyaHomeManagerModuleHomeId];
+  NSString *action = params[kTuyaHomeManagerModuleAction];
+
+  [self.homeManager joinFamilyWithHomeId:homeIdNum.longLongValue action:action.boolValue success:^(BOOL result) {
+    [TuyaRNUtils resolverWithHandler:resolver];
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
 }
 
 RCT_EXPORT_METHOD(onDestory:(NSDictionary *)params) {
