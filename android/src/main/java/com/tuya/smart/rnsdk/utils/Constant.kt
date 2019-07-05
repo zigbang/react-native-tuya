@@ -44,6 +44,7 @@ object Constant {
     const val LAT = "lat"
     const val GEONAME = "geoName"
     const val ROOMID = "roomId"
+    const val ACTION = "action"
     const val IDLIST = "idList"
     const val PRODUCTID = "productId"
     const val DEVIDLIST = "devIdList"
