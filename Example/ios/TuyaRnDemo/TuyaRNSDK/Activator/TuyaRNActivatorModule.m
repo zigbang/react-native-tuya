@@ -7,7 +7,7 @@
 //
 
 #import "TuyaRNActivatorModule.h"
-#import <TuyaSmartDeviceKit/TuyaSmartActivator.h>
+#import <TuyaSmartActivatorKit/TuyaSmartActivatorKit.h>
 #import <TuyaSmartBaseKit/TuyaSmartBaseKit.h>
 #import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
 #import "TuyaRNUtils+Network.h"
