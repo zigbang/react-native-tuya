@@ -9,7 +9,7 @@
   "license": "MIT",
   "files": ["index.js", "lib", "android", "ios"],
   "peerDependencies": {
-    "react-native": "^0.59.9"
+    "react-native": "^0.60.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.2.1",
