@@ -1,13 +1,23 @@
 {
   "name": "@volst/react-native-tuya",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React Native Tuya SDK",
   "main": "index.js",
   "scripts": {},
-  "keywords": ["react-native", "tuyasmart", "iot", "tuya"],
+  "keywords": [
+    "react-native",
+    "tuyasmart",
+    "iot",
+    "tuya"
+  ],
   "author": "Tuya Inc.",
   "license": "MIT",
-  "files": ["index.js", "lib", "android", "ios"],
+  "files": [
+    "index.js",
+    "lib",
+    "android",
+    "ios"
+  ],
   "peerDependencies": {
     "react-native": "^0.60.3"
   },
@@ -31,8 +41,14 @@
     }
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.{js,json,css,md}": ["prettier --write", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "directories": {
     "doc": "docs"
