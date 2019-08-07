@@ -28,25 +28,8 @@ RCT_EXPORT_METHOD(onDestory:(NSDictionary *)params) {
   
 }
 
-// 增加定时器：
-RCT_EXPORT_METHOD(addTimerWithTask:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-   TuyaSmartTimer *timer = [[TuyaSmartTimer alloc] init];
-  self.timer = timer;
-  NSDictionary *dps = @{[NSString stringWithFormat:@"%@", params[@"dpId"]]: @(YES)};
-    NSString *tz = [[[NSTimeZone systemTimeZone] localizedName:NSTimeZoneNameStyleStandard locale:nil] stringByReplacingOccurrencesOfString:@"GMT" withString:@""];
-  
-    [timer addTimerWithTask:params[@"taskName"] loops:params[@"loops"] devId:params[@"devId"] time:params[@"time"] dps:dps timeZone:tz success:^{
-      if (resolver) {
-        resolver(@"addTimerWithTask success");
-      }
-    } failure:^(NSError *error) {
-      [TuyaRNUtils rejecterWithError:error handler:rejecter];
-    }];
-}
-
-
 // 增加定时器,带有自己定义dp点：
-RCT_EXPORT_METHOD(addTimerWithTaskDps:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+RCT_EXPORT_METHOD(addTimerWithTask:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   TuyaSmartTimer *timer = [[TuyaSmartTimer alloc] init];
   self.timer = timer;
   
@@ -128,9 +111,8 @@ RCT_EXPORT_METHOD(removeTimerWithTask:(NSDictionary *)params resolver:(RCTPromis
 RCT_EXPORT_METHOD(updateTimerWithTask:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
     TuyaSmartTimer *timer = [[TuyaSmartTimer alloc] init];
   self.timer = timer;
-    NSDictionary *dps = @{@"1": @(YES)};
   
-    [timer updateTimerWithTask:params[@"taskName"] loops:params[@"loops"] devId:params[@"devId"] timerId:params[@"timerId"] time:params[@"time"] dps:dps timeZone:@"+08:00" success:^{
+    [timer updateTimerWithTask:params[@"taskName"] loops:params[@"loops"] devId:params[@"devId"] timerId:params[@"timerId"] time:params[@"time"] dps:params[@"dps"] timeZone:@"+08:00" success:^{
         if (resolver) {
           resolver(@"success");
         }
