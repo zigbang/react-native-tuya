@@ -71,7 +71,7 @@ object Constant {
     const val DPID = "dpId"
     const val ISOPEN = "isOpen"
     const val STATUS = "status"
-    const val TIMEID = "timeId"
+    const val TIMERID = "timerId"
     const val SHAREID = "shareId"
     const val GROUPNAME = "groupName"
     const val GROUPLISTENER = "GroupListener"

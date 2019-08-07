@@ -85,7 +85,7 @@ RCT_EXPORT_METHOD(updateTimerStatusWithTask:(NSDictionary *)params resolver:(RCT
   
   NSInteger status = [params[@"isOpen"] boolValue]?1:0;
   
-  [timer updateTimerStatusWithTask:params[@"taskName"] devId:params[@"devId"] timerId:params[@"timeId"] status:status success:^{
+  [timer updateTimerStatusWithTask:params[@"taskName"] devId:params[@"devId"] timerId:params[@"timerId"] status:status success:^{
       if (resolver) {
         resolver(@"success");
       }
@@ -98,7 +98,7 @@ RCT_EXPORT_METHOD(updateTimerStatusWithTask:(NSDictionary *)params resolver:(RCT
 RCT_EXPORT_METHOD(removeTimerWithTask:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
     TuyaSmartTimer *timer = [[TuyaSmartTimer alloc] init];
   self.timer = timer;
-    [timer removeTimerWithTask:params[@"taskName"] devId:params[@"devId"] timerId:params[@"timeId"] success:^{
+    [timer removeTimerWithTask:params[@"taskName"] devId:params[@"devId"] timerId:params[@"timerId"] success:^{
       if (resolver) {
         resolver(@"success");
       }
@@ -112,7 +112,8 @@ RCT_EXPORT_METHOD(updateTimerWithTask:(NSDictionary *)params resolver:(RCTPromis
     TuyaSmartTimer *timer = [[TuyaSmartTimer alloc] init];
   self.timer = timer;
   
-    [timer updateTimerWithTask:params[@"taskName"] loops:params[@"loops"] devId:params[@"devId"] timerId:params[@"timerId"] time:params[@"time"] dps:params[@"dps"] timeZone:@"+08:00" success:^{
+    NSString *tz = [[[NSTimeZone systemTimeZone] localizedName:NSTimeZoneNameStyleStandard locale:nil] stringByReplacingOccurrencesOfString:@"GMT" withString:@""];
+    [timer updateTimerWithTask:params[@"taskName"] loops:params[@"loops"] devId:params[@"devId"] timerId:params[@"timerId"] time:params[@"time"] dps:params[@"dps"] timeZone:tz success:^{
         if (resolver) {
           resolver(@"success");
         }
@@ -148,19 +149,28 @@ RCT_EXPORT_METHOD(getAllTimerWithDeviceId:(NSDictionary *)params resolver:(RCTPr
     self.timer = timer;
     [timer getAllTimerWithDeviceId:params[@"devId"] success:^(NSDictionary *dict) {
       
-      NSMutableDictionary *res = [NSMutableDictionary dictionary];
+      NSMutableArray *res = [NSMutableArray array];
       
       [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSArray* _Nonnull obj, BOOL * _Nonnull stop) {
         NSMutableArray *arr = [NSMutableArray array];
+        
+        NSMutableDictionary *timerTaskStatus = [NSMutableDictionary dictionary];
+        timerTaskStatus[@"timerName"] = key;
+        NSMutableDictionary *task = [NSMutableDictionary dictionary];
+        task[@"timerTaskStatus"] = timerTaskStatus;
+        
         if([obj isKindOfClass:[NSArray class]]) {
           for (TYTimerModel *item in obj) {
             NSMutableDictionary *dic = [item yy_modelToJSONObject];
             dic[@"timerId"] = item.timerId;
             dic[@"status"] = item.status?@(1):@(0);
+            task[@"timerTaskStatus"][@"open"] = item.status?@(true):@(false);
             [arr addObject:dic];
           }
         }
-        res[key] = arr;
+
+        task[@"timerList"] = arr;
+        [res addObject:task];
       }];
         if (resolver) {
           resolver(res);

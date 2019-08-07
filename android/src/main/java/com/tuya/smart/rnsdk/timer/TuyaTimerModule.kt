@@ -13,7 +13,7 @@ import com.tuya.smart.rnsdk.utils.Constant.LOOPS
 import com.tuya.smart.rnsdk.utils.Constant.STATUS
 import com.tuya.smart.rnsdk.utils.Constant.TASKNAME
 import com.tuya.smart.rnsdk.utils.Constant.TIME
-import com.tuya.smart.rnsdk.utils.Constant.TIMEID
+import com.tuya.smart.rnsdk.utils.Constant.TIMERID
 import com.tuya.smart.rnsdk.utils.Constant.getIResultCallback
 import com.tuya.smart.rnsdk.utils.JsonUtils
 import com.tuya.smart.rnsdk.utils.ReactParamsCheck
@@ -83,11 +83,11 @@ class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
     /*控制某个定时器的开关状态*/
     @ReactMethod
     fun updateTimerStatusWithTask(params: ReadableMap,promise: Promise) {
-        if (ReactParamsCheck.checkParams(arrayOf(TASKNAME,DEVID,TIMEID, ISOPEN), params)) {
+        if (ReactParamsCheck.checkParams(arrayOf(TASKNAME,DEVID,TIMERID, ISOPEN), params)) {
             TuyaHomeSdk.getTimerManagerInstance().updateTimerStatusWithTask(
                     params.getString(TASKNAME),
                     params.getString(DEVID),
-                    params.getString(TIMEID),
+                    params.getString(TIMERID),
                     params.getBoolean(ISOPEN),
                     getIResultStatusCallback(promise)
             )
@@ -98,11 +98,11 @@ class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
     /*删除定时器*/
     @ReactMethod
     fun removeTimerWithTask(params: ReadableMap,promise: Promise) {
-        if (ReactParamsCheck.checkParams(arrayOf(TASKNAME,DEVID, TIMEID), params)) {
+        if (ReactParamsCheck.checkParams(arrayOf(TASKNAME,DEVID, TIMERID), params)) {
             TuyaHomeSdk.getTimerManagerInstance().removeTimerWithTask(
                     params.getString(TASKNAME),
                     params.getString(DEVID),
-                    params.getString(TIMEID),
+                    params.getString(TIMERID),
                     getIResultStatusCallback(promise)
             )
         }
@@ -120,12 +120,12 @@ class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
      */
     @ReactMethod
     fun updateTimerWithTask(params: ReadableMap,promise: Promise) {
-        if (ReactParamsCheck.checkParams(arrayOf(TASKNAME, LOOPS, DEVID, TIMEID, TIME, ISOPEN), params)) {
+        if (ReactParamsCheck.checkParams(arrayOf(TASKNAME, LOOPS, DEVID, TIMERID, TIME, ISOPEN), params)) {
             TuyaHomeSdk.getTimerManagerInstance().updateTimerWithTask(
                     params.getString(TASKNAME),
                     params.getString(LOOPS),
                     params.getString(DEVID),
-                    params.getString(TIMEID),
+                    params.getString(TIMERID),
                     // Unfortunately we cannot update dps values, we can only give a single dp id but we also want to control the dp value
                     null,
                     params.getString(TIME),
