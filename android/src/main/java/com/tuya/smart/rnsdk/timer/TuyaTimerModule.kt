@@ -114,20 +114,20 @@ class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
      * @param loops    循环次数 如每周每天传”1111111”
      * @param devId    设备Id或群组Id
      * @param timerId  定时钟Id
-     * @param dps     dp点键值对，key是dpId，value是dpValue,仅支持单dp点
      * @param time     定时时间
      * @param isOpen	  是否开启
      * @param callback 回调
      */
     @ReactMethod
     fun updateTimerWithTask(params: ReadableMap,promise: Promise) {
-        if (ReactParamsCheck.checkParams(arrayOf(TASKNAME, LOOPS, DEVID, TIMEID, DPS,TIME, ISOPEN), params)) {
+        if (ReactParamsCheck.checkParams(arrayOf(TASKNAME, LOOPS, DEVID, TIMEID, TIME, ISOPEN), params)) {
             TuyaHomeSdk.getTimerManagerInstance().updateTimerWithTask(
                     params.getString(TASKNAME),
                     params.getString(LOOPS),
                     params.getString(DEVID),
                     params.getString(TIMEID),
-                    TuyaReactUtils.parseToMap(params.getMap(DPS) as ReadableMap),
+                    // Unfortunately we cannot update dps values, we can only give a single dp id but we also want to control the dp value
+                    null,
                     params.getString(TIME),
                     params.getBoolean(ISOPEN),
                     getIResultStatusCallback(promise))
