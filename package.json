@@ -1,6 +1,6 @@
 {
   "name": "@volst/react-native-tuya",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "React Native Tuya SDK",
   "main": "index.js",
   "scripts": {},
