@@ -170,11 +170,8 @@ RCT_EXPORT_METHOD(queryRoomList:(NSDictionary *)params resolver:(RCTPromiseResol
   self.currentHome = [self smartHomeWithParams:params];
   
   //获取详情获取：
-  WEAKSELF_AT
   [self.currentHome getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
-    
-    TuyaSmartHome *detailHome =  [TuyaSmartHome homeWithHomeId:weakSelf_AT.currentHome.homeModel.homeId];
-    if (detailHome.roomList.count == 0) {
+    if (self.currentHome.roomList.count == 0) {
       if (resolver) {
         resolver(@[]);
       }
@@ -182,7 +179,7 @@ RCT_EXPORT_METHOD(queryRoomList:(NSDictionary *)params resolver:(RCTPromiseResol
     }
     
     NSMutableArray *list = [NSMutableArray array];
-    for (TuyaSmartRoomModel *roomModel in detailHome.roomList) {
+    for (TuyaSmartRoomModel *roomModel in self.currentHome.roomList) {
       NSDictionary *dic = [roomModel yy_modelToJSONObject];
       //检查相关字段是否一致
       NSMutableDictionary *roomDic = [NSMutableDictionary dictionaryWithDictionary:dic];
