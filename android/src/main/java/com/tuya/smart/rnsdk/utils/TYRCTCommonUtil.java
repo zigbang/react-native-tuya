@@ -1,6 +1,6 @@
 package com.tuya.smart.rnsdk.utils;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
