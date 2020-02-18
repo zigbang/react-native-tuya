@@ -84,23 +84,6 @@
   [TuyaRNEventEmitter ty_sendEvent:[kTYEventEmitterHomeChangeEvent stringByAppendingString:@"//"] withBody:dic];
 }
 
-// 家庭和房间关系变化
-- (void)homeDidUpdateRoomInfo:(TuyaSmartHome *)home {
-  
-  if (!self.homeChangeSmartHome) {
-    return;
-  }
-  
-  if (home.homeModel.homeId <= 0) {
-    return;
-  }
-  NSDictionary *dic = @{
-                        @"homeId": [NSNumber numberWithLongLong:home.homeModel.homeId],
-                        @"type": @"onHomeRoomListChange"
-                        };
-  [TuyaRNEventEmitter ty_sendEvent:[kTYEventEmitterHomeChangeEvent stringByAppendingFormat:@"//%lld",home.homeModel.homeId] withBody:dic];
-}
-
 // 我收到的共享设备列表变化
 - (void)homeDidUpdateSharedInfo:(TuyaSmartHome *)home {
   

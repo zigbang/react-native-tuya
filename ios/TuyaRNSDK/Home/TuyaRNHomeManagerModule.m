@@ -127,8 +127,9 @@ RCT_EXPORT_METHOD(unregisterTuyaHomeChangeListener:(NSDictionary *)params resolv
 RCT_EXPORT_METHOD(joinFamily:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   NSNumber *homeIdNum = params[kTuyaHomeManagerModuleHomeId];
   NSString *action = params[kTuyaHomeManagerModuleAction];
+  TuyaSmartHome *newHome = [TuyaSmartHome homeWithHomeId:homeIdNum.longLongValue];
 
-  [self.homeManager joinFamilyWithHomeId:homeIdNum.longLongValue action:action.boolValue success:^(BOOL result) {
+  [newHome joinFamilyWithAccept:action.boolValue success:^(BOOL result) {
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
