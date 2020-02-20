@@ -12,7 +12,8 @@
   "files": [
     "android",
     "ios",
-    "dist"
+    "dist",
+    "RNTuyaSdk.podspec"
   ],
   "scripts": {
     "start": "tsdx watch",
