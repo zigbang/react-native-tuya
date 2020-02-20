@@ -32,7 +32,6 @@
 		93D1D56723FE9628007D33C0 /* TuyaRNFeedBackModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D54923FE9628007D33C0 /* TuyaRNFeedBackModule.m */; };
 		93D1D56823FE9628007D33C0 /* TuyaRNSceneModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D54C23FE9628007D33C0 /* TuyaRNSceneModule.m */; };
 		93D1D56923FE9628007D33C0 /* TuyaRNGatewayModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D55023FE9628007D33C0 /* TuyaRNGatewayModule.m */; };
-		B3E7B58A1CC2AC0600A0062D /* RNTuyaSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNTuyaSdk.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -99,8 +98,6 @@
 		93D1D54D23FE9628007D33C0 /* TuyaRNSceneModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNSceneModule.h; sourceTree = "<group>"; };
 		93D1D54F23FE9628007D33C0 /* TuyaRNGatewayModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNGatewayModule.h; sourceTree = "<group>"; };
 		93D1D55023FE9628007D33C0 /* TuyaRNGatewayModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNGatewayModule.m; sourceTree = "<group>"; };
-		B3E7B5881CC2AC0600A0062D /* RNTuyaSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTuyaSdk.h; sourceTree = "<group>"; };
-		B3E7B5891CC2AC0600A0062D /* RNTuyaSdk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTuyaSdk.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,8 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				93D1D50F23FE9628007D33C0 /* RNTuyaSdk */,
-				B3E7B5881CC2AC0600A0062D /* RNTuyaSdk.h */,
-				B3E7B5891CC2AC0600A0062D /* RNTuyaSdk.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -389,7 +384,6 @@
 				93D1D55623FE9628007D33C0 /* TuyaRNShareModule.m in Sources */,
 				93D1D56923FE9628007D33C0 /* TuyaRNGatewayModule.m in Sources */,
 				93D1D55F23FE9628007D33C0 /* TuyaRNEventEmitter.m in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* RNTuyaSdk.m in Sources */,
 				93D1D56823FE9628007D33C0 /* TuyaRNSceneModule.m in Sources */,
 				93D1D56723FE9628007D33C0 /* TuyaRNFeedBackModule.m in Sources */,
 			);
