@@ -29,13 +29,29 @@ Refer to Details: [Tuya Smart Doc: tuyasmart-home-sdk-react-native](https://tuya
 
 ## Usage
 
+In the Tuya development environment create a new app and make sure you have an "App key", "App secret" and "Secure image". [Read how to do this](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/en/resource/Preparation.html).
+
 ### iOS
 
-Put the secure image into the root path of your project and configure your AppKey and AppSecret in AppDelegate.m like this(refer to [SDK doc](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/zh-hans/resource/Preparation.html)):
+Put the secure image into the root path of your project as [explained here](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/en/resource/Preparation.html).
 
-``` objective-c
-  [[TuyaSmartSDK sharedInstance] startWithAppKey:@"" secretKey:@""];
+In `ios/AppDelegate.m`, add the following import;
+
+```obj-c
+#import <TuyaSmartHomeKit/TuyaSmartKit.h>
 ```
+
+Then, under the `roootView.backgroundColor` line in the same file, add this:
+
+```obj-c
+  #ifdef DEBUG
+    [[TuyaSmartSDK sharedInstance] setDebugMode:YES];
+  #endif
+
+  [[TuyaSmartSDK sharedInstance] startWithAppKey:@"xxx" secretKey:@"xxx"];
+```
+
+Now replace the `xxx` with your app key and secret key.
 
 ### Android
 
