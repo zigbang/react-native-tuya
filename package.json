@@ -33,7 +33,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "react-native-tuya",
+  "name": "@volst/react-native-tuya",
   "author": "Kees Kluskens",
   "module": "dist/react-native-tuya.esm.js",
   "devDependencies": {

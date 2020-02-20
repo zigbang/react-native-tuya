@@ -2,37 +2,46 @@ import { NativeModules } from 'react-native';
 
 const tuya = NativeModules.TuyaUserModule;
 
-export const user = {
-  registerAccountWithEmail(
-    params: RegisterAccountWithEmailParams
-  ): Promise<any> {
-    return tuya.registerAccountWithEmail(params);
-  },
-  getRegisterEmailValidateCode(
-    params: GetEmailValidateCodeParams
-  ): Promise<any> {
-    return tuya.getRegisterEmailValidateCode(params);
-  },
-  loginWithEmail(params: LoginWithEmailParams): Promise<any> {
-    return tuya.loginWithEmail(params);
-  },
-  getEmailValidateCode(params: GetEmailValidateCodeParams): Promise<any> {
-    return tuya.getEmailValidateCode(params);
-  },
-  resetEmailPassword(params: ResetEmailPasswordParams): Promise<any> {
-    return tuya.resetEmailPassword(params);
-  },
-  logout(): Promise<string> {
-    return tuya.logout();
-  },
-  getCurrentUser() {
-    // TODO: provide typings
-    return tuya.getCurrentUser();
-  },
-  cancelAccount(): Promise<string> {
-    return tuya.cancelAccount();
-  },
-};
+export function registerAccountWithEmail(
+  params: RegisterAccountWithEmailParams
+): Promise<any> {
+  return tuya.registerAccountWithEmail(params);
+}
+
+export function getRegisterEmailValidateCode(
+  params: GetEmailValidateCodeParams
+): Promise<any> {
+  return tuya.getRegisterEmailValidateCode(params);
+}
+
+export function loginWithEmail(params: LoginWithEmailParams): Promise<any> {
+  return tuya.loginWithEmail(params);
+}
+
+export function getEmailValidateCode(
+  params: GetEmailValidateCodeParams
+): Promise<any> {
+  return tuya.getEmailValidateCode(params);
+}
+
+export function resetEmailPassword(
+  params: ResetEmailPasswordParams
+): Promise<any> {
+  return tuya.resetEmailPassword(params);
+}
+
+export function logout(): Promise<string> {
+  return tuya.logout();
+}
+
+// TODO: provide typings
+export function getCurrentUser() {
+  return tuya.getCurrentUser();
+}
+
+export function cancelAccount(): Promise<string> {
+  return tuya.cancelAccount();
+}
 
 export type RegisterAccountWithEmailParams = {
   countryCode: string;
