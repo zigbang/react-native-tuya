@@ -17,25 +17,29 @@ export type DevListenerType =
   | 'onFirmwareUpgradeFailure'
   | 'onFirmwareUpgradeProgress';
 
+let devListenerSubs: { [devId: string]: EmitterSubscription } = {};
+
 export function registerDevListener(
   params: DevListenerParams,
   type: DevListenerType,
   callback: (data: any) => void
 ) {
   tuya.registerDevListener(params);
-  return addEvent(bridge(DEVLISTENER, params.devId), data => {
+  const sub = addEvent(bridge(DEVLISTENER, params.devId), data => {
     if (data.type === type) {
       callback(data);
     }
   });
+  devListenerSubs[params.devId] = sub;
 }
 
-export function unRegisterDevListener(
-  params: DevListenerParams,
-  sub: EmitterSubscription
-) {
-  tuya.unRegisterDevListener(params);
-  sub.remove();
+export function unRegisterAllDevListeners() {
+  for (const devId in devListenerSubs) {
+    const sub = devListenerSubs[devId];
+    sub.remove();
+    tuya.unRegisterDevListener({ devId });
+  }
+  devListenerSubs = {};
 }
 
 export type DeviceDpValue = boolean | number | string;
