@@ -55,50 +55,53 @@ Now replace the `xxx` with your app key and secret key.
 
 ### Android
 
-TODO
+Assuming you already have created an app in the Tuya development environment (otherwise follow the iOS steps before this), follow [these steps](https://tuyainc.github.io/tuyasmart_home_android_sdk_doc/en/resource/Integrated.html#3-integrated-security-image). You should now have an app key, app secret and security image for Android. Make sure the security image is put in `android/src/main/assets/t_s.bmp`.
 
-In your app MainApplication ,you should initSDK 
+Open your `AndroidManifest.xml` and put the following **in the `<application>` tag**:
 
-You can choose one of the following two ways to go initSDK
-
-* the first one
-
-```
-
-Appkey and appSecret are configured in the AndroidManifest.xml file, and corresponding permissions are also configured
-
+```xml
 <meta-data
-android:name="TUYA_SMART_APPKEY"
-android:value="Appkey" />
+  android:name="TUYA_SMART_APPKEY"
+  android:value="xxx" />
 <meta-data
-android:name="TUYA_SMART_SECRET"
-android:value="AppSecret" />
-
-TuyaCoreModule.Companion.initTuyaSDKWithoutOptions()
+  android:name="TUYA_SMART_SECRET"
+  android:value="xxx" />
 ```
 
-* the second one
+Replace the `xxx` with your app key and secret key.
 
-```
-TuyaCoreModule.Companion.initTuyaSDk("xxxxxxxxxxxxxxxxxxxxx","xxxxxxxxxxxxxxxxxxxxx",this);
+Now open `MainApplication.java` and add the following import to the top:
 
-```
-
-* how to use
-
+```java
+import com.tuya.smart.rnsdk.core.TuyaCoreModule;
 ```
 
+Change the `onCreate` function to look like this:
+
+```java
 @Override
-  public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
-    // Fill in appkey and appsecret of the application below
-   // TuyaCoreModule.Companion.initTuyaSDKWithoutOptions();
-  //TuyaCoreModule.Companion.initTuyaSDk("xxxxxxxxxxxxxxxxxxxxx","xxxxxxxxxxxxxxxxxxxxx",this);
-  //TuyaCoreModule.setSDKDebug(true) //if you have some problem ,You can grab the log for us
-  }
+public void onCreate() {
+  super.onCreate();
+  SoLoader.init(this, /* native exopackage */ false);
+  initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+  TuyaCoreModule.Companion.initTuyaSDKWithoutOptions(this);
+}
+```
 
+Now you can try to build, but you'll probably run into an error saying that it can't choose between `libc++_shared` or something. One fix for this (don't know if it's the best fix) is to open `android/app/build.gradle` and add this;
 
+```
+android {
+    ...
+    packagingOptions {
+        pickFirst '**/armeabi-v7a/libc++_shared.so'
+        pickFirst '**/x86/libc++_shared.so'
+        pickFirst '**/arm64-v8a/libc++_shared.so'
+        pickFirst '**/x86_64/libc++_shared.so'
+        pickFirst '**/x86/libjsc.so'
+        pickFirst '**/armeabi-v7a/libjsc.so'
+    }
+}
 ```
 
 ## Local Development
