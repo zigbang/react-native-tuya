@@ -34,14 +34,28 @@ export function logout(): Promise<string> {
   return tuya.logout();
 }
 
-// TODO: provide typings
-export function getCurrentUser() {
-  return tuya.getCurrentUser();
+export async function getCurrentUser(): Promise<User | null> {
+  const user = tuya.getCurrentUser();
+  // The iOS SDK returns an empty user model but the Android one doesn't.
+  return user && user.email ? user : null;
 }
 
 export function cancelAccount(): Promise<string> {
   return tuya.cancelAccount();
 }
+
+export type User = {
+  email: string;
+  username: string;
+  sid: string;
+  timezoneId: string;
+  uid: string;
+  userType: number;
+  headPic: string;
+  mobile: string;
+  nickName: string;
+  phoneCode: string;
+};
 
 export type RegisterAccountWithEmailParams = {
   countryCode: string;
