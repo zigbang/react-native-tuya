@@ -1,6 +1,8 @@
 # @volst/react-native-tuya
 
-This is a fork of [TuyaInc/tuyasmart-home-sdk-react-native](https://github.com/TuyaInc/tuyasmart-home-sdk-react-native), fixing some issues we were having that were not merged. Refer to the commit logs for our changes.
+This is a fork of [TuyaInc/tuyasmart-home-sdk-react-native](https://github.com/TuyaInc/tuyasmart-home-sdk-react-native), fixing a lot of issues we came across. It also uses TypeScript.
+
+Some features are not implemented, feel free to send a PR for those missing features.
 
 ## Feature Overview
 
@@ -19,8 +21,6 @@ npm install @volst/react-native-tuya
 This library contains native code which is automatically linked in React Native >= 0.59. For iOS, run `cd ios && pod install`.
 
 ## Examples
-
-See the demo in https://github.com/TuyaInc/tuyasmart-home-sdk-react-native/tree/master/Example before using.
 
 ## Doc
 
