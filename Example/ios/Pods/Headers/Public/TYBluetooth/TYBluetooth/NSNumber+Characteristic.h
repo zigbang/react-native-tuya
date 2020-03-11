@@ -1,1 +1,0 @@
-../../../../TYBluetooth/TYBluetooth.framework/Versions/A/Headers/NSNumber+Characteristic.h

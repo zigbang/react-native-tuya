@@ -1,1 +1,0 @@
-../../../TuyaSmartHomeKit/TuyaSmartKit.h
