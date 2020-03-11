@@ -35,7 +35,7 @@ export function logout(): Promise<string> {
 }
 
 export async function getCurrentUser(): Promise<User | null> {
-  const user = tuya.getCurrentUser();
+  const user = await tuya.getCurrentUser();
   // The iOS SDK returns an empty user model but the Android one doesn't.
   return user && user.email ? user : null;
 }
