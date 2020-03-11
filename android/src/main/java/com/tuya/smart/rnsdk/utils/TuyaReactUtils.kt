@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
 import com.facebook.react.bridge.*
 import com.facebook.react.modules.core.DeviceEventManagerModule
+import java.math.BigDecimal
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -131,6 +132,7 @@ object TuyaReactUtils {
                 is String -> map.putString(key, obv)
                 is Boolean -> map.putBoolean(key, obv)
                 is Double -> map.putDouble(key, obv)
+                is BigDecimal -> map.putDouble(key, obv.toDouble())
                 is Long ->map.putString(key,obv.toString())
                 else -> map.putNull(key)
             }
@@ -148,6 +150,7 @@ object TuyaReactUtils {
                 is String -> list.pushString(obv)
                 is Boolean -> list.pushBoolean(obv)
                 is Double -> list.pushDouble(obv)
+                is BigDecimal -> list.pushDouble(obv.toDouble())
                 is Long -> list.pushString(obv.toString())
                 else -> list.pushNull()
             }
