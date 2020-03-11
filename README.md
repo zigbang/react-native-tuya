@@ -1,8 +1,8 @@
 # @volst/react-native-tuya
 
-This is a fork of [TuyaInc/tuyasmart-home-sdk-react-native](https://github.com/TuyaInc/tuyasmart-home-sdk-react-native), fixing a lot of issues we came across. It also uses TypeScript.
+This is a fork of [TuyaInc/tuyasmart-home-sdk-react-native](https://github.com/TuyaInc/tuyasmart-home-sdk-react-native), fixing a lot of issues we came across and a better install guide. It also uses TypeScript. We use it currently in multiple projects for clients and it is stable.
 
-Some features are not implemented, feel free to send a PR for those missing features.
+Some features are not implemented, feel free to send a PR for those missing features. Unfortunately there is no demo yet
 
 ## Feature Overview
 
@@ -20,14 +20,7 @@ npm install @volst/react-native-tuya
 
 This library contains native code which is automatically linked in React Native >= 0.59. For iOS, run `cd ios && pod install`.
 
-## Examples
-
-## Doc
-
-Refer to Details: [Tuya Smart Doc: tuyasmart-home-sdk-react-native](https://tuyakae.gitbook.io/tuyasmart-home-sdk-react-native)
-
-
-## Usage
+## Installation
 
 In the Tuya development environment create a new app and make sure you have an "App key", "App secret" and "Secure image". [Read how to do this](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/en/resource/Preparation.html).
 
@@ -102,6 +95,50 @@ android {
         pickFirst '**/armeabi-v7a/libjsc.so'
     }
 }
+```
+
+## Usage
+
+Now you can actually use the methods in this package. Unfortunately I don't have time to document them all, so it is advised to read the source code, but here's a start.
+
+To login with an existing account:
+
+```js
+import { loginWithEmail } from '@volst/react-native-tuya';
+
+await loginWithEmail({
+  countryCode: '+1',
+  email: 'you@example.com',
+  password: 'testtest'
+});
+```
+
+To register a new account you first need to validate the email address. And then actually register using the code in the email.
+
+```js
+import { getRegisterEmailValidateCode, registerAccountWithEmail } from '@volst/react-native-tuya';
+
+await getRegisterEmailValidateCode({
+  countryCode: '+1',
+  email: 'you@example.com'
+});
+
+...
+
+await registerAccountWithEmail({
+  countryCode: '+1',
+  email: 'you@example.com',
+  password: 'testtest',
+  validateCode: 'xxxxxx'
+})
+```
+
+To get the currently logged in user:
+
+```js
+import { getCurrentUser } from '@volst/react-native-tuya';
+
+const user = await getCurrentUser();
 ```
 
 ## Local Development
