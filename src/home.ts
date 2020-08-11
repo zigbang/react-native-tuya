@@ -30,6 +30,7 @@ export type DeviceDetailResponse = {
   verSw: string;
   name: string;
   dps: DeviceDps;
+  homeDisplayOrder: number;
 };
 export type GetHomeDetailResponse = {
   deviceList: DeviceDetailResponse[];
