@@ -3,12 +3,12 @@ package com.tuya.smart.rnsdk.device
 import com.facebook.react.bridge.*
 import com.tuya.smart.home.sdk.TuyaHomeSdk
 import com.tuya.smart.sdk.api.IGetOtaInfoCallback
-import com.tuya.smart.sdk.enums.FirmwareUpgradeEnum
 import com.tuya.smart.android.device.bean.UpgradeInfoBean
 import com.tuya.smart.rnsdk.utils.*
 import com.tuya.smart.rnsdk.utils.Constant.DEVID
 import com.tuya.smart.sdk.api.IOtaListener
 import com.tuya.smart.sdk.api.ITuyaOta
+import com.tuya.smart.sdk.bean.OTAErrorMessageBean
 
 
 class TuyaOTAModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
@@ -46,6 +46,14 @@ class TuyaOTAModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
                     BridgeUtils.hardwareUpgradeListener(reactApplicationContext,map,params.getString(DEVID) as String)
                 }
 
+                override fun onTimeout(otaType: Int) {
+                  //
+                }
+
+                override fun onFailureWithText(otaType: Int, code: String, messageBean: OTAErrorMessageBean) {
+                  //
+                }
+
                 override fun onFailure(otaType: Int, code: String, error: String) {
                     var map=Arguments.createMap();
                     map.putInt("otaType",otaType)
@@ -67,7 +75,7 @@ class TuyaOTAModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
         }
     }
     @ReactMethod
-    fun onDestory(){
+    fun onDestroy(){
         iTuyaOta?.onDestroy()
     }
     fun getIoat(devId:String): ITuyaOta {
