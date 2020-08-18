@@ -96,7 +96,11 @@ class TuyaGroupModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
                             BridgeUtils.groupListener(reactApplicationContext,map,params.getDouble(GROUPID).toLong())
                         }
 
-                      override fun onGroupInfoUpdate(var1: Long){
+                        override fun onDpCodeUpdate(groupId: Long, dpCodeMap: MutableMap<String, Any>?) {
+                            //
+                        }
+
+                        override fun onGroupInfoUpdate(var1: Long){
                             var map=Arguments.createMap();
                             map.putDouble("id",var1.toDouble())
                             map.putString("type","onGroupInfoUpdate")
