@@ -66,18 +66,6 @@ export function renameDevice(params: RenameDeviceParams): Promise<string> {
   return tuya.renameDevice(params);
 }
 
-export type UpdateDeviceLatLonParams = {
-  devId: string;
-  lat: number;
-  lon: number;
-};
-
-export function updateDeviceLatLon(
-  params: UpdateDeviceLatLonParams
-): Promise<string> {
-  return tuya.updateDeviceLatLon(params);
-}
-
 export type GetDataPointStatsParams = {
   devId: string;
   DataPointTypeEnum: 'DAY' | 'WEEK' | 'MONTH';

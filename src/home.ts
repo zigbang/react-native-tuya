@@ -31,8 +31,6 @@ export type DeviceDetailResponse = {
   name: string;
   dps: DeviceDps;
   homeDisplayOrder: number;
-  lat: string;
-  lon: string;
 };
 export type GetHomeDetailResponse = {
   deviceList: DeviceDetailResponse[];

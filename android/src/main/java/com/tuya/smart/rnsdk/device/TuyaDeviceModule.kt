@@ -13,8 +13,6 @@ import com.tuya.smart.rnsdk.utils.Constant.DATAPOINTTYPEENUM
 import com.tuya.smart.rnsdk.utils.Constant.DEVID
 import com.tuya.smart.rnsdk.utils.Constant.DPID
 import com.tuya.smart.rnsdk.utils.Constant.NAME
-import com.tuya.smart.rnsdk.utils.Constant.LAT
-import com.tuya.smart.rnsdk.utils.Constant.LON
 import com.tuya.smart.rnsdk.utils.Constant.NUMBER
 import com.tuya.smart.rnsdk.utils.Constant.STARTTIME
 import com.tuya.smart.rnsdk.utils.Constant.getIResultCallback
@@ -139,15 +137,6 @@ class TuyaDeviceModule(reactContext: ReactApplicationContext) : ReactContextBase
     fun renameDevice(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(DEVID, NAME), params)) {
             getDevice(params.getString(DEVID) as String)?.renameDevice(params.getString(NAME), getIResultCallback(promise))
-        }
-    }
-
-    @ReactMethod
-    fun updateDeviceLatLon(params: ReadableMap, promise: Promise) {
-        if (ReactParamsCheck.checkParams(arrayOf(DEVID, LON, LAT), params)) {
-            val lat = params.getDouble(LAT).toString()
-            val lon = params.getDouble(LON).toString()
-            getDevice(params.getString(DEVID) as String)?.setLatAndLong(lat, lon, getIResultCallback(promise))
         }
     }
 
