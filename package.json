@@ -23,7 +23,7 @@
     "prepare": "tsdx build"
   },
   "peerDependencies": {
-    "react-native": "^0.61.5"
+    "react-native": ">=0.61.5"
   },
   "husky": {
     "hooks": {
