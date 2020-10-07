@@ -11,8 +11,8 @@
 #import "TuyaRNUtils.h"
 #import <TuyaSmartDeviceKit/TuyaSmartHome.h>
 #import <TuyaSmartDeviceKit/TuyaSmartHomeModel.h>
-#import <TuyaSmartDeviceKit/TuyaSmartDeviceModel.h>
-#import <TuyaSmartDeviceKit/TuyaSmartGroupModel.h>
+#import <TuyaSmartDeviceKit/TuyaSmartShareDeviceModel.h>
+#import <TuyaSmartDeviceKit/TuyaSmartGroup+DpCode.h>
 #import <TuyaSmartBaseKit/TuyaSmartRequest.h>
 #import <TuyaSmartDeviceKit/TuyaSmartRoomModel.h>
 #import "TuyaRNUtils+Cache.h"
@@ -37,22 +37,22 @@
 RCT_EXPORT_MODULE(TuyaHomeModule)
 
 RCT_EXPORT_METHOD(getHomeDetail:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   self.currentHome = [self smartHomeWithParams:params];
-  
+
   [self.currentHome getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
     TuyaSmartHome *newHome = [TuyaSmartHome homeWithHomeId:homeModel.homeId];
-    
+
     NSMutableDictionary *homeDic = [[NSMutableDictionary alloc] init];
     [homeDic setObject:getValidDataForDeviceModel(newHome.deviceList) forKey:@"deviceList"];
     [homeDic setObject:getValidDataForGroupModel(newHome.groupList) forKey:@"groupList"];
     [homeDic setObject:getValidDataForDeviceModel(newHome.sharedDeviceList) forKey:@"sharedDeviceList"];
     [homeDic setObject:getValidDataForGroupModel(newHome.sharedGroupList) forKey:@"sharedGroupList"];
-    
+
     if(resolver) {
       resolver(homeDic);
     }
-    
+
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
@@ -76,12 +76,12 @@ RCT_EXPORT_METHOD(getHomeLocalCache:(NSDictionary *)params resolver:(RCTPromiseR
  * @param callback
  */
 RCT_EXPORT_METHOD(updateHome:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *name = params[kTuyaRNHomeModuleName];
   NSNumber *lon = params[kTuyaRNHomeModuleLon];
   NSNumber *lat = params[kTuyaRNHomeModuleLat];
   NSString *geoName = params[kTuyaRNHomeModuleGeoName];
-  
+
   self.currentHome = [self smartHomeWithParams:params];
   [self.currentHome updateHomeInfoWithName:name
                        geoName:geoName
@@ -101,7 +101,7 @@ RCT_EXPORT_METHOD(updateHome:(NSDictionary *)params resolver:(RCTPromiseResolveB
  * @param callback
  */
 RCT_EXPORT_METHOD(dismissHome:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   self.currentHome = [self smartHomeWithParams:params];
   [self.currentHome dismissHomeWithSuccess:^{
     [TuyaRNUtils resolverWithHandler:resolver];
@@ -117,7 +117,7 @@ RCT_EXPORT_METHOD(dismissHome:(NSDictionary *)params resolver:(RCTPromiseResolve
  * @param callback
  */
 RCT_EXPORT_METHOD(addRoom:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   self.currentHome = [self smartHomeWithParams:params];
   NSString *name = params[kTuyaRNHomeModuleName];
   [self.currentHome addHomeRoomWithName:name success:^{
@@ -134,27 +134,27 @@ RCT_EXPORT_METHOD(addRoom:(NSDictionary *)params resolver:(RCTPromiseResolveBloc
  * @param callback
  */
 RCT_EXPORT_METHOD(removeRoom:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   self.currentHome = [self smartHomeWithParams:params];
   NSNumber *roomId = params[kTuyaRNHomeModuleRoomId];
-  
+
   [self.currentHome removeHomeRoomWithRoomId:roomId.longLongValue success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /**
  房屋排序
  */
 RCT_EXPORT_METHOD(sortRoom:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   self.currentHome = [self smartHomeWithParams:params];
-  
+
   NSArray<TuyaSmartRoomModel *> * list = nil;
-  
+
   [self.currentHome sortRoomList:list success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
@@ -168,7 +168,7 @@ RCT_EXPORT_METHOD(sortRoom:(NSDictionary *)params resolver:(RCTPromiseResolveBlo
 RCT_EXPORT_METHOD(queryRoomList:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   self.currentHome = [self smartHomeWithParams:params];
-  
+
   //获取详情获取：
   [self.currentHome getHomeDetailWithSuccess:^(TuyaSmartHomeModel *homeModel) {
     if (self.currentHome.roomList.count == 0) {
@@ -177,7 +177,7 @@ RCT_EXPORT_METHOD(queryRoomList:(NSDictionary *)params resolver:(RCTPromiseResol
       }
       return;
     }
-    
+
     NSMutableArray *list = [NSMutableArray array];
     for (TuyaSmartRoomModel *roomModel in self.currentHome.roomList) {
       NSDictionary *dic = [roomModel yy_modelToJSONObject];
@@ -199,7 +199,7 @@ RCT_EXPORT_METHOD(queryRoomList:(NSDictionary *)params resolver:(RCTPromiseResol
 
  */
 RCT_EXPORT_METHOD(registerHomeStatusListener:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSNumber *homeIdNum = params[kTuyaRNHomeModuleHomeId];
   if (!homeIdNum || homeIdNum.longLongValue <= 0) {
     return;
@@ -218,12 +218,12 @@ RCT_EXPORT_METHOD(unRegisterHomeStatusListener:(NSDictionary *)params resolver:(
 
 //
 RCT_EXPORT_METHOD(queryDeviceListToAddGroup:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
-  
+
+
 }
 
 RCT_EXPORT_METHOD(onDestroy:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
 }
 
 #pragma mark -

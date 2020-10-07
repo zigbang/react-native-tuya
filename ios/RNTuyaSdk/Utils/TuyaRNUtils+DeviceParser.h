@@ -7,8 +7,8 @@
 //
 
 #import "TuyaRNUtils.h"
-#import <TuyaSmartDeviceKit/TuyaSmartDeviceModel.h>
-#import <TuyaSmartDeviceKit/TuyaSmartGroupModel.h>
+#import <TuyaSmartDeviceKit/TuyaSmartShareDeviceModel.h>
+#import <TuyaSmartDeviceKit/TuyaSmartGroup+DpCode.h>
 #import <YYModel/YYModel.h>
 
 static inline NSArray *getValidDataForDeviceModel(NSArray <TuyaSmartDeviceModel *> *deviceModelList) {
@@ -17,7 +17,7 @@ static inline NSArray *getValidDataForDeviceModel(NSArray <TuyaSmartDeviceModel 
   }
   NSMutableArray *list = [NSMutableArray array];
   for (TuyaSmartDeviceModel *tempModel in deviceModelList) {
-    
+
     NSDictionary *dic = [tempModel yy_modelToJSONObject];
     [list addObject:dic];
   }
@@ -28,7 +28,7 @@ static inline NSArray *getValidDataForGroupModel(NSArray <TuyaSmartGroupModel *>
   if(!groupModelList || [groupModelList count] == 0) {
     return @[];
   }
-  
+
   NSMutableArray *list = [NSMutableArray array];
   for (TuyaSmartGroupModel *tempModel in groupModelList) {
     NSDictionary *dic = [tempModel yy_modelToJSONObject];

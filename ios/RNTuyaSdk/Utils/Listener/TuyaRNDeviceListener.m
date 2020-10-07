@@ -7,7 +7,7 @@
 //
 
 #import "TuyaRNDeviceListener.h"
-#import <TuyaSmartDeviceKit/TuyaSmartDevice.h>
+#import <TuyaSmartDeviceCoreKit/TuyaSmartDevice.h>
 #import <YYModel/YYModel.h>
 #import "TuyaRNEventEmitter.h"
 
@@ -43,11 +43,11 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
 }
 
 + (void)registerDevice:(TuyaSmartDevice *)device type:(TuyaRNDeviceListenType)type {
-  
+
   if (!TuyaRNDeviceListenTypeAvailable(type)) {
     return;
   }
-  
+
   __block BOOL exist = NO;
   [[TuyaRNDeviceListener shareInstance].listenDevices enumerateObjectsUsingBlock:^(TuyaSmartDevice * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     if ([obj.deviceModel.devId isEqualToString:device.deviceModel.devId]) {
@@ -55,9 +55,9 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
       *stop = YES;
     }
   }];
-  
+
   device.delegate = [TuyaRNDeviceListener shareInstance];
-  
+
   TuyaRNDeviceListenType listenType = type;
   if (!exist) {
     if ([TuyaRNDeviceListener shareInstance].listenDeviceArr.count == 0) {
@@ -71,7 +71,7 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
     }
   }
   [[TuyaRNDeviceListener shareInstance].listenTypeDic setObject:[NSNumber numberWithUnsignedInteger:listenType] forKey:device.deviceModel.devId];
-  
+
 }
 
 + (void)removeDevice:(TuyaSmartDevice *)device type:(TuyaRNDeviceListenType)type {
@@ -79,16 +79,16 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
 }
 
 + (void)removeDeviceWithDeviceId:(NSString *)deviceId type:(TuyaRNDeviceListenType)type {
-  
+
   if (!TuyaRNDeviceListenTypeAvailable(type)) {
     return;
   }
-  
+
   TuyaRNDeviceListenType listenType = [[TuyaRNDeviceListener shareInstance].listenTypeDic[deviceId] integerValue];
   if (!(listenType & type)) {
     return;
   }
-  
+
   listenType = listenType & (!type);
   if (listenType != TuyaRNDeviceListenType_None) {
     [[TuyaRNDeviceListener shareInstance].listenTypeDic setObject:[NSNumber numberWithUnsignedInteger:listenType] forKey:deviceId];
@@ -102,11 +102,11 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
         *stop = YES;
       }
     }];
-    
+
     if (deviceIdx >= 0) {
       [[TuyaRNDeviceListener shareInstance].listenDeviceArr removeObjectAtIndex:deviceIdx];
       if ([TuyaRNDeviceListener shareInstance].listenDeviceArr.count == 0) {
-      
+
       }
     }
   }
@@ -121,7 +121,7 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
   if (!([deviceId isKindOfClass:[NSString class]] && deviceId.length > 0)) {
     return;
   }
-  
+
   NSInteger listenType = [[TuyaRNDeviceListener shareInstance].listenTypeDic[deviceId] integerValue];
   if (listenType & TuyaRNDeviceListenType_DeviceInfo) {
     NSDictionary *dic = @{
@@ -134,12 +134,12 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
 
 /// 设备被移除
 - (void)deviceRemoved:(TuyaSmartDevice *)device {
-  
+
   NSString *deviceId = device.deviceModel.devId;
   if (!([deviceId isKindOfClass:[NSString class]] && deviceId.length > 0)) {
     return;
   }
-  
+
   NSInteger listenType = [[TuyaRNDeviceListener shareInstance].listenTypeDic[deviceId] integerValue];
   if (listenType & TuyaRNDeviceListenType_DeviceInfo) {
     NSDictionary *dic = @{
@@ -152,22 +152,22 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
 
 /// dp数据更新
 - (void)device:(TuyaSmartDevice *)device dpsUpdate:(NSDictionary *)dps {
-  
+
   NSString *deviceId = device.deviceModel.devId;
   if (!([deviceId isKindOfClass:[NSString class]] && deviceId.length > 0)) {
     return;
   }
   device.deviceModel.dps = dps;
-  
+
   NSInteger listenType = [[TuyaRNDeviceListener shareInstance].listenTypeDic[deviceId] integerValue];
   if (listenType & TuyaRNDeviceListenType_DeviceInfo) {
-    
+
     if (!dps || ![dps isKindOfClass:[NSDictionary class]]) {
       return;
     }
-    
+
     NSString *dpStr = [dps yy_modelToJSONString];
-    
+
     NSDictionary *dic = @{
                           @"devId": deviceId,
                           @"dpStr": device.deviceModel.dps ? dpStr: @"",
@@ -175,7 +175,7 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
                           };
     [TuyaRNEventEmitter ty_sendEvent:[kTYEventEmitterDeviceInfoEvent stringByAppendingFormat:@"//%@", deviceId] withBody:dic];
   }
-  
+
 }
 
 /// 固件升级成功
@@ -184,7 +184,7 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
   if (!([deviceId isKindOfClass:[NSString class]] && deviceId.length > 0)) {
     return;
   }
-  
+
   NSInteger listenType = [[TuyaRNDeviceListener shareInstance].listenTypeDic[deviceId] integerValue];
   if (listenType & TuyaRNDeviceListenType_DeviceInfo) {
     NSDictionary *dic = @{
@@ -201,7 +201,7 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
   if (!([deviceId isKindOfClass:[NSString class]] && deviceId.length > 0)) {
     return;
   }
-  
+
   NSInteger listenType = [[TuyaRNDeviceListener shareInstance].listenTypeDic[deviceId] integerValue];
   if (listenType & TuyaRNDeviceListenType_DeviceInfo) {
     NSDictionary *dic = @{
@@ -223,7 +223,7 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
   if (!([deviceId isKindOfClass:[NSString class]] && deviceId.length > 0)) {
     return;
   }
-  
+
   NSInteger listenType = [[TuyaRNDeviceListener shareInstance].listenTypeDic[deviceId] integerValue];
   if (listenType & TuyaRNDeviceListenType_DeviceInfo) {
     NSDictionary *dic = @{
@@ -237,12 +237,12 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
 
 // wifi信号强度回调
 - (void)device:(TuyaSmartDevice *)device signal:(NSString *)signal {
-  
+
   NSString *deviceId = device.deviceModel.devId;
   if (!([deviceId isKindOfClass:[NSString class]] && deviceId.length > 0)) {
     return;
   }
-  
+
   NSInteger listenType = [[TuyaRNDeviceListener shareInstance].listenTypeDic[deviceId] integerValue];
   if (listenType & TuyaRNDeviceListenType_DeviceInfo) {
     NSDictionary *dic = @{
@@ -253,5 +253,5 @@ static inline BOOL TuyaRNDeviceListenTypeAvailable(TuyaRNDeviceListenType type) 
     [TuyaRNEventEmitter ty_sendEvent:[kTYEventEmitterDeviceInfoEvent stringByAppendingFormat:@"//%@", deviceId] withBody:dic];
   }
 }
-  
+
 @end

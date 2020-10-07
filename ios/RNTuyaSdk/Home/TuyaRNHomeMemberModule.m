@@ -42,15 +42,23 @@ RCT_EXPORT_MODULE(TuyaHomeMemberModule)
  */
 
 RCT_EXPORT_METHOD(addMember:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   TuyaSmartHome *smartHome = [self smartHomeWithParams:params];
-  
+
+  TuyaSmartHomeAddMemberRequestModel *requestModel = [[TuyaSmartHomeAddMemberRequestModel alloc] init];
+
   NSString *name = params[kTuyaRNHomeMemberModuleName];
+  NSString *userAccount = params[kTuyaRNHomeMemberModuleUserAccount];
   NSString *countryCode = params[kTuyaRNHomeMemberModuleCountryCode];
   NSString *admin = params[kTuyaRNHomeMemberModuleAdmin];
-  NSString *userAccount = params[kTuyaRNHomeMemberModuleUserAccount];
-  
-  [smartHome addHomeMemberWithName:name headPic:nil countryCode:countryCode userAccount:userAccount isAdmin:admin.boolValue success:^(NSDictionary *dict) {
+
+  requestModel.name = name;
+  requestModel.account = userAccount;
+  requestModel.countryCode = countryCode;
+  requestModel.autoAccept = NO;
+  requestModel.role = admin.boolValue ? TYHomeRoleType_Admin : TYHomeRoleType_Member;
+
+  [smartHome addHomeMemberWithAddMemeberRequestModel:requestModel success:^(NSDictionary *dict) {
     if (resolver) {
       resolver(dict);
     }
@@ -66,7 +74,7 @@ RCT_EXPORT_METHOD(addMember:(NSDictionary *)params resolver:(RCTPromiseResolveBl
  * @param callback
  */
 RCT_EXPORT_METHOD(removeMember:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSNumber *memberId = params[kTuyaRNHomeMemberModuleMemberId];
   [self.homeMember removeHomeMemberWithMemberId:memberId.longLongValue success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
@@ -82,12 +90,16 @@ RCT_EXPORT_METHOD(removeMember:(NSDictionary *)params resolver:(RCTPromiseResolv
  * @param callback
  */
 RCT_EXPORT_METHOD(updateMember:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSNumber *memberId = params[kTuyaRNHomeMemberModuleMemberId];
-  NSString *name = params[kTuyaRNHomeMemberModuleName];
-  NSNumber *admin = params[kTuyaRNHomeMemberModuleAdmin];
-  
-  [self.homeMember updateHomeMemberRemarkNameWithMemberId:memberId.longLongValue name:name isAdmin:admin.boolValue success:^{
+  NSString *admin = params[kTuyaRNHomeMemberModuleAdmin];
+
+  TuyaSmartHomeMemberRequestModel *requestModel = [[TuyaSmartHomeMemberRequestModel alloc] init];
+  requestModel.memberId = memberId.longLongValue;
+  requestModel.name = params[kTuyaRNHomeMemberModuleName];
+  requestModel.role = admin.boolValue ? TYHomeRoleType_Admin : TYHomeRoleType_Member;
+
+  [self.homeMember updateHomeMemberInfoWithMemberRequestModel:requestModel success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
@@ -99,7 +111,7 @@ RCT_EXPORT_METHOD(updateMember:(NSDictionary *)params resolver:(RCTPromiseResolv
  *
  */
 RCT_EXPORT_METHOD(queryMemberList:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   self.smartHome = [self smartHomeWithParams:params];
   [self.smartHome getHomeMemberListWithSuccess:^(NSArray<TuyaSmartHomeMemberModel *> *memberList) {
     if (memberList.count == 0) {
@@ -121,7 +133,7 @@ RCT_EXPORT_METHOD(queryMemberList:(NSDictionary *)params resolver:(RCTPromiseRes
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 #pragma mark -

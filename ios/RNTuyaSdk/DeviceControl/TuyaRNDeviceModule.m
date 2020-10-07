@@ -8,7 +8,6 @@
 
 #import "TuyaRNDeviceModule.h"
 #import "TuyaRNDeviceListener.h"
-#import <TuyaSmartDeviceKit/TuyaSmartDevice.h>
 #import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
 #import "TuyaRNUtils.h"
 #import "YYModel.h"
@@ -33,7 +32,7 @@ RCT_EXPORT_MODULE(TuyaDeviceModule)
  设备监听开启
  */
 RCT_EXPORT_METHOD(registerDevListener:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   self.smartDevice  = [self smartDeviceWithParams:params];
   //监听设备
   [TuyaRNDeviceListener registerDevice:self.smartDevice type:TuyaRNDeviceListenType_DeviceInfo];
@@ -48,12 +47,12 @@ RCT_EXPORT_METHOD(unRegisterDevListener:(NSDictionary *)params resolver:(RCTProm
   if(deviceId.length == 0) {
     return;
   }
-  
+
   TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:deviceId];
-  
+
   // 移除监听设备
   [TuyaRNDeviceListener removeDevice:device type:TuyaRNDeviceListenType_DeviceInfo];
-  
+
   self.smartDevice  = [self smartDeviceWithParams:params];
   //取消设备监听
   [TuyaRNDeviceListener removeDevice:self.smartDevice type:TuyaRNDeviceListenType_DeviceInfo];
@@ -79,7 +78,7 @@ RCT_EXPORT_METHOD(send:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)r
  查询单个dp数据
  */
 RCT_EXPORT_METHOD(getDp:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *dpId = params[kTuyaDeviceModuleDpId];
   //读取dp点
   self.smartDevice  = [self smartDeviceWithParams:params];
@@ -95,7 +94,7 @@ RCT_EXPORT_METHOD(getDp:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)
  设备重命名
  */
 RCT_EXPORT_METHOD(renameDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   self.smartDevice  = [self smartDeviceWithParams:params];
   NSString *deviceName = params[kTuyaDeviceModuleDeviceName];
   [self.smartDevice updateName:deviceName success:^{
@@ -121,13 +120,13 @@ RCT_EXPORT_METHOD(renameDevice:(NSDictionary *)params resolver:(RCTPromiseResolv
 RCT_EXPORT_METHOD(getDataPointStat:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   self.smartDevice  = [self smartDeviceWithParams:params];
 }
-  
+
 
 /**
  删除设备
  */
 RCT_EXPORT_METHOD(removeDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   self.smartDevice  = [self smartDeviceWithParams:params];
   [self.smartDevice remove:^{
     [TuyaRNUtils resolverWithHandler:resolver];
@@ -151,7 +150,7 @@ RCT_EXPORT_METHOD(removeDevice:(NSDictionary *)params resolver:(RCTPromiseResolv
 
 
 RCT_EXPORT_METHOD(onDestroy:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
 }
 
 // 下发升级指令：
@@ -171,7 +170,7 @@ RCT_EXPORT_METHOD(getOtaInfo:(NSDictionary *)params resolver:(RCTPromiseResolveB
 
     TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:params[@"devId"]];
     [device getFirmwareUpgradeInfo:^(NSArray<TuyaSmartFirmwareUpgradeModel *> *upgradeModelList) {
-      
+
         NSMutableArray *res = [NSMutableArray array];
         for (TuyaSmartFirmwareUpgradeModel *item in upgradeModelList) {
           NSDictionary *dic = [item yy_modelToJSONObject];
@@ -180,12 +179,12 @@ RCT_EXPORT_METHOD(getOtaInfo:(NSDictionary *)params resolver:(RCTPromiseResolveB
         if (resolver) {
           resolver(res);
         }
-      
+
         NSLog(@"getFirmwareUpgradeInfo success");
     } failure:^(NSError *error) {
         [TuyaRNUtils rejecterWithError:error handler:rejecter];
     }];
-  
+
 }
 
 

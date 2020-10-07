@@ -11,8 +11,8 @@
 #import <TuyaSmartDeviceKit/TuyaSmartHomeManager.h>
 #import "TuyaRNEventEmitter.h"
 #import <TuyaSmartDeviceKit/TuyaSmartRoomModel.h>
-#import <TuyaSmartDeviceKit/TuyaSmartDeviceModel.h>
-#import <TuyaSmartDeviceKit/TuyaSmartGroupModel.h>
+#import <TuyaSmartDeviceKit/TuyaSmartShareDeviceModel.h>
+#import <TuyaSmartDeviceKit/TuyaSmartGroup+DpCode.h>
 
 @interface TuyaRNHomeListener()<TuyaSmartHomeDelegate>
 
@@ -33,7 +33,7 @@
 }
 
 - (void)registerHomeChangeWithSmartHome:(TuyaSmartHome *)smartHome {
-  
+
   if (!smartHome) {
     return;
   }
@@ -42,14 +42,14 @@
 }
 
 - (void)removeHomeChangeSmartHome {
-  
+
   [TuyaRNHomeListener shareInstance].homeChangeSmartHome = nil;
   [TuyaRNHomeListener shareInstance].homeChangeSmartHome.delegate = nil;
-  
+
 }
 
 - (void)registerHomeStatusWithSmartHome:(TuyaSmartHome *)smartHome {
-  
+
   if (!smartHome) {
     return;
   }
@@ -58,10 +58,10 @@
 }
 
 - (void)removeHomeStatusSmartHome {
-  
+
   [TuyaRNHomeListener shareInstance].homeStatusSmartHome = nil;
   [TuyaRNHomeListener shareInstance].homeStatusSmartHome.delegate = nil;
-  
+
 }
 
 
@@ -69,11 +69,11 @@
 
 // 家庭的信息更新，例如name
 - (void)homeDidUpdateInfo:(TuyaSmartHome *)home {
-  
+
   if (!self.homeChangeSmartHome) {
     return;
   }
-  
+
   if (home.homeModel.homeId <= 0) {
     return;
   }
@@ -86,11 +86,11 @@
 
 // 我收到的共享设备列表变化
 - (void)homeDidUpdateSharedInfo:(TuyaSmartHome *)home {
-  
+
   if (!self.homeChangeSmartHome) {
     return;
   }
-  
+
   if (home.homeModel.homeId <= 0) {
     return;
   }
@@ -103,11 +103,11 @@
 
 // 房间信息变更，例如name
 - (void)home:(TuyaSmartHome *)home roomInfoUpdate:(TuyaSmartRoomModel *)room {
-  
+
   if (!self.homeChangeSmartHome) {
     return;
   }
-  
+
   //房间的名字的变更
   if (home.homeModel.homeId <= 0) {
     return;
@@ -122,28 +122,28 @@
 
 // 房间与设备，群组的关系变化
 - (void)home:(TuyaSmartHome *)home roomRelationUpdate:(TuyaSmartRoomModel *)room {
-  
+
 }
 
 // 添加设备
 - (void)home:(TuyaSmartHome *)home didAddDeivice:(TuyaSmartDeviceModel *)device {
-  
+
   if (!self.homeStatusSmartHome) {
     return;
   }
-  
+
   NSDictionary *dic = @{
                         @"homeId": [NSNumber numberWithLongLong:home.homeModel.homeId],
                         @"devId": device.devId,
                         @"type": @"onDeviceAdded"
                         };
   [TuyaRNEventEmitter ty_sendEvent:[kTYEventEmitterHomeStatusEvent stringByAppendingFormat:@"//%lld",home.homeModel.homeId] withBody:dic];
-  
+
 }
 
 // 删除设备
 - (void)home:(TuyaSmartHome *)home didRemoveDeivice:(NSString *)devId {
-  
+
   if (!self.homeStatusSmartHome) {
     return;
   }
@@ -153,17 +153,17 @@
                         @"type": @"onDeviceRemoved"
                         };
   [TuyaRNEventEmitter ty_sendEvent:[kTYEventEmitterHomeStatusEvent stringByAppendingFormat:@"//%lld",home.homeModel.homeId] withBody:dic];
-  
+
 }
 
 // 设备信息更新，例如name
 - (void)home:(TuyaSmartHome *)home deviceInfoUpdate:(TuyaSmartDeviceModel *)device {
-  
+
 }
 
 // 设备dp数据更新
 - (void)home:(TuyaSmartHome *)home device:(TuyaSmartDeviceModel *)device dpsUpdate:(NSDictionary *)dps {
-  
+
 }
 
 // 添加群组

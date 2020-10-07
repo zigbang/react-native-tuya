@@ -7,8 +7,8 @@
 //
 
 #import "TuyaRNGroupListener.h"
-#import <TuyaSmartDeviceKit/TuyaSmartDevice.h>
-#import <TuyaSmartDeviceKit/TuyaSmartGroup.h>
+#import <TuyaSmartDeviceKit/TuyaSmartShareDeviceModel.h>
+#import <TuyaSmartDeviceKit/TuyaSmartGroup+DpCode.h>
 #import <YYModel/YYModel.h>
 #import "TuyaRNEventEmitter.h"
 
@@ -37,7 +37,7 @@
 }
 
 + (void)registerGroup:(TuyaSmartGroup *)group {
-  
+
   __block BOOL exist = NO;
   [[TuyaRNGroupListener shareInstance].listenGroupArr enumerateObjectsUsingBlock:^(TuyaSmartGroup * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     if ([obj.groupModel.groupId isEqualToString:group.groupModel.groupId]) {
@@ -45,9 +45,9 @@
       *stop = YES;
     }
   }];
-  
+
   group.delegate = [TuyaRNGroupListener shareInstance];
-  
+
   if (!exist) {
     if ([TuyaRNGroupListener shareInstance].listenGroupArr.count == 0) {
     }
@@ -75,18 +75,18 @@
                         @"dps": dps,
                         @"type": @"onDpUpdate"
                         };
-  
+
     [TuyaRNEventEmitter ty_sendEvent:[kTYEventEmitterGroupInfoEvent stringByAppendingFormat:@"//%@", group.groupModel.groupId] withBody:dic];
 }
 
 /// 群组信息更新
 - (void)groupInfoUpdate:(TuyaSmartGroup *)group {
-  
+
     NSDictionary *dic = @{
                         @"id": group.groupModel.groupId,
                         @"type": @"onGroupInfoUpdate"
                         };
-  
+
     [TuyaRNEventEmitter ty_sendEvent:[kTYEventEmitterGroupInfoEvent stringByAppendingFormat:@"//%@", group.groupModel.groupId] withBody:dic];
 }
 
