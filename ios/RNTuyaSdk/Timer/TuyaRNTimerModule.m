@@ -111,7 +111,7 @@ RCT_EXPORT_METHOD(updateTimerWithTask:(NSDictionary *)params resolver:(RCTPromis
     TuyaSmartTimer *timer = [[TuyaSmartTimer alloc] init];
     self.timer = timer;
 
-    [timer updateTimerWithTimerId:params[@"taskName"] loops:params[@"loops"] bizId:params[@"devId"] bizType:0 time:params[@"time"] dps:params[@"dps"] status:YES isAppPush:NO aliasName:@"" success:^{
+    [timer updateTimerWithTimerId:params[@"timerId"] loops:params[@"loops"] bizId:params[@"devId"] bizType:0 time:params[@"time"] dps:params[@"dps"] status:YES isAppPush:NO aliasName:@"" success:^{
         if (resolver) {
           resolver(@"success");
         }
