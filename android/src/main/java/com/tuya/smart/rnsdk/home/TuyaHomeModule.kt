@@ -78,13 +78,25 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
+    @ReactMethod
+    fun sortRoom(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(HOMEID, IDLIST), params)) {
+            var list = ArrayList<Long>()
+            var length = (params.getArray(IDLIST) as ReadableArray).size()
+            for (index in 0..length - 1) {
+                list.add((params.getArray(IDLIST) as ReadableArray).getDouble(index).toLong())
+            }
+            getHomeInstance(params.getDouble(HOMEID))?.sortRoom(list, getIResultCallback(promise))
+        }
+    }
+
     /* 排序房间 */
     @ReactMethod
     fun sortHome(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, IDLIST), params)) {
             var list = ArrayList<Long>()
             var length = (params.getArray(IDLIST) as ReadableArray).size()
-            for (index in 0..length) {
+            for (index in 0..length - 1) {
                 list.add((params.getArray(IDLIST) as ReadableArray).getDouble(index).toLong())
             }
             getHomeInstance(params.getDouble(HOMEID))?.sortHome(list, getIResultCallback(promise))

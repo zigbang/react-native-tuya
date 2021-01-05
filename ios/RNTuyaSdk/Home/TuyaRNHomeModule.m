@@ -153,7 +153,12 @@ RCT_EXPORT_METHOD(sortRoom:(NSDictionary *)params resolver:(RCTPromiseResolveBlo
 
   self.currentHome = [self smartHomeWithParams:params];
 
-  NSArray<TuyaSmartRoomModel *> * list = nil;
+  NSMutableArray<TuyaSmartRoomModel *> * list = [NSMutableArray array];
+  for(NSNumber * homeId in params[@"idList"] ) {
+    TuyaSmartRoomModel *room = [[TuyaSmartRoomModel alloc] init];
+    room.roomId = [homeId longLongValue];
+    [list addObject:room];
+  }
 
   [self.currentHome sortRoomList:list success:^{
     [TuyaRNUtils resolverWithHandler:resolver];

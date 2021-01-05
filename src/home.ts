@@ -31,6 +31,7 @@ export type DeviceDetailResponse = {
   name: string;
   dps: DeviceDps;
   homeDisplayOrder: number;
+  roomId: number;
 };
 export type GetHomeDetailResponse = {
   deviceList: DeviceDetailResponse[];
@@ -64,4 +65,13 @@ export type DismissHomeParams = {
 
 export function dismissHome(params: DismissHomeParams): Promise<string> {
   return tuya.dismissHome(params);
+}
+
+export type SortRoomsParams = {
+  idList: number[];
+  homeId: number;
+};
+
+export function sortRoom(params: SortRoomsParams): Promise<string> {
+  return tuya.sortRoom(params);
 }
