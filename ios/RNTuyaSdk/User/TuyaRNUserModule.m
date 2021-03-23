@@ -48,13 +48,13 @@ RCT_EXPORT_METHOD(checkVersionUpgrade:(NSDictionary *)params resolver:(RCTPromis
 
 //版本升级
 RCT_EXPORT_METHOD(upgradeVersion:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   [[TuyaSmartSDK sharedInstance] upgradeVersion:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /*获取手机验证码
@@ -63,7 +63,7 @@ RCT_EXPORT_METHOD(upgradeVersion:(NSDictionary *)params resolver:(RCTPromiseReso
 * @param validateType  验证码类型
 */
 RCT_EXPORT_METHOD(getValidateCode:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *phoneNumber = params[kTuyaRNUserModulePhoneNumber];
   NSInteger aType = 1;
@@ -87,11 +87,11 @@ RCT_EXPORT_METHOD(getValidateCode:(NSDictionary *)params resolver:(RCTPromiseRes
 * @param code        验证码
 */
 RCT_EXPORT_METHOD(loginWithValidateCode:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *phoneNumber = params[kTuyaRNUserModulePhoneNumber];
   NSString *phone = params[kTuyaRNUserModulePhone];
-  
+
   if(phone.length > 0) {
     phoneNumber = phone;
   }
@@ -101,7 +101,7 @@ RCT_EXPORT_METHOD(loginWithValidateCode:(NSDictionary *)params resolver:(RCTProm
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /*
@@ -111,7 +111,7 @@ RCT_EXPORT_METHOD(loginWithValidateCode:(NSDictionary *)params resolver:(RCTProm
 * @param passwd      登陆密码
 */
 RCT_EXPORT_METHOD(registerAccountWithPhone:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *phoneNumber = params[kTuyaRNUserModulePhoneNumber];
   NSString *phone = params[kTuyaRNUserModulePhone];
@@ -119,7 +119,7 @@ RCT_EXPORT_METHOD(registerAccountWithPhone:(NSDictionary *)params resolver:(RCTP
     phoneNumber = phone;
   }
   NSString *password = params[kTuyaRNUserModulePassword];
-  
+
   //验证码  可以为空
   NSString *validateCode = params[kTuyaRNUserModuleValidateCode];
   if (validateCode.length == 0) {
@@ -131,7 +131,7 @@ RCT_EXPORT_METHOD(registerAccountWithPhone:(NSDictionary *)params resolver:(RCTP
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /*手机密码登陆
@@ -140,7 +140,7 @@ RCT_EXPORT_METHOD(registerAccountWithPhone:(NSDictionary *)params resolver:(RCTP
 * @param passwd      登陆密码
  */
 RCT_EXPORT_METHOD(loginWithPhonePassword:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *phoneNumber = params[kTuyaRNUserModulePhoneNumber];
   NSString *phone = params[kTuyaRNUserModulePhone];
@@ -148,13 +148,13 @@ RCT_EXPORT_METHOD(loginWithPhonePassword:(NSDictionary *)params resolver:(RCTPro
     phoneNumber = phone;
   }
   NSString *password = params[kTuyaRNUserModulePassword];
-  
+
   [[TuyaSmartUser sharedInstance] loginByPhone:countryCode phoneNumber:phoneNumber password:password success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /* 重置密码
@@ -164,7 +164,7 @@ RCT_EXPORT_METHOD(loginWithPhonePassword:(NSDictionary *)params resolver:(RCTPro
 * @param newPasswd   新密码
 */
 RCT_EXPORT_METHOD(resetPhonePassword:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *phoneNumber = params[kTuyaRNUserModulePhoneNumber];
   NSString *phone = params[kTuyaRNUserModulePhone];
@@ -173,13 +173,13 @@ RCT_EXPORT_METHOD(resetPhonePassword:(NSDictionary *)params resolver:(RCTPromise
   }
   NSString *password = params[kTuyaRNUserModuleNewPassword];
   NSString *validateCode = params[kTuyaRNUserModuleValidateCode];
-  
+
   [[TuyaSmartUser sharedInstance] resetPasswordByPhone:countryCode phoneNumber:phoneNumber newPassword:password code:validateCode success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /* 邮箱注册获取验证码
@@ -190,13 +190,13 @@ RCT_EXPORT_METHOD(getRegisterEmailValidateCode:(NSDictionary *)params resolver:(
 
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *email = params[kTuyaRNUserModuleEmail];
-  
+
   [[TuyaSmartUser sharedInstance] sendVerifyCodeByRegisterEmail:countryCode email:email success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /* 邮箱密码注册
@@ -205,18 +205,18 @@ RCT_EXPORT_METHOD(getRegisterEmailValidateCode:(NSDictionary *)params resolver:(
 * @param passwd      登陆密码
 */
 RCT_EXPORT_METHOD(registerAccountWithEmail:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *email = params[kTuyaRNUserModuleEmail];
   NSString *password = params[kTuyaRNUserModulePassword];
   NSString *validateCode = params[kTuyaRNUserModuleValidateCode];
-  
+
   [[TuyaSmartUser sharedInstance] registerByEmail:countryCode email:email password:password code:validateCode success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /*
@@ -225,17 +225,17 @@ RCT_EXPORT_METHOD(registerAccountWithEmail:(NSDictionary *)params resolver:(RCTP
 * @param passwd 登陆密码
 */
 RCT_EXPORT_METHOD(loginWithEmail:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *email = params[kTuyaRNUserModuleEmail];
   NSString *password = params[kTuyaRNUserModulePassword];
-  
+
   [[TuyaSmartUser sharedInstance] loginByEmail:countryCode email:email password:password success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /*
@@ -244,16 +244,16 @@ RCT_EXPORT_METHOD(loginWithEmail:(NSDictionary *)params resolver:(RCTPromiseReso
 * @param email       邮箱账户
 */
 RCT_EXPORT_METHOD(getEmailValidateCode:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *email = params[kTuyaRNUserModuleEmail];
-  
+
   [[TuyaSmartUser sharedInstance] sendVerifyCodeByEmail:countryCode email:email success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /* 邮箱重置密码
@@ -262,12 +262,12 @@ RCT_EXPORT_METHOD(getEmailValidateCode:(NSDictionary *)params resolver:(RCTPromi
 * @param passwd    新密码
 */
 RCT_EXPORT_METHOD(resetEmailPassword:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *email = params[kTuyaRNUserModuleEmail];
   NSString *validateCode = params[kTuyaRNUserModuleValidateCode];
   NSString *password = params[kTuyaRNUserModuleNewPassword];
-  
+
   [[TuyaSmartUser sharedInstance] resetPasswordByEmail:countryCode email:email newPassword:password code:validateCode success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
@@ -276,7 +276,7 @@ RCT_EXPORT_METHOD(resetEmailPassword:(NSDictionary *)params resolver:(RCTPromise
 }
 
 RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   [[TuyaSmartUser sharedInstance] loginOut:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
@@ -285,13 +285,13 @@ RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRe
 }
 
 RCT_EXPORT_METHOD(cancelAccount:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   [[TuyaSmartUser sharedInstance] cancelAccount:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /* 用户uid注册
@@ -300,17 +300,17 @@ RCT_EXPORT_METHOD(cancelAccount:(RCTPromiseResolveBlock)resolver rejecter:(RCTPr
 * @param password    用户密码
 */
 RCT_EXPORT_METHOD(registerAccountWithUid:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *uid = params[kTuyaRNUserModuleUid];
   NSString *password = params[kTuyaRNUserModulePassword];
-  
+
   [[TuyaSmartUser sharedInstance] registerByUid:uid password:password countryCode:countryCode success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 
@@ -321,17 +321,17 @@ RCT_EXPORT_METHOD(registerAccountWithUid:(NSDictionary *)params resolver:(RCTPro
  */
 
 RCT_EXPORT_METHOD(loginWithUid:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *uid = params[kTuyaRNUserModuleUid];
   NSString *password = params[kTuyaRNUserModulePassword];
-  
+
   [[TuyaSmartUser sharedInstance] loginByUid:uid password:password countryCode:countryCode success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 
@@ -341,11 +341,11 @@ RCT_EXPORT_METHOD(loginWithUid:(NSDictionary *)params resolver:(RCTPromiseResolv
 * @param passwd      用户密码
 */
 RCT_EXPORT_METHOD(loginOrRegisterWithUid:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *uid = params[kTuyaRNUserModuleUid];
   NSString *password = params[kTuyaRNUserModulePassword];
-  
+
   [[TuyaSmartUser sharedInstance] loginOrRegisterWithCountryCode:countryCode uid:uid password:password success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
@@ -359,11 +359,11 @@ RCT_EXPORT_METHOD(loginOrRegisterWithUid:(NSDictionary *)params resolver:(RCTPro
 * @param secret      twitter授权登录获取的secret
  */
 RCT_EXPORT_METHOD(loginByTwitter:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *key = params[kTuyaRNUserModuleTwitterKey];
   NSString *secret = params[kTuyaRNUserModuleTwitterSecret];
-  
+
   [[TuyaSmartUser sharedInstance] loginByTwitter:countryCode key:key secret:secret success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
@@ -377,11 +377,11 @@ RCT_EXPORT_METHOD(loginByTwitter:(NSDictionary *)params resolver:(RCTPromiseReso
 * @param accessToken      QQ授权登录获取的accessToken
 */
 RCT_EXPORT_METHOD(loginByQQ:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *userId = params[kTuyaRNUserModuleQQUserId];
   NSString *accountToken = params[kTuyaRNUserModuleQQAccessToken];
-  
+
   [[TuyaSmartUser sharedInstance] loginByQQ:countryCode userId:userId accessToken:accountToken success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
@@ -394,16 +394,16 @@ RCT_EXPORT_METHOD(loginByQQ:(NSDictionary *)params resolver:(RCTPromiseResolveBl
 * @param code        微信授权登录获取的code
 */
 RCT_EXPORT_METHOD(loginByWechat:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *code = params[kTuyaRNUserModuleWechatkCode];
-  
+
   [[TuyaSmartUser sharedInstance] loginByWechat:countryCode code:code success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
-  
+
 }
 
 /* Facebook登录
@@ -411,10 +411,10 @@ RCT_EXPORT_METHOD(loginByWechat:(NSDictionary *)params resolver:(RCTPromiseResol
 * @param code     token facebook授权登录获取的token
  */
 RCT_EXPORT_METHOD(loginByFacebook:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
   NSString *code = params[kTuyaRNUserModuleFacebookCode];
-  
+
   [[TuyaSmartUser sharedInstance] loginByFacebook:countryCode token:code success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
@@ -429,6 +429,7 @@ RCT_EXPORT_METHOD(getCurrentUser:(RCTPromiseResolveBlock)resolver rejecter:(RCTP
     NSDictionary *dic = [user yy_modelToJSONObject];
     NSMutableDictionary *userDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     [userDic setObject:[self getValidStr:user.userName] forKey:@"username"];
+    [userDic setObject:[self getValidStr:user.uid] forKey:@"uid"];
     [userDic setObject:[self getValidStr:user.headIconUrl] forKey:@"headPic"];
     [userDic setObject:[self getValidStr:user.countryCode] forKey:@"phoneCode"];
     [userDic setObject:[self getValidStr:user.phoneNumber] forKey:@"mobile"];
@@ -441,14 +442,14 @@ RCT_EXPORT_METHOD(getCurrentUser:(RCTPromiseResolveBlock)resolver rejecter:(RCTP
 
 
 RCT_EXPORT_METHOD(uploadUserAvatar:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   UIImage *image = params[kTuyaRNUserModuleImageFile];
-  
+
   if (image == nil || [image isKindOfClass:[UIImage class]]) {
     [TuyaRNUtils rejecterWithError:[NSError tysdk_errorWithCodeString:@"999" errorMsg:@"error image info"] handler:rejecter];
     return;
   }
-  
+
   [[TuyaSmartUser sharedInstance] updateHeadIcon:image success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
@@ -457,7 +458,7 @@ RCT_EXPORT_METHOD(uploadUserAvatar:(NSDictionary *)params resolver:(RCTPromiseRe
 }
 
 RCT_EXPORT_METHOD(setTempUnit:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
+
   NSString *unit = params[kTuyaRNUserModuleUnit];
   if (unit) {
     [[TuyaSmartUser sharedInstance] setTempUnit:unit.integerValue];
@@ -470,7 +471,7 @@ RCT_EXPORT_METHOD(setTempUnit:(NSDictionary *)params resolver:(RCTPromiseResolve
 }
 
 RCT_EXPORT_METHOD(onDestory:(NSDictionary *)params) {
-  
+
 }
 
 
