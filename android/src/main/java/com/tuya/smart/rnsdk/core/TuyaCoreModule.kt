@@ -83,21 +83,17 @@ class TuyaCoreModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
     fun apiRequest(params: ReadableMap, promise: Promise) {
         val callback = object : ITuyaDataCallback<Any> {
             override fun onSuccess(data: Any?) {
-                Log.e("apiRequest",data.toString())
                 if (data is Boolean) {
                     Log.e("apiRequest", data.toString())
                     promise.resolve("success")
                     return
                 }
-//                val writableArray = TuyaReactUtils.parseToWritableArray(data as com.alibaba.fastjson.JSONArray)
-//                promise.resolve(JSON.toJSONString(data))
+
                 if(data is JSONArray){
-                    Log.e("Array apiRequest",data.toString())
                     val writableArray = TYRCTCommonUtil.parseToWritableArray(data as com.alibaba.fastjson.JSONArray)
                     promise.resolve(writableArray)
                     return
                 }
-                Log.e("apiRequest", data.toString());
                 val writableMap = TYRCTCommonUtil.parseToWritableMap(data)
                 promise.resolve(writableMap)
 
@@ -111,8 +107,8 @@ class TuyaCoreModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
 
 //        val withoutSession = params.getBoolean("withoutSession")
         val withoutSession = false
-        val apiName = params.getString("a")
-        val apiVersion = params.getString("v")
+        val apiName = params.getString("apiName")
+        val apiVersion = params.getString("version")
         val postData = TYRCTCommonUtil.parseToMap(params.getMap("postData"))
         if (TextUtils.isEmpty(apiName)) {
             promise.reject(API_REQUEST_ERROR, "ApiName is empty")
