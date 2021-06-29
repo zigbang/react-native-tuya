@@ -46,6 +46,10 @@ class TuyaOTAModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
                     BridgeUtils.hardwareUpgradeListener(reactApplicationContext,map,params.getString(DEVID) as String)
                 }
 
+                override fun onStatusChanged(otaStatus: Int, otaType: Int) {
+                  //
+                }
+
                 override fun onTimeout(otaType: Int) {
                   //
                 }
