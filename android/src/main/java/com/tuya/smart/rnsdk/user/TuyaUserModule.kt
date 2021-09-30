@@ -147,6 +147,17 @@ class TuyaUserModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
+    @ReactMethod
+    fun touristRegisterAndLogin(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(COUNTRYCODE, EMAIL), params)) {
+            TuyaHomeSdk.getUserInstance().touristRegisterAndLogin(
+                    params.getString(COUNTRYCODE),
+                    params.getString(EMAIL),
+                    getRegisterCallback(promise)
+            )
+        }
+    }
+
     /* 邮箱获取验证码 找密码 */
     @ReactMethod
     fun getEmailValidateCode(params: ReadableMap, promise: Promise) {
