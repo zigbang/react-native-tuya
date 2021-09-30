@@ -1,0 +1,52 @@
+{
+  "version": "0.3.7",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "typings": "dist/index.d.ts",
+  "keywords": [
+    "react-native",
+    "tuyasmart",
+    "iot",
+    "tuya"
+  ],
+  "files": [
+    "android",
+    "ios",
+    "dist",
+    "RNTuyaSdk.podspec"
+  ],
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.61.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "@zigbang/react-native-tuya",
+  "description": "React Native bindings for the Tuya SDK",
+  "homepage": "https://github.com/zigbang/zigbang-iot-app/packages/react-native-tuya#readme",
+  "author": "zigbang",
+  "module": "dist/react-native-tuya.esm.js",
+  "devDependencies": {
+    "@types/jest": "^25.1.2",
+    "@types/react-native": "^0.61.16",
+    "@volst/eslint-config": "^4.1.1",
+    "husky": "^4.2.3",
+    "react-native": "^0.61.5",
+    "tsdx": "^0.12.3",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.5"
+  }
+}

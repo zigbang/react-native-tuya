@@ -1,0 +1,532 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		93D1D55123FE9628007D33C0 /* TuyaRNActivatorModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D51223FE9628007D33C0 /* TuyaRNActivatorModule.m */; };
+		93D1D55223FE9628007D33C0 /* TuyaRNHomeMemberModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D51623FE9628007D33C0 /* TuyaRNHomeMemberModule.m */; };
+		93D1D55323FE9628007D33C0 /* TuyaRNHomeManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D51823FE9628007D33C0 /* TuyaRNHomeManagerModule.m */; };
+		93D1D55423FE9628007D33C0 /* TuyaRNHomeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D51A23FE9628007D33C0 /* TuyaRNHomeModule.m */; };
+		93D1D55523FE9628007D33C0 /* TuyaRNHomeDataManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D51B23FE9628007D33C0 /* TuyaRNHomeDataManagerModule.m */; };
+		93D1D55623FE9628007D33C0 /* TuyaRNShareModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D51E23FE9628007D33C0 /* TuyaRNShareModule.m */; };
+		93D1D55723FE9628007D33C0 /* TuyaRNDeviceModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D52123FE9628007D33C0 /* TuyaRNDeviceModule.m */; };
+		93D1D55823FE9628007D33C0 /* TuyaRNRoomModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D52423FE9628007D33C0 /* TuyaRNRoomModule.m */; };
+		93D1D55923FE9628007D33C0 /* TuyaRNCoreModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D52623FE9628007D33C0 /* TuyaRNCoreModule.m */; };
+		93D1D55A23FE9628007D33C0 /* TuyaRNGroupModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D52923FE9628007D33C0 /* TuyaRNGroupModule.m */; };
+		93D1D55B23FE9628007D33C0 /* TuyaRNTimerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D52C23FE9628007D33C0 /* TuyaRNTimerModule.m */; };
+		93D1D55C23FE9628007D33C0 /* TuyaRNMessageModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D52F23FE9628007D33C0 /* TuyaRNMessageModule.m */; };
+		93D1D55D23FE9628007D33C0 /* TuyaRNHomeListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D53523FE9628007D33C0 /* TuyaRNHomeListener.m */; };
+		93D1D55E23FE9628007D33C0 /* TuyaRNDeviceListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D53823FE9628007D33C0 /* TuyaRNDeviceListener.m */; };
+		93D1D55F23FE9628007D33C0 /* TuyaRNEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D53A23FE9628007D33C0 /* TuyaRNEventEmitter.m */; };
+		93D1D56023FE9628007D33C0 /* TuyaRNHomeManagerListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D53B23FE9628007D33C0 /* TuyaRNHomeManagerListener.m */; };
+		93D1D56123FE9628007D33C0 /* TuyaRNGroupListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D53C23FE9628007D33C0 /* TuyaRNGroupListener.m */; };
+		93D1D56223FE9628007D33C0 /* TuyaRNUtils+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D53D23FE9628007D33C0 /* TuyaRNUtils+Cache.m */; };
+		93D1D56323FE9628007D33C0 /* TuyaRNUtils+Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D53E23FE9628007D33C0 /* TuyaRNUtils+Network.m */; };
+		93D1D56423FE9628007D33C0 /* TuyaRNUtils+DeviceParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D53F23FE9628007D33C0 /* TuyaRNUtils+DeviceParser.m */; };
+		93D1D56523FE9628007D33C0 /* TuyaRNUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D54423FE9628007D33C0 /* TuyaRNUtils.m */; };
+		93D1D56623FE9628007D33C0 /* TuyaRNUserModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D54623FE9628007D33C0 /* TuyaRNUserModule.m */; };
+		93D1D56723FE9628007D33C0 /* TuyaRNFeedBackModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D54923FE9628007D33C0 /* TuyaRNFeedBackModule.m */; };
+		93D1D56823FE9628007D33C0 /* TuyaRNSceneModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D54C23FE9628007D33C0 /* TuyaRNSceneModule.m */; };
+		93D1D56923FE9628007D33C0 /* TuyaRNGatewayModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1D55023FE9628007D33C0 /* TuyaRNGatewayModule.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		58B511D91A9E6C8500147676 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		134814201AA4EA6300B7C361 /* libRNTuyaSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTuyaSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		93D1D51123FE9628007D33C0 /* TuyaRNActivatorModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNActivatorModule.h; sourceTree = "<group>"; };
+		93D1D51223FE9628007D33C0 /* TuyaRNActivatorModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNActivatorModule.m; sourceTree = "<group>"; };
+		93D1D51423FE9628007D33C0 /* TuyaRNHomeManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNHomeManagerModule.h; sourceTree = "<group>"; };
+		93D1D51523FE9628007D33C0 /* TuyaRNHomeModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNHomeModule.h; sourceTree = "<group>"; };
+		93D1D51623FE9628007D33C0 /* TuyaRNHomeMemberModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNHomeMemberModule.m; sourceTree = "<group>"; };
+		93D1D51723FE9628007D33C0 /* TuyaRNHomeDataManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNHomeDataManagerModule.h; sourceTree = "<group>"; };
+		93D1D51823FE9628007D33C0 /* TuyaRNHomeManagerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNHomeManagerModule.m; sourceTree = "<group>"; };
+		93D1D51923FE9628007D33C0 /* TuyaRNHomeMemberModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNHomeMemberModule.h; sourceTree = "<group>"; };
+		93D1D51A23FE9628007D33C0 /* TuyaRNHomeModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNHomeModule.m; sourceTree = "<group>"; };
+		93D1D51B23FE9628007D33C0 /* TuyaRNHomeDataManagerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNHomeDataManagerModule.m; sourceTree = "<group>"; };
+		93D1D51D23FE9628007D33C0 /* TuyaRNShareModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNShareModule.h; sourceTree = "<group>"; };
+		93D1D51E23FE9628007D33C0 /* TuyaRNShareModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNShareModule.m; sourceTree = "<group>"; };
+		93D1D52023FE9628007D33C0 /* TuyaRNDeviceModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNDeviceModule.h; sourceTree = "<group>"; };
+		93D1D52123FE9628007D33C0 /* TuyaRNDeviceModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNDeviceModule.m; sourceTree = "<group>"; };
+		93D1D52323FE9628007D33C0 /* TuyaRNRoomModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNRoomModule.h; sourceTree = "<group>"; };
+		93D1D52423FE9628007D33C0 /* TuyaRNRoomModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNRoomModule.m; sourceTree = "<group>"; };
+		93D1D52623FE9628007D33C0 /* TuyaRNCoreModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNCoreModule.m; sourceTree = "<group>"; };
+		93D1D52723FE9628007D33C0 /* TuyaRNCoreModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNCoreModule.h; sourceTree = "<group>"; };
+		93D1D52923FE9628007D33C0 /* TuyaRNGroupModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNGroupModule.m; sourceTree = "<group>"; };
+		93D1D52A23FE9628007D33C0 /* TuyaRNGroupModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNGroupModule.h; sourceTree = "<group>"; };
+		93D1D52C23FE9628007D33C0 /* TuyaRNTimerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNTimerModule.m; sourceTree = "<group>"; };
+		93D1D52D23FE9628007D33C0 /* TuyaRNTimerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNTimerModule.h; sourceTree = "<group>"; };
+		93D1D52F23FE9628007D33C0 /* TuyaRNMessageModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNMessageModule.m; sourceTree = "<group>"; };
+		93D1D53023FE9628007D33C0 /* TuyaRNMessageModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNMessageModule.h; sourceTree = "<group>"; };
+		93D1D53323FE9628007D33C0 /* TuyaRNEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNEventEmitter.h; sourceTree = "<group>"; };
+		93D1D53423FE9628007D33C0 /* TuyaRNDeviceListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNDeviceListener.h; sourceTree = "<group>"; };
+		93D1D53523FE9628007D33C0 /* TuyaRNHomeListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNHomeListener.m; sourceTree = "<group>"; };
+		93D1D53623FE9628007D33C0 /* TuyaRNGroupListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNGroupListener.h; sourceTree = "<group>"; };
+		93D1D53723FE9628007D33C0 /* TuyaRNHomeManagerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNHomeManagerListener.h; sourceTree = "<group>"; };
+		93D1D53823FE9628007D33C0 /* TuyaRNDeviceListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNDeviceListener.m; sourceTree = "<group>"; };
+		93D1D53923FE9628007D33C0 /* TuyaRNHomeListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNHomeListener.h; sourceTree = "<group>"; };
+		93D1D53A23FE9628007D33C0 /* TuyaRNEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNEventEmitter.m; sourceTree = "<group>"; };
+		93D1D53B23FE9628007D33C0 /* TuyaRNHomeManagerListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNHomeManagerListener.m; sourceTree = "<group>"; };
+		93D1D53C23FE9628007D33C0 /* TuyaRNGroupListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNGroupListener.m; sourceTree = "<group>"; };
+		93D1D53D23FE9628007D33C0 /* TuyaRNUtils+Cache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TuyaRNUtils+Cache.m"; sourceTree = "<group>"; };
+		93D1D53E23FE9628007D33C0 /* TuyaRNUtils+Network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TuyaRNUtils+Network.m"; sourceTree = "<group>"; };
+		93D1D53F23FE9628007D33C0 /* TuyaRNUtils+DeviceParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TuyaRNUtils+DeviceParser.m"; sourceTree = "<group>"; };
+		93D1D54023FE9628007D33C0 /* TuyaRNUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNUtils.h; sourceTree = "<group>"; };
+		93D1D54123FE9628007D33C0 /* TuyaRNUtils+Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TuyaRNUtils+Network.h"; sourceTree = "<group>"; };
+		93D1D54223FE9628007D33C0 /* TuyaRNUtils+Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TuyaRNUtils+Cache.h"; sourceTree = "<group>"; };
+		93D1D54323FE9628007D33C0 /* TuyaRNUtils+DeviceParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TuyaRNUtils+DeviceParser.h"; sourceTree = "<group>"; };
+		93D1D54423FE9628007D33C0 /* TuyaRNUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNUtils.m; sourceTree = "<group>"; };
+		93D1D54623FE9628007D33C0 /* TuyaRNUserModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNUserModule.m; sourceTree = "<group>"; };
+		93D1D54723FE9628007D33C0 /* TuyaRNUserModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNUserModule.h; sourceTree = "<group>"; };
+		93D1D54923FE9628007D33C0 /* TuyaRNFeedBackModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNFeedBackModule.m; sourceTree = "<group>"; };
+		93D1D54A23FE9628007D33C0 /* TuyaRNFeedBackModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNFeedBackModule.h; sourceTree = "<group>"; };
+		93D1D54C23FE9628007D33C0 /* TuyaRNSceneModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNSceneModule.m; sourceTree = "<group>"; };
+		93D1D54D23FE9628007D33C0 /* TuyaRNSceneModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNSceneModule.h; sourceTree = "<group>"; };
+		93D1D54F23FE9628007D33C0 /* TuyaRNGatewayModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuyaRNGatewayModule.h; sourceTree = "<group>"; };
+		93D1D55023FE9628007D33C0 /* TuyaRNGatewayModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuyaRNGatewayModule.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		58B511D81A9E6C8500147676 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		134814211AA4EA7D00B7C361 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				134814201AA4EA6300B7C361 /* libRNTuyaSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		58B511D21A9E6C8500147676 = {
+			isa = PBXGroup;
+			children = (
+				93D1D50F23FE9628007D33C0 /* RNTuyaSdk */,
+				134814211AA4EA7D00B7C361 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		93D1D50F23FE9628007D33C0 /* RNTuyaSdk */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D51023FE9628007D33C0 /* Activator */,
+				93D1D51323FE9628007D33C0 /* Home */,
+				93D1D51C23FE9628007D33C0 /* ShareDevice */,
+				93D1D51F23FE9628007D33C0 /* DeviceControl */,
+				93D1D52223FE9628007D33C0 /* Room */,
+				93D1D52523FE9628007D33C0 /* Core */,
+				93D1D52823FE9628007D33C0 /* Group */,
+				93D1D52B23FE9628007D33C0 /* Timer */,
+				93D1D52E23FE9628007D33C0 /* MessageCenter */,
+				93D1D53123FE9628007D33C0 /* Utils */,
+				93D1D54523FE9628007D33C0 /* User */,
+				93D1D54823FE9628007D33C0 /* Feedback */,
+				93D1D54B23FE9628007D33C0 /* Scene */,
+				93D1D54E23FE9628007D33C0 /* GateWay */,
+			);
+			path = RNTuyaSdk;
+			sourceTree = "<group>";
+		};
+		93D1D51023FE9628007D33C0 /* Activator */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D51123FE9628007D33C0 /* TuyaRNActivatorModule.h */,
+				93D1D51223FE9628007D33C0 /* TuyaRNActivatorModule.m */,
+			);
+			path = Activator;
+			sourceTree = "<group>";
+		};
+		93D1D51323FE9628007D33C0 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D51423FE9628007D33C0 /* TuyaRNHomeManagerModule.h */,
+				93D1D51523FE9628007D33C0 /* TuyaRNHomeModule.h */,
+				93D1D51623FE9628007D33C0 /* TuyaRNHomeMemberModule.m */,
+				93D1D51723FE9628007D33C0 /* TuyaRNHomeDataManagerModule.h */,
+				93D1D51823FE9628007D33C0 /* TuyaRNHomeManagerModule.m */,
+				93D1D51923FE9628007D33C0 /* TuyaRNHomeMemberModule.h */,
+				93D1D51A23FE9628007D33C0 /* TuyaRNHomeModule.m */,
+				93D1D51B23FE9628007D33C0 /* TuyaRNHomeDataManagerModule.m */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		93D1D51C23FE9628007D33C0 /* ShareDevice */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D51D23FE9628007D33C0 /* TuyaRNShareModule.h */,
+				93D1D51E23FE9628007D33C0 /* TuyaRNShareModule.m */,
+			);
+			path = ShareDevice;
+			sourceTree = "<group>";
+		};
+		93D1D51F23FE9628007D33C0 /* DeviceControl */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D52023FE9628007D33C0 /* TuyaRNDeviceModule.h */,
+				93D1D52123FE9628007D33C0 /* TuyaRNDeviceModule.m */,
+			);
+			path = DeviceControl;
+			sourceTree = "<group>";
+		};
+		93D1D52223FE9628007D33C0 /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D52323FE9628007D33C0 /* TuyaRNRoomModule.h */,
+				93D1D52423FE9628007D33C0 /* TuyaRNRoomModule.m */,
+			);
+			path = Room;
+			sourceTree = "<group>";
+		};
+		93D1D52523FE9628007D33C0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D52623FE9628007D33C0 /* TuyaRNCoreModule.m */,
+				93D1D52723FE9628007D33C0 /* TuyaRNCoreModule.h */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		93D1D52823FE9628007D33C0 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D52923FE9628007D33C0 /* TuyaRNGroupModule.m */,
+				93D1D52A23FE9628007D33C0 /* TuyaRNGroupModule.h */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		93D1D52B23FE9628007D33C0 /* Timer */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D52C23FE9628007D33C0 /* TuyaRNTimerModule.m */,
+				93D1D52D23FE9628007D33C0 /* TuyaRNTimerModule.h */,
+			);
+			path = Timer;
+			sourceTree = "<group>";
+		};
+		93D1D52E23FE9628007D33C0 /* MessageCenter */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D52F23FE9628007D33C0 /* TuyaRNMessageModule.m */,
+				93D1D53023FE9628007D33C0 /* TuyaRNMessageModule.h */,
+			);
+			path = MessageCenter;
+			sourceTree = "<group>";
+		};
+		93D1D53123FE9628007D33C0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D53223FE9628007D33C0 /* Listener */,
+				93D1D53D23FE9628007D33C0 /* TuyaRNUtils+Cache.m */,
+				93D1D53E23FE9628007D33C0 /* TuyaRNUtils+Network.m */,
+				93D1D53F23FE9628007D33C0 /* TuyaRNUtils+DeviceParser.m */,
+				93D1D54023FE9628007D33C0 /* TuyaRNUtils.h */,
+				93D1D54123FE9628007D33C0 /* TuyaRNUtils+Network.h */,
+				93D1D54223FE9628007D33C0 /* TuyaRNUtils+Cache.h */,
+				93D1D54323FE9628007D33C0 /* TuyaRNUtils+DeviceParser.h */,
+				93D1D54423FE9628007D33C0 /* TuyaRNUtils.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		93D1D53223FE9628007D33C0 /* Listener */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D53323FE9628007D33C0 /* TuyaRNEventEmitter.h */,
+				93D1D53423FE9628007D33C0 /* TuyaRNDeviceListener.h */,
+				93D1D53523FE9628007D33C0 /* TuyaRNHomeListener.m */,
+				93D1D53623FE9628007D33C0 /* TuyaRNGroupListener.h */,
+				93D1D53723FE9628007D33C0 /* TuyaRNHomeManagerListener.h */,
+				93D1D53823FE9628007D33C0 /* TuyaRNDeviceListener.m */,
+				93D1D53923FE9628007D33C0 /* TuyaRNHomeListener.h */,
+				93D1D53A23FE9628007D33C0 /* TuyaRNEventEmitter.m */,
+				93D1D53B23FE9628007D33C0 /* TuyaRNHomeManagerListener.m */,
+				93D1D53C23FE9628007D33C0 /* TuyaRNGroupListener.m */,
+			);
+			path = Listener;
+			sourceTree = "<group>";
+		};
+		93D1D54523FE9628007D33C0 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D54623FE9628007D33C0 /* TuyaRNUserModule.m */,
+				93D1D54723FE9628007D33C0 /* TuyaRNUserModule.h */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		93D1D54823FE9628007D33C0 /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D54923FE9628007D33C0 /* TuyaRNFeedBackModule.m */,
+				93D1D54A23FE9628007D33C0 /* TuyaRNFeedBackModule.h */,
+			);
+			path = Feedback;
+			sourceTree = "<group>";
+		};
+		93D1D54B23FE9628007D33C0 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D54C23FE9628007D33C0 /* TuyaRNSceneModule.m */,
+				93D1D54D23FE9628007D33C0 /* TuyaRNSceneModule.h */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		93D1D54E23FE9628007D33C0 /* GateWay */ = {
+			isa = PBXGroup;
+			children = (
+				93D1D54F23FE9628007D33C0 /* TuyaRNGatewayModule.h */,
+				93D1D55023FE9628007D33C0 /* TuyaRNGatewayModule.m */,
+			);
+			path = GateWay;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		58B511DA1A9E6C8500147676 /* RNTuyaSdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RNTuyaSdk" */;
+			buildPhases = (
+				58B511D71A9E6C8500147676 /* Sources */,
+				58B511D81A9E6C8500147676 /* Frameworks */,
+				58B511D91A9E6C8500147676 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RNTuyaSdk;
+			productName = RCTDataManager;
+			productReference = 134814201AA4EA6300B7C361 /* libRNTuyaSdk.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		58B511D31A9E6C8500147676 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = Facebook;
+				TargetAttributes = {
+					58B511DA1A9E6C8500147676 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "RNTuyaSdk" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+			);
+			mainGroup = 58B511D21A9E6C8500147676;
+			productRefGroup = 58B511D21A9E6C8500147676;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				58B511DA1A9E6C8500147676 /* RNTuyaSdk */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		58B511D71A9E6C8500147676 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93D1D55E23FE9628007D33C0 /* TuyaRNDeviceListener.m in Sources */,
+				93D1D55723FE9628007D33C0 /* TuyaRNDeviceModule.m in Sources */,
+				93D1D55A23FE9628007D33C0 /* TuyaRNGroupModule.m in Sources */,
+				93D1D55223FE9628007D33C0 /* TuyaRNHomeMemberModule.m in Sources */,
+				93D1D56523FE9628007D33C0 /* TuyaRNUtils.m in Sources */,
+				93D1D56023FE9628007D33C0 /* TuyaRNHomeManagerListener.m in Sources */,
+				93D1D56223FE9628007D33C0 /* TuyaRNUtils+Cache.m in Sources */,
+				93D1D55823FE9628007D33C0 /* TuyaRNRoomModule.m in Sources */,
+				93D1D55B23FE9628007D33C0 /* TuyaRNTimerModule.m in Sources */,
+				93D1D55D23FE9628007D33C0 /* TuyaRNHomeListener.m in Sources */,
+				93D1D56123FE9628007D33C0 /* TuyaRNGroupListener.m in Sources */,
+				93D1D55923FE9628007D33C0 /* TuyaRNCoreModule.m in Sources */,
+				93D1D56423FE9628007D33C0 /* TuyaRNUtils+DeviceParser.m in Sources */,
+				93D1D56623FE9628007D33C0 /* TuyaRNUserModule.m in Sources */,
+				93D1D55323FE9628007D33C0 /* TuyaRNHomeManagerModule.m in Sources */,
+				93D1D55123FE9628007D33C0 /* TuyaRNActivatorModule.m in Sources */,
+				93D1D56323FE9628007D33C0 /* TuyaRNUtils+Network.m in Sources */,
+				93D1D55C23FE9628007D33C0 /* TuyaRNMessageModule.m in Sources */,
+				93D1D55523FE9628007D33C0 /* TuyaRNHomeDataManagerModule.m in Sources */,
+				93D1D55423FE9628007D33C0 /* TuyaRNHomeModule.m in Sources */,
+				93D1D55623FE9628007D33C0 /* TuyaRNShareModule.m in Sources */,
+				93D1D56923FE9628007D33C0 /* TuyaRNGatewayModule.m in Sources */,
+				93D1D55F23FE9628007D33C0 /* TuyaRNEventEmitter.m in Sources */,
+				93D1D56823FE9628007D33C0 /* TuyaRNSceneModule.m in Sources */,
+				93D1D56723FE9628007D33C0 /* TuyaRNFeedBackModule.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		58B511ED1A9E6C8500147676 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		58B511EE1A9E6C8500147676 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		58B511F01A9E6C8500147676 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../../React/**",
+					"$(SRCROOT)/../../react-native/React/**",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = RNTuyaSdk;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		58B511F11A9E6C8500147676 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../../React/**",
+					"$(SRCROOT)/../../react-native/React/**",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = RNTuyaSdk;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "RNTuyaSdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58B511ED1A9E6C8500147676 /* Debug */,
+				58B511EE1A9E6C8500147676 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RNTuyaSdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58B511F01A9E6C8500147676 /* Debug */,
+				58B511F11A9E6C8500147676 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 58B511D31A9E6C8500147676 /* Project object */;
+}
