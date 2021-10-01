@@ -21,6 +21,7 @@
 #define kTuyaRNUserModuleNewPassword @"newPassword"
 #define kTuyaRNUserModuleEmail @"email"
 #define kTuyaRNUserModuleUid @"uid"
+#define kTuyaRNUserModuleNickName @"nickName"
 
 
 #define kTuyaRNUserModuleTwitterKey @"key"
@@ -231,6 +232,23 @@ RCT_EXPORT_METHOD(loginWithEmail:(NSDictionary *)params resolver:(RCTPromiseReso
   NSString *password = params[kTuyaRNUserModulePassword];
 
   [[TuyaSmartUser sharedInstance] loginByEmail:countryCode email:email password:password success:^{
+    [TuyaRNUtils resolverWithHandler:resolver];
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
+
+}
+
+/*
+* touristRegisterAndLogin
+* @param nickname
+*/
+RCT_EXPORT_METHOD(touristRegisterAndLogin:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+
+  NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
+  NSString *usename = params[kTuyaRNUserModuleNickName];
+
+  [[TuyaSmartUser sharedInstance] tempRegisterAndLogin:countryCode userName:usename success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
