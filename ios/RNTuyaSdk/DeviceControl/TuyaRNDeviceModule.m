@@ -104,6 +104,16 @@ RCT_EXPORT_METHOD(renameDevice:(NSDictionary *)params resolver:(RCTPromiseResolv
   }];
 }
 
+RCT_EXPORT_METHOD(resetDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+
+  self.smartDevice  = [self smartDeviceWithParams:params];
+  [self.smartDevice resetFactory:^{
+    [TuyaRNUtils resolverWithHandler:resolver];
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
+}
+
 // 更新单个设备信息:
 //RCT_EXPORT_METHOD(getDp:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 //    TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:params[@"devId"]];
