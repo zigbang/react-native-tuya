@@ -18,6 +18,12 @@ export function loginWithEmail(params: LoginWithEmailParams): Promise<any> {
   return tuya.loginWithEmail(params);
 }
 
+export function touristRegisterAndLogin(
+  params: TouristRegisterAndLoginParams
+): Promise<any> {
+  return tuya.touristRegisterAndLogin(params);
+}
+
 export function getEmailValidateCode(
   params: GetEmailValidateCodeParams
 ): Promise<any> {
@@ -73,6 +79,11 @@ export type LoginWithEmailParams = {
   email: string;
   password: string;
   countryCode: string;
+};
+
+export type TouristRegisterAndLoginParams = {
+  countryCode: string;
+  userName: string;
 };
 
 export type ResetEmailPasswordParams = {

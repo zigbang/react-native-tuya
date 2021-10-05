@@ -246,9 +246,9 @@ RCT_EXPORT_METHOD(loginWithEmail:(NSDictionary *)params resolver:(RCTPromiseReso
 RCT_EXPORT_METHOD(touristRegisterAndLogin:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
-  NSString *usename = params[kTuyaRNUserModuleNickName];
+  NSString *userName = params[kTuyaRNUserModuleNickName];
 
-  [[TuyaSmartUser sharedInstance] tempRegisterAndLogin:countryCode userName:usename success:^{
+  [[TuyaSmartUser sharedInstance] registerAnonymousWithCountryCode:countryCode userName:userName success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
