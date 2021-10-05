@@ -3,8 +3,10 @@ package com.tuya.smart.rnsdk.home
 import com.facebook.react.bridge.*
 import com.tuya.smart.home.sdk.TuyaHomeSdk
 import com.tuya.smart.home.sdk.bean.MemberBean
+import com.tuya.sdk.home.bean.InviteMessageBean
 import com.tuya.smart.home.sdk.callback.ITuyaGetMemberListCallback
 import com.tuya.smart.home.sdk.callback.ITuyaMemberResultCallback
+import com.tuya.smart.sdk.api.ITuyaDataCallback
 import com.tuya.smart.rnsdk.utils.Constant
 import com.tuya.smart.rnsdk.utils.JsonUtils
 import com.tuya.smart.rnsdk.utils.ReactParamsCheck
@@ -36,6 +38,35 @@ class TuyaHomeMemberModule(reactContext: ReactApplicationContext) : ReactContext
             )
         }
     }
+
+    @ReactMethod
+    fun inviteHomeMember(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(Constant.HOMEID), params)) {
+            TuyaHomeSdk.getMemberInstance().getInvitationMessage(
+                params.getDouble(Constant.HOMEID).toLong(),
+                object : ITuyaDataCallback<InviteMessageBean>{
+                        override fun onSuccess(var1: InviteMessageBean){
+                            promise.resolve(TuyaReactUtils.parseToWritableMap(var1))
+                        }
+
+                        override fun onError(var1: String, var2: String){
+                            promise.reject(var1,var2)
+                        }
+                }
+            )
+        }
+    }
+
+    @ReactMethod
+    fun joinHomeMember(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(Constant.CODE), params)) {
+            TuyaHomeSdk.getHomeManagerInstance().joinHomeByInviteCode(
+                params.getString(Constant.CODE),
+                Constant.getIResultCallback(promise)
+            )
+        }
+    }
+
     /* 移除Home下面的成员 */
     @ReactMethod
     fun removeMember(params: ReadableMap, promise: Promise) {

@@ -11,6 +11,7 @@
 #import "YYModel.h"
 #import <TuyaSmartDeviceKit/TuyaSmartHomeMember.h>
 #import <TuyaSmartDeviceKit/TuyaSmartHome.h>
+#import <TuyaSmartDeviceKit/TuyaSmartHomeInvitation.h>
 
 #define kTuyaRNHomeMemberModuleHomeId @"homeId"
 #define kTuyaRNHomeMemberModuleCountryCode @"countryCode"
@@ -18,12 +19,14 @@
 #define kTuyaRNHomeMemberModuleName @"name"
 #define kTuyaRNHomeMemberModuleAdmin @"admin"
 #define kTuyaRNHomeMemberModuleMemberId @"memberId"
+#define kTuyaRNHomeMemberModuleInvitationCode @"invitationCode"
 //#define kTuyaRNHomeMemberModule
 
 @interface TuyaRNHomeMemberModule()
 
 @property (nonatomic, strong) TuyaSmartHomeMember *homeMember;
 @property (nonatomic, strong) TuyaSmartHome *smartHome;
+@property (nonatomic, strong) TuyaSmartHomeInvitation *smartHomeInvitation;
 
 @end
 
@@ -62,6 +65,33 @@ RCT_EXPORT_METHOD(addMember:(NSDictionary *)params resolver:(RCTPromiseResolveBl
     if (resolver) {
       resolver(dict);
     }
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
+}
+
+RCT_EXPORT_METHOD(inviteHomeMember:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  TuyaSmartHomeInvitationCreateRequestModel *requestModel = [[TuyaSmartHomeInvitationCreateRequestModel alloc] init];
+
+  NSNumber *homeId = params[kTuyaRNHomeMemberModuleHomeId];
+  
+  requestModel.homeID = homeId;
+  requestModel.needMsgContent = YES;
+  self.smartHomeInvitation = [[TuyaSmartHomeInvitation alloc] init];
+  [self.smartHomeInvitation createInvitationWithCreateRequestModel:requestModel success:^(TuyaSmartHomeInvitationResultModel *result){
+    [TuyaRNUtils resolverWithHandler:resolver];
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
+}
+
+RCT_EXPORT_METHOD(joinHomeMember:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+
+  NSString *invitationCode = params[kTuyaRNHomeMemberModuleInvitationCode]; 
+  
+  self.smartHomeInvitation = [[TuyaSmartHomeInvitation alloc] init];
+  [self.smartHomeInvitation joinHomeWithInvitationCode:invitationCode success:^(BOOL result){
+    [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];

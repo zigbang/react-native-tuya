@@ -39,10 +39,36 @@ export function addMember(params: AddMemberParams): Promise<any> {
   return tuya.addMember(params);
 }
 
+export type InviteHomeMemberParams = {
+  homeId: number;
+};
+
+export function inviteHomeMember(params: InviteHomeMemberParams): Promise<any> {
+  return tuya.inviteHomeMember(params);
+}
+
+export type JoinHomeMemberParams = {
+  invitationCode: string;
+};
+
+export function joinHomeMember(params: JoinHomeMemberParams): Promise<any> {
+  return tuya.joinHomeMember(params);
+}
+
 export type RemoveMemberParams = {
   memberId: number;
 };
 
 export function removeMember(params: RemoveMemberParams): Promise<any> {
   return tuya.removeMember(params);
+}
+
+export type UpdateMemberParams = {
+  memberId: number;
+  name: string;
+  admin: boolean;
+};
+
+export function updateMember(params: UpdateMemberParams): Promise<any> {
+  return tuya.updateMember(params);
 }
