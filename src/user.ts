@@ -83,7 +83,7 @@ export type LoginWithEmailParams = {
 
 export type TouristRegisterAndLoginParams = {
   countryCode: string;
-  userName: string;
+  username: string;
 };
 
 export type ResetEmailPasswordParams = {
