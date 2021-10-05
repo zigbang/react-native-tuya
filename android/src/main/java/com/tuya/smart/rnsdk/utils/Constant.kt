@@ -40,6 +40,7 @@ object Constant {
     const val MESHID = "meshId"
     const val HOMEID = "homeId"
     const val NAME = "name"
+    const val USERNAME = "username"
     const val LON = "lon"
     const val LAT = "lat"
     const val GEONAME = "geoName"
