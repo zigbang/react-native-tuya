@@ -113,7 +113,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
      */
     @ReactMethod
     fun newGwSubDevActivator(params: ReadableMap,promise: Promise) {
-        if (ReactParamsCheck.checkParams(arrayOf(DEVID,TIME), params)){
+        if (ReactParamsCheck.checkParams(arrayOf(DEVID, TIME), params)){
             val builder = TuyaGwSubDevActivatorBuilder()
                     //게이트웨이 ID 설정
                     .setDevId(params.getString(DEVID))
@@ -136,11 +136,12 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                          * device_bind_success 장치가 성공적으로 바인딩되었지만 아직 온라인 상태가 아닙니다. 현재 장치가 오프라인 상태이므로 제어할 수 없습니다.
                          */
                         override fun onStep(var1: String, var2: Any) {
-                           // promise.reject(var1,"")
+                            promise.reject(var1,"")
                         }
                     })
 
             mTuyaGWActivator = TuyaHomeSdk.getActivatorInstance().newGwSubDevActivator(builder)
+            mTuyaGWActivator?.start()
         }
     }
 
