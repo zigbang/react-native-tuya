@@ -38,6 +38,17 @@ export function initWiredGwActivator(
   return tuya.initWiredGwActivator(params);
 }
 
+export type initWiredGwActivatorByPaaSParams = {
+  token: string;
+  time: number;
+};
+
+export function initWiredGwActivatorByPaaS(
+  params: initWiredGwActivatorByPaaSParams
+): Promise<DeviceDetailResponse> {
+  return tuya.initWiredGwActivatorByPaaS(params);
+}
+
 export function newGwSubDevActivator(
   params: RegistSubForGwParams
 ): Promise<DeviceDetailResponse> {
