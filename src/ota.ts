@@ -1,7 +1,7 @@
 import { NativeModules, Platform } from 'react-native';
 import { addEvent, bridge, HARDWAREUPGRADELISTENER } from './bridgeUtils';
 
-let tuya;
+let tuya: any;
 
 if (Platform.OS === 'ios') {
   tuya = NativeModules.TuyaDeviceModule;
