@@ -22,6 +22,7 @@
 #define kTuyaRNUserModuleEmail @"email"
 #define kTuyaRNUserModuleUid @"uid"
 #define kTuyaRNUserModuleNickName @"nickName"
+#define kTuyaRNUserModuleTicket @"ticket"
 
 
 #define kTuyaRNUserModuleTwitterKey @"key"
@@ -30,6 +31,7 @@
 #define kTuyaRNUserModuleQQAccessToken @"accessToken"
 #define kTuyaRNUserModuleWechatkCode @"code"
 #define kTuyaRNUserModuleFacebookCode @"code"
+#define kTuyaRNUserModuleGoogleCode @"code"
 
 #define kTuyaRNUserModuleImageFile @"file"
 #define kTuyaRNUserModuleUnit @"unit"
@@ -81,6 +83,25 @@ RCT_EXPORT_METHOD(getValidateCode:(NSDictionary *)params resolver:(RCTPromiseRes
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
 }
+
+// RCT_EXPORT_METHOD(getValidateCodeWithUserName:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+
+//   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
+//   NSString *phoneNumber = params[kTuyaRNUserModulePhoneNumber];
+//   NSInteger aType = 1;
+//   NSString *validateType = params[kTuyaRNUserModuleValidateType];
+//   if (validateType) {
+//     if ([validateType isKindOfClass:[NSString class]] ||
+//         [validateType isKindOfClass:[NSNumber class]]) {
+//       aType = validateType.integerValue;
+//     }
+//   }
+//   [[TuyaSmartUser sharedInstance] sendVerifyCode:countryCode phoneNumber:phoneNumber type:aType success:^{
+//     [TuyaRNUtils resolverWithHandler:resolver];
+//   } failure:^(NSError *error) {
+//     [TuyaRNUtils rejecterWithError:error handler:rejecter];
+//   }];
+// }
 
 /* 手机验证码登陆
 * @param countryCode 国家区号
@@ -239,6 +260,20 @@ RCT_EXPORT_METHOD(loginWithEmail:(NSDictionary *)params resolver:(RCTPromiseReso
 
 }
 
+RCT_EXPORT_METHOD(loginWithEmailAndCode:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+
+  NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
+  NSString *email = params[kTuyaRNUserModuleEmail];
+  NSString *code = params[kTuyaRNUserModuleValidateCode];
+
+  [[TuyaSmartUser sharedInstance] loginWithEmail:email countryCode:countryCode code:code success:^{
+    [TuyaRNUtils resolverWithHandler:resolver];
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
+
+}
+
 /*
 * touristRegisterAndLogin
 * @param nickname
@@ -267,6 +302,19 @@ RCT_EXPORT_METHOD(getEmailValidateCode:(NSDictionary *)params resolver:(RCTPromi
   NSString *email = params[kTuyaRNUserModuleEmail];
 
   [[TuyaSmartUser sharedInstance] sendVerifyCodeByEmail:countryCode email:email success:^{
+    [TuyaRNUtils resolverWithHandler:resolver];
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
+
+}
+
+RCT_EXPORT_METHOD(sendEmailBindingCode:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+
+  NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
+  NSString *email = params[kTuyaRNUserModuleEmail];
+
+  [[TuyaSmartUser sharedInstance] sendBindingVerificationCodeWithEmail:email countryCode:countryCode success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
@@ -330,7 +378,6 @@ RCT_EXPORT_METHOD(registerAccountWithUid:(NSDictionary *)params resolver:(RCTPro
   }];
 
 }
-
 
 /* uid 登陆
 * @param countryCode 国家号码
@@ -434,6 +481,19 @@ RCT_EXPORT_METHOD(loginByFacebook:(NSDictionary *)params resolver:(RCTPromiseRes
   NSString *code = params[kTuyaRNUserModuleFacebookCode];
 
   [[TuyaSmartUser sharedInstance] loginByFacebook:countryCode token:code success:^{
+    [TuyaRNUtils resolverWithHandler:resolver];
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
+}
+
+RCT_EXPORT_METHOD(loginByGoogle:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+
+  NSString *loginType = @"gg";
+  NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
+  NSString *code = params[kTuyaRNUserModuleGoogleCode];
+
+  [[TuyaSmartUser sharedInstance] loginByAuth2WithType:loginType countryCode:countryCode accessToken:code extraInfo:@{@"pubVersion": @1} success:^{
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
