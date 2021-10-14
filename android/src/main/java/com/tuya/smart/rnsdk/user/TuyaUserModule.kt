@@ -291,6 +291,18 @@ class TuyaUserModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
     }
 
     @ReactMethod
+    fun loginByGoogle(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(COUNTRYCODE, TOKEN), params)) {
+            TuyaHomeSdk.getUserInstance().thirdLogin(
+                    params.getString(COUNTRYCODE),
+                    params.getString(TOKEN),
+                    "gg",
+                    "{\"pubVersion\":1}",
+                    getLoginCallback(promise))
+        }
+    }
+
+    @ReactMethod
     fun getCurrentUser(promise: Promise) {
         if (TuyaHomeSdk.getUserInstance().user != null) {
             promise.resolve(TuyaReactUtils.parseToWritableMap(TuyaHomeSdk.getUserInstance().user))

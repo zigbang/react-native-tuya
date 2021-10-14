@@ -20,6 +20,8 @@
 #define kTuyaRNActivatorModuleOverTime @"time"
 #define kTuyaRNActivatorModuleAcccessToken @"token"
 #define kTuyaRNActivatorModuleDeviceId @"devId"
+#define kTuyaRNActivatorModuleGWId @"GWId"
+#define kTuyaRNActivatorModuleProductId @"ProductId"
 
 static TuyaRNActivatorModule * activatorInstance = nil;
 
@@ -101,7 +103,6 @@ RCT_EXPORT_METHOD(initWiredGwActivator:(NSDictionary *)params resolver:(RCTPromi
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
 }
-
 
 RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
