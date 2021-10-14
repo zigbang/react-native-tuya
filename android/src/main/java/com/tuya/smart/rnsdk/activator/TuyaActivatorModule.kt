@@ -79,7 +79,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
     @ReactMethod
     fun initWiredGwActivator(params: ReadableMap, promise: Promise) {
-        if (ReactParamsCheck.checkParams(arrayOf(HOMEID), params)){
+        if (ReactParamsCheck.checkParams(arrayOf(HOMEID, TIME), params)){
             //promise.reject("error")
             //TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
             var mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
@@ -92,7 +92,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                             //promise.resolve("OK: token value - "+ token)
                             var mITuyaActivator : ITuyaActivator = TuyaHomeSdk.getActivatorInstance().newGwActivator( TuyaGwActivatorBuilder()
                                 .setToken(token)
-                                .setTimeOut(40)
+                                .setTimeOut(params.getInt(TIME).toLong())
                                 .setContext(reactApplicationContext.applicationContext)
                                 .setListener( getITuyaSmartActivatorListener(promise)))
                             mITuyaActivator.start()
