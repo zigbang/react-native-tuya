@@ -17,7 +17,6 @@ export type InitActivatorParams = {
 
 export type InitGwActivatorParams = {
   homeId: number;
-  ssid: string;
   time: number;
 };
 

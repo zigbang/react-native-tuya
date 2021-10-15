@@ -80,16 +80,16 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
     @ReactMethod
     fun initWiredGwActivator(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, TIME), params)){
-            //promise.reject("error")
+            Log.d("initWiredGwActivator", " Initialized")
             //TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
-            var mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
+            val mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
 
 		    mTuyaGwSearcher.registerGwSearchListener(object : IGwSearchListener {
                 override fun onDevFind(hgwBean:HgwBean) {
-                    // promise.resolve("OK: hgwBean value - "+ hgwBean)
+                    Log.d("initWiredGwActivator", " hgwBean:" + hgwBean)
                     TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
                         override fun onSuccess(token: String) {
-                            //promise.resolve("OK: token value - "+ token)
+                            Log.d("initWiredGwActivator", " token:" + token)
                             var mITuyaActivator : ITuyaActivator = TuyaHomeSdk.getActivatorInstance().newGwActivator( TuyaGwActivatorBuilder()
                                 .setToken(token)
                                 .setTimeOut(params.getInt(TIME).toLong())
@@ -101,7 +101,6 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                             promise.reject(errorCode, errorMsg)
                         }
                     })
-                    //promise.resolve("OK")
                 }
 		    })
         }
