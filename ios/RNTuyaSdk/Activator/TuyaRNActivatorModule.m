@@ -109,6 +109,21 @@ RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromi
   [[TuyaSmartActivator sharedInstance] stopConfigWiFi];
 }
 
+RCT_EXPORT_METHOD(GetFirstSearcingGwDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  
+  [TuyaRNUtils rejecterWithError:error handler:rejecter];
+}
+
+RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  
+  [TuyaRNUtils rejecterWithError:error handler:rejecter];
+}
+
+RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  
+  [[TuyaSmartActivator sharedInstance] stopConfigWiFi];
+}
+
 
 //ZigBee子设备配网需要ZigBee网关设备云在线的情况下才能发起,且子设备处于配网状态。
 

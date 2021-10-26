@@ -15,9 +15,29 @@ export type InitActivatorParams = {
   type: 'TY_EZ' | 'TY_AP' | 'TY_QR';
 };
 
+export type HgwBean = {
+  ip: string;
+  gwId: string;
+  active: number;
+  ability: number;
+  lastSeenTime: number;
+  mode: number;
+  encrypt: boolean;
+  productKey: string;
+  version: string;
+  token: boolean;
+  wf_cfg: boolean;
+};
+
 export type InitGwActivatorParams = {
   homeId: number;
   time: number;
+};
+
+export type SearchedGwActivatorParams = {
+  homeId: number;
+  time: number;
+  devId: string;
 };
 
 export type RegistSubForGwParams = {
@@ -35,6 +55,18 @@ export function initWiredGwActivator(
   params: InitGwActivatorParams
 ): Promise<DeviceDetailResponse> {
   return tuya.initWiredGwActivator(params);
+}
+
+export function GetFirstSearcingGwDevice(
+  params: InitGwActivatorParams
+): Promise<HgwBean> {
+  return tuya.GetFirstSearcingGwDevice(params);
+}
+
+export function InitSearchedGwDevice(
+  params: SearchedGwActivatorParams
+): Promise<HgwBean> {
+  return tuya.InitSearchedGwDevice(params);
 }
 
 export type initWiredGwActivatorByPaaSParams = {
