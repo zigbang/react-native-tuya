@@ -28,13 +28,15 @@ import com.tuya.smart.android.hardware.bean.HgwBean
 
 
 
+val SearchedDevices : MutableMap<String, HgwBean> = mutableMapOf()
+
 class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     var mITuyaActivator: ITuyaActivator?=null
     var mTuyaGWActivator: ITuyaActivator?=null
-    companion object {
-        val SearchedDevices : MutableMap<String, HgwBean> = mutableMapOf()
-    }
+    // companion object {
+    //     val SearchedDevices : MutableMap<String, HgwBean> = mutableMapOf()        
+    // }
 
     override fun getName(): String {
         return "TuyaActivatorModule"
@@ -114,16 +116,17 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
     @ReactMethod
     fun GetFirstSearcingGwDevice(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, TIME), params)){
-            Log.d("GetFirstSearcingGwDevice", "start" + hgwBean)
             val mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
             
             mTuyaGwSearcher.registerGwSearchListener(object : IGwSearchListener { 
                 override fun onDevFind(hgwBean:HgwBean) {
-                    Log.d("GetFirstSearcingGwDevice", " hgwBean:" + hgwBean)
-                    if( TuyaActivatorModule.SearchedDevices.containsKey(hgwBean.gwId) == false ){
-                        TuyaActivatorModule.SearchedDevices.put(hgwBean.gwId, hgwBean)
-                        promise.resolve(TuyaReactUtils.parseToWritableMap(hgwBean))
+                    if( SearchedDevices.containsKey(hgwBean.gwId) == false ){
+                        SearchedDevices.put(hgwBean.gwId, hgwBean)
                     }
+
+                    BridgeUtils.foundGateway(reactApplicationContext, TuyaReactUtils.parseToWritableMap(hgwBean))
+
+                    promise.resolve(TuyaReactUtils.parseToWritableMap(hgwBean))
                 }
             })
         }
@@ -134,7 +137,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, TIME, DEVID), params)){
             var DeviceID = params.getString(DEVID)
 
-            if( TuyaActivatorModule.SearchedDevices.containsKey(DeviceID) )
+            if( SearchedDevices.containsKey(DeviceID) )
             {
                 TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
                     override fun onSuccess(token: String) {
@@ -143,7 +146,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                             .setToken(token)
                             .setTimeOut(params.getInt(TIME).toLong())
                             .setContext(reactApplicationContext.applicationContext)
-                            .setHgwBean(TuyaActivatorModule.SearchedDevices[DeviceID])
+                            .setHgwBean(SearchedDevices[DeviceID])
                             .setListener(getITuyaSmartActivatorListener(promise)))
                         mITuyaActivator.start()
                     }

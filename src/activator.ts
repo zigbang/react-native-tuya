@@ -57,6 +57,7 @@ export function initWiredGwActivator(
   return tuya.initWiredGwActivator(params);
 }
 
+
 export function GetFirstSearcingGwDevice(
   params: InitGwActivatorParams
 ): Promise<HgwBean> {
