@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TuyaRNActivatorModule : NSObject<RCTBridgeModule>
+@interface TuyaRNActivatorModule : NSObject <RCTBridgeModule>
 
 @end
 

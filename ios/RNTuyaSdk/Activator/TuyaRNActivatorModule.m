@@ -13,6 +13,8 @@
 #import "TuyaRNUtils+Network.h"
 #import "YYModel.h"
 
+#import "TuyaRNEventEmitter.h"
+
 #define kTuyaRNActivatorModuleHomeId @"homeId"
 #define kTuyaRNActivatorModuleSSID @"ssid"
 #define kTuyaRNActivatorModulePassword @"password"
@@ -87,7 +89,7 @@ RCT_EXPORT_METHOD(initWiredGwActivator:(NSDictionary *)params resolver:(RCTPromi
 //  NSString *token = params[kTuyaRNActivatorModuleActivatorToken];
   
   TuyaSmartActivatorNotificationFindGatewayDevice;
-  
+
   if (activatorInstance == nil) {
     activatorInstance = [TuyaRNActivatorModule new];
   }
@@ -104,6 +106,33 @@ RCT_EXPORT_METHOD(initWiredGwActivator:(NSDictionary *)params resolver:(RCTPromi
   }];
 }
 
+RCT_EXPORT_METHOD(registerWiredGW:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  
+  NSNumber *homeId = params[kTuyaRNActivatorModuleHomeId];
+  NSString *gwId = params[kTuyaRNActivatorModuleGWId];
+  NSString *productId = params[kTuyaRNActivatorModuleProductId];
+  NSNumber *time = params[kTuyaRNActivatorModuleOverTime];
+  
+  if (activatorInstance == nil) {
+    activatorInstance = [TuyaRNActivatorModule new];
+  }
+  
+  [TuyaSmartActivator sharedInstance].delegate = activatorInstance;
+  activatorInstance.promiseResolveBlock = resolver;
+  activatorInstance.promiseRejectBlock = rejecter;
+  
+  [[TuyaSmartActivator sharedInstance] getTokenWithHomeId:homeId.longLongValue success:^(NSString *result) {
+    //开始配置网络：
+    [[TuyaSmartActivator sharedInstance] activeGatewayDeviceWithGwId:gwId productId:productId token:result timeout:time.doubleValue];
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
+}
+
+RCT_EXPORT_METHOD(startSearchWiredGW) {
+  TuyaSmartActivatorNotificationFindGatewayDevice;
+}
+
 RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
   [[TuyaSmartActivator sharedInstance] stopConfigWiFi];
@@ -112,7 +141,7 @@ RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromi
 
 //ZigBee子设备配网需要ZigBee网关设备云在线的情况下才能发起,且子设备处于配网状态。
 
-RCT_EXPORT_METHOD(newGwSubDevActivator:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+RCT_EXPORT_METHOD(registerZigbeeSubDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
   NSString *deviceId = params[kTuyaRNActivatorModuleDeviceId];
   NSNumber *time = params[kTuyaRNActivatorModuleOverTime];

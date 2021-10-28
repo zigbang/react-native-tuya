@@ -14,6 +14,7 @@ extern NSString *const kTYEventEmitterDeviceInfoEvent;
 extern NSString *const kTYEventEmitterGroupInfoEvent;
 extern NSString *const kTYEventEmitterHomeChangeEvent;
 extern NSString *const kTYEventEmitterHomeStatusEvent;
+extern NSString *const kNotificationFindGatewayDevice;
 
 NS_ASSUME_NONNULL_BEGIN
 
