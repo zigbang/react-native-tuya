@@ -38,7 +38,6 @@ export function initWiredGwActivator(
 }
 
 export type registerWiredGWParams = {
-  homeId: number;
   gwId: string;
   productId?: string;
   time: number;

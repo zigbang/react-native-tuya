@@ -108,10 +108,10 @@ RCT_EXPORT_METHOD(initWiredGwActivator:(NSDictionary *)params resolver:(RCTPromi
 
 RCT_EXPORT_METHOD(registerWiredGW:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
-  NSNumber *homeId = params[kTuyaRNActivatorModuleHomeId];
   NSString *gwId = params[kTuyaRNActivatorModuleGWId];
   NSString *productId = params[kTuyaRNActivatorModuleProductId];
   NSNumber *time = params[kTuyaRNActivatorModuleOverTime];
+  long long homeId = 51757763;
   
   if (activatorInstance == nil) {
     activatorInstance = [TuyaRNActivatorModule new];
@@ -121,7 +121,7 @@ RCT_EXPORT_METHOD(registerWiredGW:(NSDictionary *)params resolver:(RCTPromiseRes
   activatorInstance.promiseResolveBlock = resolver;
   activatorInstance.promiseRejectBlock = rejecter;
   
-  [[TuyaSmartActivator sharedInstance] getTokenWithHomeId:homeId.longLongValue success:^(NSString *result) {
+  [[TuyaSmartActivator sharedInstance] getTokenWithHomeId:homeId success:^(NSString *result) {
     //开始配置网络：
     [[TuyaSmartActivator sharedInstance] activeGatewayDeviceWithGwId:gwId productId:productId token:result timeout:time.doubleValue];
   } failure:^(NSError *error) {
