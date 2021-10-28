@@ -114,22 +114,19 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
     }
 
     @ReactMethod
-    fun GetFirstSearcingGwDevice(params: ReadableMap, promise: Promise) {
-        if (ReactParamsCheck.checkParams(arrayOf(HOMEID, TIME), params)){
-            val mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
-            
-            mTuyaGwSearcher.registerGwSearchListener(object : IGwSearchListener { 
-                override fun onDevFind(hgwBean:HgwBean) {
-                    if( SearchedDevices.containsKey(hgwBean.gwId) == false ){
-                        SearchedDevices.put(hgwBean.gwId, hgwBean)
-                    }
-
-                    BridgeUtils.foundGateway(reactApplicationContext, TuyaReactUtils.parseToWritableMap(hgwBean))
-
-                    promise.resolve(TuyaReactUtils.parseToWritableMap(hgwBean))
+    fun GetFirstSearcingGwDevice() {
+        val mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
+        
+        mTuyaGwSearcher.registerGwSearchListener(object : IGwSearchListener { 
+            override fun onDevFind(hgwBean:HgwBean) {
+                if( SearchedDevices.containsKey(hgwBean.gwId) == false ){
+                    SearchedDevices.put(hgwBean.gwId, hgwBean)
                 }
-            })
-        }
+
+                BridgeUtils.foundGateway(reactApplicationContext, TuyaReactUtils.parseToWritableMap(hgwBean))
+                // promise.resolve(TuyaReactUtils.parseToWritableMap(hgwBean))
+            }
+        })
     }
     
     @ReactMethod

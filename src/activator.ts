@@ -57,11 +57,8 @@ export function initWiredGwActivator(
   return tuya.initWiredGwActivator(params);
 }
 
-
-export function GetFirstSearcingGwDevice(
-  params: InitGwActivatorParams
-): Promise<HgwBean> {
-  return tuya.GetFirstSearcingGwDevice(params);
+export function GetFirstSearcingGwDevice(): boolean {
+  return tuya.GetFirstSearcingGwDevice() ? true : false;
 }
 
 export function InitSearchedGwDevice(
