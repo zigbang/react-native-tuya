@@ -13,4 +13,9 @@ let eventEmitter = new NativeEventEmitter(NativeModules.TuyaRNEventEmitter);
 export function addEvent(eventName: string, callback: (data: any) => any) {
   return eventEmitter.addListener(eventName, callback);
 }
+
+export function removeEvent(eventName: string) {
+  return eventEmitter.removeAllListeners(eventName);
+}
+
 export const bridge = (key: string, id: string | number) => `${key}//${id}`;

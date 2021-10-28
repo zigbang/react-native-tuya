@@ -29,6 +29,11 @@ export type HgwBean = {
   wf_cfg: boolean;
 };
 
+export type HgwInformation = {
+  gw_id: string;
+  product_id: string;
+};
+
 export type InitGwActivatorParams = {
   homeId: number;
   time: number;
@@ -57,8 +62,9 @@ export function initWiredGwActivator(
   return tuya.initWiredGwActivator(params);
 }
 
-export function GetFirstSearcingGwDevice(): boolean {
-  return tuya.GetFirstSearcingGwDevice() ? true : false;
+export function GetFirstSearcingGwDevice() {
+  tuya.GetFirstSearcingGwDevice();
+  return false;
 }
 
 export function InitSearchedGwDevice(
