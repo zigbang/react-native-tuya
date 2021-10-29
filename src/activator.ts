@@ -48,7 +48,8 @@ export type SearchedGwActivatorParams = {
 };
 
 export type RegistSubForGwParams = {
-  deviceId: string;
+  deviceId: string; // For iOS
+  devId: string; // for android
   time: number;
 };
 
@@ -93,21 +94,7 @@ export function startSearchWiredGW() {
 export function newGwSubDevActivator(
   params: RegistSubForGwParams
 ): Promise<DeviceDetailResponse> {
-  let passParameter;
-
-  if (Platform.OS === 'ios') {
-    passParameter = {
-      deviceId: params.deviceId, // deviceId
-      time: params.time,
-    };
-  } else {
-    passParameter = {
-      devId: params.deviceId, // devId
-      time: params.time,
-    };
-  }
-
-  return tuya.newGwSubDevActivator(passParameter);
+  return tuya.newGwSubDevActivator(params);
 }
 
 export function stopConfig() {
