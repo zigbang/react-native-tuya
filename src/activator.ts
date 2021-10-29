@@ -15,9 +15,36 @@ export type InitActivatorParams = {
   type: 'TY_EZ' | 'TY_AP' | 'TY_QR';
 };
 
+export type HgwBean = {
+  ip: string;
+  gwId: string;
+  active: number;
+  ability: number;
+  lastSeenTime: number;
+  mode: number;
+  encrypt: boolean;
+  productKey: string;
+  version: string;
+  token: boolean;
+  wf_cfg: boolean;
+};
+
+export type HgwInformation = {
+  gw_id: string;
+  product_id: string;
+};
+
 export type InitGwActivatorParams = {
   homeId: number;
   time: number;
+};
+
+export type SearchedGwActivatorParams = {
+  homeId: number;
+  time: number;
+  devId: string; // for android
+  gwId: string; // for iOS
+  productId?: string;
 };
 
 export type RegistSubForGwParams = {
@@ -37,16 +64,15 @@ export function initWiredGwActivator(
   return tuya.initWiredGwActivator(params);
 }
 
-export type registerWiredGWParams = {
-  gwId: string;
-  productId?: string;
-  time: number;
-};
+export function StartSearcingGwDevice() {
+  tuya.StartSearcingGwDevice();
+  return;
+}
 
-export function registerWiredGW(
-  params: registerWiredGWParams
+export function InitSearchedGwDevice(
+  params: SearchedGwActivatorParams
 ): Promise<DeviceDetailResponse> {
-  return tuya.registerWiredGW(params);
+  return tuya.InitSearchedGwDevice(params);
 }
 
 export type initWiredGwActivatorByPaaSParams = {
@@ -64,7 +90,7 @@ export function startSearchWiredGW() {
   return tuya.startSearchWiredGW();
 }
 
-export function registerZigbeeSubDevice(
+export function newGwSubDevActivator(
   params: RegistSubForGwParams
 ): Promise<DeviceDetailResponse> {
   let passParameter;
@@ -81,7 +107,7 @@ export function registerZigbeeSubDevice(
     };
   }
 
-  return tuya.registerZigbeeSubDevice(passParameter);
+  return tuya.newGwSubDevActivator(passParameter);
 }
 
 export function stopConfig() {

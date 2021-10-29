@@ -27,10 +27,17 @@ import com.tuya.smart.rnsdk.utils.Constant.TYPE
 import com.tuya.smart.android.hardware.bean.HgwBean
 
 
+
+val SearchedDevices : MutableMap<String, HgwBean> = mutableMapOf()
+
 class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     var mITuyaActivator: ITuyaActivator?=null
     var mTuyaGWActivator: ITuyaActivator?=null
+    // companion object {
+    //     val SearchedDevices : MutableMap<String, HgwBean> = mutableMapOf()        
+    // }
+
     override fun getName(): String {
         return "TuyaActivatorModule"
     }
@@ -105,6 +112,53 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 		    })
         }
     }
+
+    @ReactMethod
+    fun StartSearcingGwDevice() {
+        val mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
+        
+        mTuyaGwSearcher.registerGwSearchListener(object : IGwSearchListener { 
+            override fun onDevFind(hgwBean:HgwBean) {
+                if( SearchedDevices.containsKey(hgwBean.gwId) == false ){
+                    SearchedDevices.put(hgwBean.gwId, hgwBean)
+                }
+
+                BridgeUtils.foundGateway(reactApplicationContext, TuyaReactUtils.parseToWritableMap(hgwBean))
+                // promise.resolve(TuyaReactUtils.parseToWritableMap(hgwBean))
+            }
+        })
+    }
+    
+    @ReactMethod
+    fun InitSearchedGwDevice(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(HOMEID, TIME, DEVID), params)){
+            var DeviceID = params.getString(DEVID)
+
+            if( SearchedDevices.containsKey(DeviceID) )
+            {
+                TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
+                    override fun onSuccess(token: String) {
+                        Log.d("initWiredGwActivator", " token:" + token)
+                        var mITuyaActivator : ITuyaActivator = TuyaHomeSdk.getActivatorInstance().newGwActivator( TuyaGwActivatorBuilder()
+                            .setToken(token)
+                            .setTimeOut(params.getInt(TIME).toLong())
+                            .setContext(reactApplicationContext.applicationContext)
+                            .setHgwBean(SearchedDevices[DeviceID])
+                            .setListener(getITuyaSmartActivatorListener(promise)))
+                        mITuyaActivator.start()
+                    }
+                    override fun onFailure(errorCode: String, errorMsg: String) {
+                        promise.reject(errorCode, errorMsg)
+                    }
+                })
+            }
+            else
+            {
+
+            }            
+        }
+    }
+
 
     /**
      * ZigBee 하위 장치 네트워크 구성은 ZigBee 게이트웨이 장치 클라우드가 온라인 상태이고 

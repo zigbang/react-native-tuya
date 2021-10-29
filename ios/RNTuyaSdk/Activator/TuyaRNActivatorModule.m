@@ -106,12 +106,12 @@ RCT_EXPORT_METHOD(initWiredGwActivator:(NSDictionary *)params resolver:(RCTPromi
   }];
 }
 
-RCT_EXPORT_METHOD(registerWiredGW:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
+  NSNumber *homeId = params[kTuyaRNActivatorModuleHomeId];
   NSString *gwId = params[kTuyaRNActivatorModuleGWId];
   NSString *productId = params[kTuyaRNActivatorModuleProductId];
   NSNumber *time = params[kTuyaRNActivatorModuleOverTime];
-  long long homeId = 51757763;
   
   if (activatorInstance == nil) {
     activatorInstance = [TuyaRNActivatorModule new];
@@ -129,8 +129,18 @@ RCT_EXPORT_METHOD(registerWiredGW:(NSDictionary *)params resolver:(RCTPromiseRes
   }];
 }
 
-RCT_EXPORT_METHOD(startSearchWiredGW) {
+RCT_EXPORT_METHOD(StartSearcingGwDevice) {
   TuyaSmartActivatorNotificationFindGatewayDevice;
+}
+
+RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  
+  [[TuyaSmartActivator sharedInstance] stopConfigWiFi];
+}
+
+RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  
+  [TuyaRNUtils rejecterWithError:error handler:rejecter];
 }
 
 RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
@@ -141,7 +151,7 @@ RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromi
 
 //ZigBee子设备配网需要ZigBee网关设备云在线的情况下才能发起,且子设备处于配网状态。
 
-RCT_EXPORT_METHOD(registerZigbeeSubDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+RCT_EXPORT_METHOD(newGwSubDevActivator:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
   NSString *deviceId = params[kTuyaRNActivatorModuleDeviceId];
   NSNumber *time = params[kTuyaRNActivatorModuleOverTime];
@@ -196,7 +206,7 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
   
   if (error) {
     if (activatorInstance.promiseRejectBlock) {
-      [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
+      [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejecetBlock];
     }
     return;
   }
