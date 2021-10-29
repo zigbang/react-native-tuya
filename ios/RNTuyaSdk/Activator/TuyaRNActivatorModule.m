@@ -121,7 +121,7 @@ RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromi
   activatorInstance.promiseResolveBlock = resolver;
   activatorInstance.promiseRejectBlock = rejecter;
   
-  [[TuyaSmartActivator sharedInstance] getTokenWithHomeId:homeId success:^(NSString *result) {
+  [[TuyaSmartActivator sharedInstance] getTokenWithHomeId:homeId.longLongValue success:^(NSString *result) {
     //开始配置网络：
     [[TuyaSmartActivator sharedInstance] activeGatewayDeviceWithGwId:gwId productId:productId token:result timeout:time.doubleValue];
   } failure:^(NSError *error) {
@@ -137,17 +137,6 @@ RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromi
   
   [[TuyaSmartActivator sharedInstance] stopConfigWiFi];
 }
-
-RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
-  [TuyaRNUtils rejecterWithError:error handler:rejecter];
-}
-
-RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
-  [[TuyaSmartActivator sharedInstance] stopConfigWiFi];
-}
-
 
 //ZigBee子设备配网需要ZigBee网关设备云在线的情况下才能发起,且子设备处于配网状态。
 
@@ -206,7 +195,7 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
   
   if (error) {
     if (activatorInstance.promiseRejectBlock) {
-      [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejecetBlock];
+      [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
     }
     return;
   }
