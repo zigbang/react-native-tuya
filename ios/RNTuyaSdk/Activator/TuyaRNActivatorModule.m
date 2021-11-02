@@ -195,16 +195,16 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
   
   if (error) {
     NSDictionary *dic = @{
-              @"Result": @"onError",
-              @"Var1": [@(error.code) stringValue],
-              @"Var2": error.domain
+              @"result": @"onError",
+              @"var1": [@(error.code) stringValue],
+              @"var2": error.domain
               };
 
     [TuyaRNEventEmitter ty_sendEvent:kNotificationResultSubDevice withBody:dic];
 
-    if (activatorInstance.promiseRejectBlock) {
-      [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
-    }
+    // if (activatorInstance.promiseRejectBlock) {
+    //   [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
+    // }
     return;
   }
   
@@ -212,14 +212,14 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
   if (activatorInstance.promiseResolveBlock) {
     if (deviceModel) {
         NSDictionary *dic = @{
-                      @"Result": @"onActiveSuccess",
-                      @"Var1": deviceModel.yy_modelToJSONObject,
-                      @"Var2": @"none"
+                      @"result": @"onActiveSuccess",
+                      @"var1": deviceModel.yy_modelToJSONObject,
+                      @"var2": @"none"
                       };
 
         [TuyaRNEventEmitter ty_sendEvent:kNotificationResultSubDevice withBody:dic];
     }
-    self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
+    // self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
   }
   
 }
