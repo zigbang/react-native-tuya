@@ -14,6 +14,7 @@ object BridgeUtils {
     private val HOMECHANGE = "homeChange"
     private val SINGLETRANSFER = "SingleTransfer"
     private val NEW_SEARCHED_DEV_LISTENER = "kNotificationFindGatewayDevice"
+    private val RESULT_SUB_DEV_LISTENER = "kNotificationResultSubDevice"
 
     fun groupListener(context: ReactContext, map: WritableMap, groupId: Long) {
         TuyaReactUtils.sendEvent(context, bindEventname(GROUPLISTENER, groupId), map)
@@ -41,6 +42,10 @@ object BridgeUtils {
 
     fun foundGateway(context: ReactContext, map: WritableMap){
         TuyaReactUtils.sendEvent(context, NEW_SEARCHED_DEV_LISTENER, map)
+    }
+
+    fun resultSubDevice(context: ReactContext, map: WritableMap){
+        TuyaReactUtils.sendEvent(context, RESULT_SUB_DEV_LISTENER, map)
     }
 
     private fun bindEventname(key: String, id: Any): String {

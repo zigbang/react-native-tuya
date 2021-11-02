@@ -97,6 +97,12 @@ export function newGwSubDevActivator(
   return tuya.newGwSubDevActivator(params);
 }
 
+export function StartGwSubDevActivator(
+  params: RegistSubForGwParams
+): Promise<boolean> {
+  return tuya.StartGwSubDevActivator(params);
+}
+
 export function stopConfig() {
   return tuya.stopConfig();
 }
