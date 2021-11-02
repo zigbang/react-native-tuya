@@ -194,6 +194,14 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
 - (void)activator:(TuyaSmartActivator *)activator didReceiveDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error {
   
   if (error) {
+    NSDictionary *dic = @{
+              @"Result": @"onError",
+              @"Var1": [@(error.code) stringValue],
+              @"Var2": error.domain
+              };
+
+    [TuyaRNEventEmitter ty_sendEvent:kNotificationResultSubDevice withBody:dic];
+
     if (activatorInstance.promiseRejectBlock) {
       [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
     }
@@ -202,6 +210,15 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
   
   //开始回调
   if (activatorInstance.promiseResolveBlock) {
+    if (deviceModel) {
+        NSDictionary *dic = @{
+                      @"Result": @"onActiveSuccess",
+                      @"Var1": deviceModel.yy_modelToJSONObject,
+                      @"Var2": @"none"
+                      };
+
+        [TuyaRNEventEmitter ty_sendEvent:kNotificationResultSubDevice withBody:dic];
+    }
     self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
   }
   
