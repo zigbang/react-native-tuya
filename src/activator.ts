@@ -48,9 +48,12 @@ export type SearchedGwActivatorParams = {
 };
 
 export type RegistSubForGwParams = {
-  deviceId: string; // For iOS
-  devId: string; // for android
+  devId: string;
   time: number;
+};
+
+export type stopNewGwSubDevActivatorConfigParams = {
+  devId: string;
 };
 
 export function initActivator(
@@ -100,7 +103,17 @@ export function newGwSubDevActivator(
 export function StartGwSubDevActivator(
   params: RegistSubForGwParams
 ): Promise<boolean> {
-  return tuya.StartGwSubDevActivator(params);
+  if (Platform.OS == 'ios') {
+    return tuya.newGwSubDevActivator(params);
+  } else {
+    return tuya.StartGwSubDevActivator(params);
+  }
+}
+
+export function stopNewGwSubDevActivatorConfig(
+  params: stopNewGwSubDevActivatorConfigParams
+) {
+  return tuya.stopNewGwSubDevActivatorConfig(params);
 }
 
 export function stopConfig() {
