@@ -1,5 +1,9 @@
 # TuyaSdkBridge SDK Reference
 
+TuyaSdkBridges는 투야 기기 등록을 위해 필요한 기능에 집중하여 제공됨.
+react-native-tuya 모듈을 적절히 사용하고 있음.<br>
+현재는 TuyaSdkBridge는 소스로 공급하고 있으나 향후 모듈안에 넣어 npm 모듈로 등록도 가능함.<br>
+
 ## `init`
 
 `init(isShowDebugLog: boolean, pnu: string, dongho: string, user: string, host: string): Promise<string>`<br><br>
