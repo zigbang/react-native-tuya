@@ -31,31 +31,6 @@ TuyaSdkBridge 사용을 위한 초기화 수행<br><br>
 	TuyaSdkBridge.init(false, "1929129192919", "301호", "서진우", host)
 ```
 
-## `setInformation`
-
-`setInformation(pnu: string, donho: string, username: string)`<br><br>
-기기 등록 정보 설정 <br><br>
-
-- **Parameters**
-
-| 프로퍼티 | 타입   | 설명                             |
-| -------- | ------ | -------------------------------- |
-| pnu      | string | 기기 등록시 활용되는 건물 정보   |
-| dongho   | string | 기기 등록시 활용되는 동호수 정보 |
-| user     | string | 기기 등록시 활용되는 사용자 이름 |
-
-- **Return**
-
-| 타입 | 설명 |
-| ---- | ---- |
-| void | -    |
-
-- **Sample**
-
-```
-	TuyaSdkBridge.setInformation("1929129192919", "301호", "서진우")
-```
-
 ## `startSearchWiredGW`
 
 `startSearchWiredGW(callback: (gw_id: string, product_id: string) => void): boolean`<br><br>
