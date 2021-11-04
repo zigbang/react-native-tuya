@@ -1,9 +1,13 @@
 # TuyaSdkBridge SDK Reference
 
+TuyaSdkBridges는 투야 기기 등록을 위해 필요한 기능에 집중하여 제공됨.<br>
+react-native-tuya 모듈을 적절히 사용하고 있음.<br>
+현재는 TuyaSdkBridge는 패키지와 별도로 위치하고 있음.<br>
+
 ## `init`
 
 `init(isShowDebugLog: boolean, pnu: string, dongho: string, user: string, host: string): Promise<string>`<br><br>
-TuyaSdkBridge 를 사용하기 위해 필수적으로 호출해야 하는 함수<br><br>
+TuyaSdkBridge 사용을 위한 초기화 수행<br><br>
 
 - **Parameters**
 
@@ -17,9 +21,9 @@ TuyaSdkBridge 를 사용하기 위해 필수적으로 호출해야 하는 함수
 
 - **Return**
 
-| 타입            | 설명                       |
-| --------------- | -------------------------- |
-| Promise<string> | 초기화 함수 정상 수행 여부 |
+| 타입              | 설명                       |
+| ----------------- | -------------------------- |
+| Promise< string > | 초기화 함수 정상 수행 여부 |
 
 - **Sample**
 
@@ -30,7 +34,7 @@ TuyaSdkBridge 를 사용하기 위해 필수적으로 호출해야 하는 함수
 ## `setInformation`
 
 `setInformation(pnu: string, donho: string, username: string)`<br><br>
-기기 등록 정보를 변경하고자 하는 경우 사용 <br><br>
+기기 등록 정보 설정 <br><br>
 
 - **Parameters**
 
@@ -55,8 +59,8 @@ TuyaSdkBridge 를 사용하기 위해 필수적으로 호출해야 하는 함수
 ## `startSearchWiredGW`
 
 `startSearchWiredGW(callback: (gw_id: string, product_id: string) => void): boolean`<br><br>
-유선 게이트웨이 탐색 API<br><br>
-callback 함수를 통해 이벤트에 담겨있는 gw_id와 product_id 값 파싱 가능.<br><br>
+유선 게이트웨이 탐색 시작<br>
+callback 함수를 통한 gw_id와 product_id 수집 필요<br><br>
 
 - **Parameters**
 
@@ -92,7 +96,7 @@ TuyaSdkBridge.startSearchWiredGW(filterNotification)
 ## `stopSearchWiredGW`
 
 `stopSearchWiredGW(): boolean`<br><br>
-유선 게이트웨이 탐색을 중지 API <br><br>
+유선 게이트웨이 탐색 중지 <br><br>
 
 - **Parameters**
 
@@ -118,8 +122,8 @@ setTimeout(() => {
 ## `registerWiredGW`
 
 `registerWiredGW(gw_id: string, product_id: string, timeout: number): Promise<string>`<br><br>
-유선 게이트웨이를 등록하기 위한 API <br><br>
-전달받은 RegisterGwParam 정보에따라 특정 게이트웨이 하나만을 연결하고, 등록에 성공한 경우 게이트웨이의 이름을 직방가드의 정책에 맞게 자동으로 변경한다.<br><br>
+유선 게이트웨이 등록<br>
+등록에 성공한 경우, 기기 이름에 건물/동호/등록자 정보를 표시함 (직방가드 메타 정보)<br><br>
 
 - **Parameters**
 
@@ -167,9 +171,8 @@ TuyaSdkBridge.registerWiredGw({
 ## `startRegisterZigbeeSubDevice`
 
 `startRegisterZigbeeSubDevice(gw_id: string, timeout: number, callback: (result: any) => void): Promise<boolean>`<br><br>
-지그비 하위 기기를 등록하기 위한 API<br><br>
-검색기능은 없고, 조건에 맞으면 바로 등록이 된다.<br><br>
-인자로 전달되는 callback 함수를 통해 기기의 세부 정보 습득 가능.<br><br>
+게이트웨이 하위에 지그비 기기 등록 시작<br>
+검색기능은 없고, 조건에 맞으면 바로 등록 됨. callback 함수를 통해 기기의 세부 정보 습득.<br><br>
 
 - **Parameters**
 
@@ -209,8 +212,7 @@ TuyaSdkBridge.startRegisterZigbeeSubDevice(
 ## `stopRegisterZigbeeSubDevice`
 
 `stopRegisterZigbeeSubDevice(): boolean`<br><br>
-지그비 기기 등록을 중지하기 위한 API<br><br>
-지그비 게이트웨이에게 하위 기기 등록 중단 명령을 전송<br><br>
+게이트웨이 하위에 지그비 기기 등록 중지<br><br>
 
 - **Parameters**
 
