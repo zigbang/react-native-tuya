@@ -13,6 +13,8 @@ NSString *const kTYEventEmitterDeviceInfoEvent = @"devListener";
 NSString *const kTYEventEmitterGroupInfoEvent = @"groupListener";
 NSString *const kTYEventEmitterHomeChangeEvent = @"homeChange";
 NSString *const kTYEventEmitterHomeStatusEvent = @"homeStatus";
+NSString *const kNotificationFindGatewayDevice = @"gatewayFound";
+NSString *const kNotificationResultSubDevice = @"kNotificationResultSubDevice";
 
 
 

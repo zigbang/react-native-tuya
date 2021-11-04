@@ -13,6 +13,8 @@
 #import "TuyaRNUtils+Network.h"
 #import "YYModel.h"
 
+#import "TuyaRNEventEmitter.h"
+
 #define kTuyaRNActivatorModuleHomeId @"homeId"
 #define kTuyaRNActivatorModuleSSID @"ssid"
 #define kTuyaRNActivatorModulePassword @"password"
@@ -87,7 +89,7 @@ RCT_EXPORT_METHOD(initWiredGwActivator:(NSDictionary *)params resolver:(RCTPromi
 //  NSString *token = params[kTuyaRNActivatorModuleActivatorToken];
   
   TuyaSmartActivatorNotificationFindGatewayDevice;
-  
+
   if (activatorInstance == nil) {
     activatorInstance = [TuyaRNActivatorModule new];
   }
@@ -104,11 +106,37 @@ RCT_EXPORT_METHOD(initWiredGwActivator:(NSDictionary *)params resolver:(RCTPromi
   }];
 }
 
+RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  
+  NSNumber *homeId = params[kTuyaRNActivatorModuleHomeId];
+  NSString *gwId = params[kTuyaRNActivatorModuleGWId];
+  NSString *productId = params[kTuyaRNActivatorModuleProductId];
+  NSNumber *time = params[kTuyaRNActivatorModuleOverTime];
+  
+  if (activatorInstance == nil) {
+    activatorInstance = [TuyaRNActivatorModule new];
+  }
+  
+  [TuyaSmartActivator sharedInstance].delegate = activatorInstance;
+  activatorInstance.promiseResolveBlock = resolver;
+  activatorInstance.promiseRejectBlock = rejecter;
+  
+  [[TuyaSmartActivator sharedInstance] getTokenWithHomeId:homeId.longLongValue success:^(NSString *result) {
+    //开始配置网络：
+    [[TuyaSmartActivator sharedInstance] activeGatewayDeviceWithGwId:gwId productId:productId token:result timeout:time.doubleValue];
+  } failure:^(NSError *error) {
+    [TuyaRNUtils rejecterWithError:error handler:rejecter];
+  }];
+}
+
+RCT_EXPORT_METHOD(StartSearcingGwDevice) {
+  TuyaSmartActivatorNotificationFindGatewayDevice;
+}
+
 RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
   [[TuyaSmartActivator sharedInstance] stopConfigWiFi];
 }
-
 
 //ZigBee子设备配网需要ZigBee网关设备云在线的情况下才能发起,且子设备处于配网状态。
 
@@ -166,15 +194,32 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
 - (void)activator:(TuyaSmartActivator *)activator didReceiveDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error {
   
   if (error) {
-    if (activatorInstance.promiseRejectBlock) {
-      [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
-    }
+    NSDictionary *dic = @{
+              @"result": @"onError",
+              @"var1": [@(error.code) stringValue],
+              @"var2": error.domain
+              };
+
+    [TuyaRNEventEmitter ty_sendEvent:kNotificationResultSubDevice withBody:dic];
+
+    // if (activatorInstance.promiseRejectBlock) {
+    //   [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
+    // }
     return;
   }
   
   //开始回调
   if (activatorInstance.promiseResolveBlock) {
-    self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
+    if (deviceModel) {
+        NSDictionary *dic = @{
+                      @"result": @"onActiveSuccess",
+                      @"var1": deviceModel.yy_modelToJSONObject,
+                      @"var2": @"none"
+                      };
+
+        [TuyaRNEventEmitter ty_sendEvent:kNotificationResultSubDevice withBody:dic];
+    }
+    // self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
   }
   
 }

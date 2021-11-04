@@ -27,10 +27,18 @@ import com.tuya.smart.rnsdk.utils.Constant.TYPE
 import com.tuya.smart.android.hardware.bean.HgwBean
 
 
+data class ResultEvent(val Result: String, val Var1: Any, val Var2: Any)
+
+val SearchedDevices : MutableMap<String, HgwBean> = mutableMapOf()
+
 class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
     var mITuyaActivator: ITuyaActivator?=null
     var mTuyaGWActivator: ITuyaActivator?=null
+    // companion object {
+    //     val SearchedDevices : MutableMap<String, HgwBean> = mutableMapOf()        
+    // }
+
     override fun getName(): String {
         return "TuyaActivatorModule"
     }
@@ -64,7 +72,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                             .setPassword(params.getString(PASSWORD))
                             .setActivatorModel(ActivatorModelEnum.valueOf(params.getString(TYPE) as String))
                             .setTimeOut(params.getInt(TIME).toLong())
-                            .setToken(token).setListener(getITuyaSmartActivatorListener(promise)))
+                            .setToken(token).setListener(getITuyaSmartActivatorListenerForGW(promise)))
                     mITuyaActivator?.start()
                 }
 
@@ -94,7 +102,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                                 .setToken(token)
                                 .setTimeOut(params.getInt(TIME).toLong())
                                 .setContext(reactApplicationContext.applicationContext)
-                                .setListener( getITuyaSmartActivatorListener(promise)))
+                                .setListener( getITuyaSmartActivatorListenerForGW(promise)))
                             mITuyaActivator.start()
                         }
                         override fun onFailure(errorCode: String, errorMsg: String) {
@@ -105,6 +113,52 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 		    })
         }
     }
+
+    @ReactMethod
+    fun StartSearcingGwDevice() {
+        val mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
+        
+        mTuyaGwSearcher.registerGwSearchListener(object : IGwSearchListener { 
+            override fun onDevFind(hgwBean:HgwBean) {
+                if( SearchedDevices.containsKey(hgwBean.gwId) == false ){
+                    SearchedDevices.put(hgwBean.gwId, hgwBean)
+                }
+
+                BridgeUtils.foundGateway(reactApplicationContext, TuyaReactUtils.parseToWritableMap(hgwBean))
+            }
+        })
+    }
+    
+    @ReactMethod
+    fun InitSearchedGwDevice(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(HOMEID, TIME, DEVID), params)){
+            var DeviceID = params.getString(DEVID)
+
+            if( SearchedDevices.containsKey(DeviceID) )
+            {
+                TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
+                    override fun onSuccess(token: String) {
+                        Log.d("initWiredGwActivator", " token:" + token)
+                        var mITuyaActivator : ITuyaActivator = TuyaHomeSdk.getActivatorInstance().newGwActivator( TuyaGwActivatorBuilder()
+                            .setToken(token)
+                            .setTimeOut(params.getInt(TIME).toLong())
+                            .setContext(reactApplicationContext.applicationContext)
+                            .setHgwBean(SearchedDevices[DeviceID])
+                            .setListener(getITuyaSmartActivatorListenerForGW(promise)))
+                        mITuyaActivator.start()
+                    }
+                    override fun onFailure(errorCode: String, errorMsg: String) {
+                        promise.reject(errorCode, errorMsg)
+                    }
+                })
+            }
+            else
+            {
+
+            }            
+        }
+    }
+
 
     /**
      * ZigBee 하위 장치 네트워크 구성은 ZigBee 게이트웨이 장치 클라우드가 온라인 상태이고 
@@ -144,18 +198,114 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
         }
     }
 
+    /**
+     * ZigBee 하위 장치 네트워크 구성은 ZigBee 게이트웨이 장치 클라우드가 온라인 상태이고 
+     * 하위 장치가 네트워크 구성 상태인 경우에만 시작할 수 있습니다.
+     */
+    @ReactMethod
+    fun StartGwSubDevActivator(params: ReadableMap, promise: Promise) {
+        var ErrorOccur :Boolean = true
+        if (ReactParamsCheck.checkParams(arrayOf(DEVID, TIME), params)){
+            val builder = TuyaGwSubDevActivatorBuilder()
+                    //게이트웨이 ID 설정
+                    .setDevId(params.getString(DEVID))
+                    //네트워크 시간 초과 설정
+                    .setTimeOut(params.getInt(TIME).toLong())
+                    .setListener(object : ITuyaSmartActivatorListener {
+                        /**
+                        1001 네트워크 오류
+                        1002 배포 네트워크 장치의 활성화 인터페이스 호출이 실패했으며 인터페이스 호출이 실패했습니다.
+                        1003 네트워크 배포 장치의 활성화에 실패했으며 장치를 찾을 수 없습니다.
+                        1004 토큰 획득 실패
+                        1005 장치가 온라인 상태가 아닙니다.
+                        1006 네트워크 배포 시간 초과
+                        */
+                        override fun onError(var1: String, var2: String) {
+                            var PassParam = ResultEvent ("onError",var1,var2)
+                            BridgeUtils.resultSubDevice(reactApplicationContext, TuyaReactUtils.parseToWritableMap(PassParam))
+                        }
+
+                        /**
+                        * 장치가 성공적으로 네트워크에 연결되어 있고 장치가 온라인 상태이면(전화를 직접 제어할 수 있음) 다음을 사용할 수 있습니다.
+                        */
+                        override fun onActiveSuccess(var1: DeviceBean) {
+                            var PassParam = ResultEvent ("onActiveSuccess",var1,"none")
+                            BridgeUtils.resultSubDevice(reactApplicationContext, TuyaReactUtils.parseToWritableMap(PassParam))
+                        }
+
+                        /**
+                        * device_find 기기 검색
+                        device_bind_success 장치가 성공적으로 바인딩되었지만 아직 온라인 상태가 아닙니다. 현재 장치가 오프라인 상태이므로 제어할 수 없습니다.
+                        */
+                        override fun onStep(var1: String, var2: Any) {
+                            // IOS 일관성을 유지하기 위한 onStep 없음
+                            var PassParam = ResultEvent ("onStep",var1,var2)
+                            BridgeUtils.resultSubDevice(reactApplicationContext, TuyaReactUtils.parseToWritableMap(PassParam))
+                        }
+                    })
+
+            mTuyaGWActivator = TuyaHomeSdk.getActivatorInstance().newGwSubDevActivator(builder)
+            mTuyaGWActivator?.start()
+            ErrorOccur = false
+        }
+
+        if( ErrorOccur ) {
+            promise.reject("NG")
+        }
+        else {
+            promise.resolve("OK")
+        }
+    }
+
     @ReactMethod
     fun stopConfig() {
         mITuyaActivator?.stop()
         mTuyaGWActivator?.stop()
     }
+
     @ReactMethod
     fun onDestory() {
         mITuyaActivator?.onDestroy()
         mTuyaGWActivator?.onDestroy()
     }
 
-    fun getITuyaSmartActivatorListener(promise: Promise): ITuyaSmartActivatorListener {
+    @ReactMethod
+    fun getITuyaSmartActivatorListenerForSubDevice() : ITuyaSmartActivatorListener {
+        return object : ITuyaSmartActivatorListener {
+            /**
+            1001 네트워크 오류
+            1002 배포 네트워크 장치의 활성화 인터페이스 호출이 실패했으며 인터페이스 호출이 실패했습니다.
+            1003 네트워크 배포 장치의 활성화에 실패했으며 장치를 찾을 수 없습니다.
+            1004 토큰 획득 실패
+            1005 장치가 온라인 상태가 아닙니다.
+            1006 네트워크 배포 시간 초과
+             */
+            override fun onError(var1: String, var2: String) {
+                var PassParam = ResultEvent ("onError",var1,var2)
+                BridgeUtils.resultSubDevice(reactApplicationContext, TuyaReactUtils.parseToWritableMap(PassParam))
+            }
+
+            /**
+             * 장치가 성공적으로 네트워크에 연결되어 있고 장치가 온라인 상태이면(전화를 직접 제어할 수 있음) 다음을 사용할 수 있습니다.
+             */
+            override fun onActiveSuccess(var1: DeviceBean) {
+                var PassParam = ResultEvent ("onActiveSuccess",var1,"none")
+                BridgeUtils.resultSubDevice(reactApplicationContext, TuyaReactUtils.parseToWritableMap(PassParam))
+            }
+
+            /**
+             * device_find 기기 검색
+               device_bind_success 장치가 성공적으로 바인딩되었지만 아직 온라인 상태가 아닙니다. 현재 장치가 오프라인 상태이므로 제어할 수 없습니다.
+             */
+            override fun onStep(var1: String, var2: Any) {
+                // IOS 일관성을 유지하기 위한 onStep 없음
+                var PassParam = ResultEvent ("onStep",var1,var2)
+                BridgeUtils.resultSubDevice(reactApplicationContext, TuyaReactUtils.parseToWritableMap(PassParam))
+            }
+        }
+    }
+
+    fun getITuyaSmartActivatorListenerForGW(promise: Promise): ITuyaSmartActivatorListener {
         return object : ITuyaSmartActivatorListener {
             /**
             1001 네트워크 오류
