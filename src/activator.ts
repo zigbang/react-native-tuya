@@ -68,12 +68,12 @@ export function initWiredGwActivator(
   return tuya.initWiredGwActivator(params);
 }
 
-export function StartSearcingGwDevice() {
+export function startSearcingGwDevice() {
   tuya.StartSearcingGwDevice();
   return;
 }
 
-export function InitSearchedGwDevice(
+export function initSearchedGwDevice(
   params: SearchedGwActivatorParams
 ): Promise<DeviceDetailResponse> {
   return tuya.InitSearchedGwDevice(params);
@@ -100,7 +100,7 @@ export function newGwSubDevActivator(
   return tuya.newGwSubDevActivator(params);
 }
 
-export function StartGwSubDevActivator(
+export function startGwSubDevActivator(
   params: RegistSubForGwParams
 ): Promise<boolean> {
   if (Platform.OS == 'ios') {
