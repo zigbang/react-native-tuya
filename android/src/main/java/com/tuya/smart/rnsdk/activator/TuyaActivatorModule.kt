@@ -116,11 +116,15 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
     @ReactMethod
     fun StartSearcingGwDevice() {
+        Log.d("[Log]TuyaActivatorModule.kt", "게이트웨이 서치 시작")
         val mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
         
         mTuyaGwSearcher.registerGwSearchListener(object : IGwSearchListener { 
             override fun onDevFind(hgwBean:HgwBean) {
+                Log.d("[Log]TuyaActivatorModule.kt", "onDevFind")
                 if( SearchedDevices.containsKey(hgwBean.gwId) == false ){
+                    Log.d("[Log]TuyaActivatorModule.kt", "SearchedDevices.containsKey(hgwBean.gwId)")
+
                     SearchedDevices.put(hgwBean.gwId, hgwBean)
                 }
 
@@ -131,8 +135,11 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
     
     @ReactMethod
     fun InitSearchedGwDevice(params: ReadableMap, promise: Promise) {
+        Log.d("initWiredGwActivator1", " 11")
+
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, TIME, DEVID), params)){
             var DeviceID = params.getString(DEVID)
+            Log.d("initWiredGwActivator2", " 22")
 
             if( SearchedDevices.containsKey(DeviceID) )
             {
@@ -148,6 +155,8 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                         mITuyaActivator.start()
                     }
                     override fun onFailure(errorCode: String, errorMsg: String) {
+                        Log.d("initWiredGwActivatorError",errorCode)
+
                         promise.reject(errorCode, errorMsg)
                     }
                 })

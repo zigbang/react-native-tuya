@@ -70,7 +70,6 @@ export function initWiredGwActivator(
 
 export function startSearcingGwDevice() {
   tuya.StartSearcingGwDevice();
-  return;
 }
 
 export function initSearchedGwDevice(
