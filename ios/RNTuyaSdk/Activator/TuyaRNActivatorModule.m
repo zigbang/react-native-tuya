@@ -107,12 +107,16 @@ RCT_EXPORT_METHOD(initWiredGwActivator:(NSDictionary *)params resolver:(RCTPromi
 }
 
 RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  
   NSNumber *homeId = params[kTuyaRNActivatorModuleHomeId];
   NSString *gwId = params[kTuyaRNActivatorModuleGWId];
   NSString *productId = params[kTuyaRNActivatorModuleProductId];
   NSNumber *time = params[kTuyaRNActivatorModuleOverTime];
   
+  NSLog(@"%s", gwId);
+
+
+
+
   if (activatorInstance == nil) {
     activatorInstance = [TuyaRNActivatorModule new];
   }
@@ -123,6 +127,7 @@ RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromi
   
   [[TuyaSmartActivator sharedInstance] getTokenWithHomeId:homeId.longLongValue success:^(NSString *result) {
     //开始配置网络：
+    NSLog(@"%s", result);
     [[TuyaSmartActivator sharedInstance] activeGatewayDeviceWithGwId:gwId productId:productId token:result timeout:time.doubleValue];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
@@ -202,9 +207,9 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
 
     [TuyaRNEventEmitter ty_sendEvent:kNotificationResultSubDevice withBody:dic];
 
-    // if (activatorInstance.promiseRejectBlock) {
-    //   [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
-    // }
+    if (activatorInstance.promiseRejectBlock) {
+      [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
+    }
     return;
   }
   
@@ -219,9 +224,8 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
 
         [TuyaRNEventEmitter ty_sendEvent:kNotificationResultSubDevice withBody:dic];
     }
-    // self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
+    self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
   }
-  
 }
 
 @end
