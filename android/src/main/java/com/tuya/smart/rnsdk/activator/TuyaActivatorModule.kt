@@ -143,7 +143,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
             if( SearchedDevices.containsKey(DeviceID) )
             {
-                Log.d("initWiredGwActivator3",HOMEID)
+                Log.d("initWiredGwActivator3", params.getDouble(HOMEID).toLong().toString())
                 TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
                     override fun onSuccess(token: String) {
                         Log.d("initWiredGwActivator", " token:" + token)
