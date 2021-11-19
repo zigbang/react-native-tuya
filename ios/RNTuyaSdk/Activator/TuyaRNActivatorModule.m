@@ -215,7 +215,7 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
   
   //开始回调
   if (activatorInstance.promiseResolveBlock) {
-    if (deviceModel) {
+    if (deviceModel.deviceType == 5) {
         NSDictionary *dic = @{
                       @"result": @"onActiveSuccess",
                       @"var1": deviceModel.yy_modelToJSONObject,
@@ -223,8 +223,14 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
                       };
 
         [TuyaRNEventEmitter ty_sendEvent:kNotificationResultSubDevice withBody:dic];
+    } else {
+        self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
     }
-    self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
+    NSLog(@"deviceModel.gwType : %@", deviceModel.gwType);
+    NSLog(@"deviceModel.name : %@", deviceModel.name);
+    NSLog(@"deviceModel.schema : %@", deviceModel.schema);
+    NSLog(@"deviceModel.name : %@", deviceModel.productId);
+    NSLog(@"deviceModel.name : %lu", deviceModel.deviceType);
   }
 }
 
