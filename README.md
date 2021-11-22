@@ -6,7 +6,7 @@ react-native-tuya 모듈을 적절히 사용하고 있음.<br>
 
 ## `init`
 
-`init(isShowDebugLog: boolean, pnu: string, dongho: string, user: string, host: string): Promise<string>`<br><br>
+`init(isShowDebugLog: boolean, pnu: string, dong: string, ho: string, user: string, host: string): Promise<string>`<br><br>
 TuyaSdkBridge 사용을 위한 초기화 수행<br><br>
 
 - **Parameters**
@@ -15,7 +15,8 @@ TuyaSdkBridge 사용을 위한 초기화 수행<br><br>
 | -------------- | ------- | ------------------------------------------------------ |
 | isShowDebugLog | boolean | 디버그 정보 활용 여부 (true - 콘솔 출력 정보가 많아짐) |
 | pnu            | string  | 기기 등록시 활용되는 건물 정보                         |
-| dongho         | string  | 기기 등록시 활용되는 동호수 정보                       |
+| dong           | string  | 기기 등록시 활용되는 동 정보                       |
+| ho             | string  | 기기 등록시 활용되는 호 정보                       |
 | user           | string  | 기기 등록시 활용되는 사용자 이름                       |
 | host           | string  | Tuya의 익명 로그인을 위한 서버 주소                    |
 
@@ -28,7 +29,7 @@ TuyaSdkBridge 사용을 위한 초기화 수행<br><br>
 - **Sample**
 
 ```
-	TuyaSdkBridge.init(false, "1929129192919", "301호", "서진우", host)
+	TuyaSdkBridge.init(false, "1929129192919", "101동", "301호", "서진우", "10.200.18.212")
 ```
 
 ## `startSearchWiredGW`
