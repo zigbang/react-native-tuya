@@ -166,7 +166,6 @@ RCT_EXPORT_METHOD(stopNewGwSubDevActivatorConfig:(NSDictionary *)params resolver
   
   NSString *deviceId = params[kTuyaRNActivatorModuleDeviceId];
   [[TuyaSmartActivator sharedInstance] stopActiveSubDeviceWithGwId:deviceId];
-    resolver(@"success");
 }
 
 /**
