@@ -41,17 +41,10 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
     @ReactMethod
     fun scanBluetoothDevices(promise: Promise) {
-      LeScanSetting scanSetting = new LeScanSetting.Builder()
-        .setTimeout(60000) // Activation timeout: ms
-        .addScanType(ScanType.SINGLE)
-        .build();
-
-      // Start scanning
-      TuyaHomeSdk.getBleOperator().startLeScan(scanSetting, new TyBleScanResponse() {
-        @Override
-        public void onResult(var1: ScanDeviceBean) {
-          promise.resolve(TuyaReactUtils.parseToWritableMap(var1));
-        }
+      TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE, new TyBleScanResponse() {
+          override fun onResult(bean: ScanDeviceBean) {
+            promise.resolve(TuyaReactUtils.parseToWritableMap(bean))
+          }
       });
     }
 
