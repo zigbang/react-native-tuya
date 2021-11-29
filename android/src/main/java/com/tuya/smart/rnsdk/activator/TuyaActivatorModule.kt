@@ -5,6 +5,13 @@ import android.provider.Settings
 import android.util.Log
 import com.facebook.react.bridge.*
 import com.tuya.smart.android.common.utils.WiFiUtil
+
+import com.tuya.smart.android.ble.api.TyBleScanResponse
+import com.tuya.smart.android.ble.api.ScanType.SINGLE
+import com.tuya.smart.android.ble.api.ScanDeviceBean
+import com.tuya.smart.android.ble.api.LeScanSetting
+import com.tuya.smart.android.ble.api.LeScanSetting.Builder
+
 import com.tuya.smart.home.sdk.TuyaHomeSdk
 import com.tuya.smart.home.sdk.builder.ActivatorBuilder
 import com.tuya.smart.rnsdk.utils.*
@@ -30,6 +37,22 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
     var mTuyaGWActivator: ITuyaActivator?=null
     override fun getName(): String {
         return "TuyaActivatorModule"
+    }
+
+    @ReactMethod
+    fun scanBluetoothDevices(promise: Promise) {
+      LeScanSetting scanSetting = new LeScanSetting.Builder()
+        .setTimeout(60000) // Activation timeout: ms
+        .addScanType(ScanType.SINGLE)
+        .build();
+
+      // Start scanning
+      TuyaHomeSdk.getBleOperator().startLeScan(scanSetting, new TyBleScanResponse() {
+        @Override
+        public void onResult(var1: ScanDeviceBean) {
+          promise.resolve(TuyaReactUtils.parseToWritableMap(var1));
+        }
+      });
     }
 
     @ReactMethod

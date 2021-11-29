@@ -25,6 +25,10 @@ export function stopConfig() {
   return tuya.stopConfig();
 }
 
+export function scanBluetoothDevices() {
+  return tuya.scanBluetoothDevices();
+}
+
 export function getCurrentWifi(
   success: (ssid: string) => void,
   error: () => void
