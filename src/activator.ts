@@ -1,3 +1,4 @@
+import { DeviceBean } from 'device';
 import { NativeModules } from 'react-native';
 import { DeviceDetailResponse } from './home';
 
@@ -15,6 +16,12 @@ export type InitActivatorParams = {
   type: 'TY_EZ' | 'TY_AP' | 'TY_QR';
 };
 
+export type InitBluetoothActivatorParams = {
+  homeId: number;
+  ssid: string;
+  password: string;
+};
+
 export function initActivator(
   params: InitActivatorParams
 ): Promise<DeviceDetailResponse> {
@@ -25,8 +32,14 @@ export function stopConfig() {
   return tuya.stopConfig();
 }
 
-export function scanBluetoothDevices() {
-  return tuya.scanBluetoothDevices();
+export function startBluetoothScan() {
+  return tuya.startBluetoothScan();
+}
+
+export function initBluetoothDualModeActivator(
+  params: InitBluetoothActivatorParams
+): Promise<DeviceBean> {
+  return tuya.initBluetoothDualModeActivator(params);
 }
 
 export function getCurrentWifi(
