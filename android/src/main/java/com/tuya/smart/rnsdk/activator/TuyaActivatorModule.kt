@@ -44,15 +44,8 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
     @ReactMethod
     fun startBluetoothScan(promise: Promise) {
-      TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE, object : TyBleScanResponse {
-        override fun onResult(bean: ScanDeviceBean) {
-          promise.resolve(TuyaReactUtils.parseToWritableMap(bean))
-        }
-
-        override fun onFailure(s: String, s1: String) {
-          promise.reject(s,s1)
-        }
-      });
+      TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE
+      ) { bean -> promise.resolve(TuyaReactUtils.parseToWritableMap(bean)) };
     }
 
     @ReactMethod
@@ -65,10 +58,10 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
     fun initBluetoothDualModeActivator(params: ReadableMap, promise: Promise) {
       if (ReactParamsCheck.checkParams(arrayOf(HOMEID,SSID,PASSWORD), params)){
 
-        TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE, object : TyBleScanResponse {
-          override fun onResult(bean: ScanDeviceBean) {
-
-            TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(), object : ITuyaActivatorGetToken {
+        TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE
+        ) { bean ->
+          TuyaHomeSdk.getActivatorInstance()
+            .getActivatorToken(params.getDouble(HOMEID).toLong(), object : ITuyaActivatorGetToken {
               override fun onSuccess(token: String) {
                 val multiModeActivatorBean = MultiModeActivatorBean();
                 multiModeActivatorBean.ssid = params.getString(SSID);
@@ -80,33 +73,28 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                 multiModeActivatorBean.address = bean.getAddress();
 
 
-                multiModeActivatorBean.homeId = params.getString(HOMEID);
+                multiModeActivatorBean.homeId = params.getString(HOMEID)?.toLong() ?: 0;
                 multiModeActivatorBean.token = token;
                 multiModeActivatorBean.timeout = 120000;
                 multiModeActivatorBean.phase1Timeout = 60000;
 
-                TuyaHomeSdk.getActivator().newMultiModeActivator().startActivator(multiModeActivatorBean, object : IMultiModeActivatorListener {
-                  override fun onSuccess(bean: DeviceBean) {
-                    promise.resolve(TuyaReactUtils.parseToWritableMap(bean));
-                  }
+                TuyaHomeSdk.getActivator().newMultiModeActivator()
+                  .startActivator(multiModeActivatorBean, object : IMultiModeActivatorListener {
+                    override fun onSuccess(bean: DeviceBean) {
+                      promise.resolve(TuyaReactUtils.parseToWritableMap(bean));
+                    }
 
-                  override fun onFailure(code: Int, msg: String) {
-                    promise.reject(code, msg);
-                  }
-                });
+                    override fun onFailure(code: Int, msg: String?, handle: Any?) {
+                      promise.reject(code.toString(), msg);
+                    }
+                  });
               }
 
               override fun onFailure(s: String, s1: String) {
-                promise.reject(s,s1);
+                promise.reject(s, s1);
               }
             })
-
-          }
-
-          override fun onFailure(s: String, s1: String) {
-            promise.reject(s,s1)
-          }
-        });
+        };
       }
     }
 
