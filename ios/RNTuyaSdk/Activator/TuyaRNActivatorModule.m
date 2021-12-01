@@ -10,6 +10,8 @@
 #import <TuyaSmartActivatorKit/TuyaSmartActivatorKit.h>
 #import <TuyaSmartBaseKit/TuyaSmartBaseKit.h>
 #import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
+#import <TuyaSmartBLEManager/TuyaSmartBLEManager.h>
+#import <TuyaSmartBLEWifiActivator/TuyaSmartBLEWifiActivator.h>
 #import "TuyaRNUtils+Network.h"
 #import "YYModel.h"
 
@@ -81,6 +83,44 @@ RCT_EXPORT_METHOD(initActivator:(NSDictionary *)params resolver:(RCTPromiseResol
 RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
   [[TuyaSmartActivator sharedInstance] stopConfigWiFi];
+}
+
+
+RCT_EXPORT_METHOD(startBluetoothScan:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  [TuyaSmartBLEManager sharedInstance].delegate = self;
+  [[TuyaSmartBLEManager sharedInstance] startListening:YES];
+    
+  - (void)didDiscoveryDeviceWithDeviceInfo:(TYBLEAdvModel *)deviceInfo {
+    if (resolver) {
+      resolver([deviceInfo yy_modelToJSONObject]);
+    }
+  }
+}
+
+RCT_EXPORT_METHOD(initBluetoothDualModeActivator:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+  
+  [TuyaSmartBLEManager sharedInstance].delegate = self;
+  [[TuyaSmartBLEManager sharedInstance] startListening:YES];
+    
+  - (void)didDiscoveryDeviceWithDeviceInfo:(TYBLEAdvModel *)deviceInfo {
+    
+    [[TuyaSmartBLEWifiActivator sharedInstance] startConfigBLEWifiDeviceWithUUID:deviceInfo.uuid homeId:params.homeId productId:params.productId ssid:params.ssid password:params.password  timeout:100 success:^{
+      // Pairing data is sent.
+      } failure:^{
+        [TuyaRNUtils rejecterWithError:error handler:rejecter];
+      }];
+  }
+  
+  - (void)bleWifiActivator:(TuyaSmartBLEWifiActivator *)activator didReceiveBLEWifiConfigDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error {
+      if (!error && deviceModel) {
+        resolver([deviceModel yy_modelToJSONObject]);
+      }
+
+      if (error) {
+        [TuyaRNUtils rejecterWithError:error handler:rejecter];
+      }
+  }
+
 }
 
 
