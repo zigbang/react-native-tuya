@@ -44,7 +44,7 @@
     "@types/react-native": "^0.61.16",
     "@volst/eslint-config": "^4.1.1",
     "husky": "^4.2.3",
-    "react-native": "^0.61.5",
+    "react-native": "0.66.1",
     "tsdx": "^0.12.3",
     "tslib": "^1.10.0",
     "typescript": "^3.7.5"
