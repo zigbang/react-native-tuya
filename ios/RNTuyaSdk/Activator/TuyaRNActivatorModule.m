@@ -102,6 +102,8 @@ RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromi
 
 RCT_EXPORT_METHOD(startBluetoothScan:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   [[TuyaSmartBLEManager sharedInstance] startListening:YES];
+  activationParamsInstance.promiseResolveBlock = resolver;
+  activationParamsInstance.promiseRejectBlock = rejecter;
 }
 
 RCT_EXPORT_METHOD(initBluetoothDualModeActivator:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
@@ -109,6 +111,8 @@ RCT_EXPORT_METHOD(initBluetoothDualModeActivator:(NSDictionary *)params resolver
 
   shouldActivate = true;
   activationParamsInstance = params;
+  activationParamsInstance.promiseResolveBlock = resolver;
+  activationParamsInstance.promiseRejectBlock = rejecter;
 }
 
 //ZigBee子设备配网需要ZigBee网关设备云在线的情况下才能发起,且子设备处于配网状态。
