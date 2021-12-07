@@ -10,8 +10,6 @@
 #import <TuyaSmartActivatorKit/TuyaSmartActivatorKit.h>
 #import <TuyaSmartBaseKit/TuyaSmartBaseKit.h>
 #import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
-#import <TuyaSmartBLEKit/TuyaSmartBLEManager+Biz.h>
-#import <TuyaSmartBLEKit/TuyaSmartBLEWifiActivator.h>
 #import "TuyaRNUtils+Network.h"
 #import "YYModel.h"
 
@@ -22,20 +20,6 @@
 #define kTuyaRNActivatorModuleOverTime @"time"
 #define kTuyaRNActivatorModuleAcccessToken @"token"
 #define kTuyaRNActivatorModuleDeviceId @"devId"
-
-
-@interface activationParams : NSObject
-@property(assign) long long homeId;
-@property(assign) NSString *productId;
-@property(assign) NSString *ssid;
-@property(assign) NSString *password;
-@property(copy, nonatomic) RCTPromiseResolveBlock promiseResolveBlock;
-@property(copy, nonatomic) RCTPromiseRejectBlock promiseRejectBlock;
-@end
-
-// Bluetooth Pairing
-static bool shouldActivate = false;
-static activationParams * activationParamsInstance = nil;
 
 static TuyaRNActivatorModule * activatorInstance = nil;
 
@@ -97,22 +81,6 @@ RCT_EXPORT_METHOD(initActivator:(NSDictionary *)params resolver:(RCTPromiseResol
 RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   [[TuyaSmartActivator sharedInstance] stopConfigWiFi];
-}
-
-
-RCT_EXPORT_METHOD(startBluetoothScan:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  [[TuyaSmartBLEManager sharedInstance] startListening:YES];
-  activationParamsInstance.promiseResolveBlock = resolver;
-  activationParamsInstance.promiseRejectBlock = rejecter;
-}
-
-RCT_EXPORT_METHOD(initBluetoothDualModeActivator:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-  [[TuyaSmartBLEManager sharedInstance] startListening:YES];
-
-  shouldActivate = true;
-  activationParamsInstance = params;
-  activationParamsInstance.promiseResolveBlock = resolver;
-  activationParamsInstance.promiseRejectBlock = rejecter;
 }
 
 //ZigBee子设备配网需要ZigBee网关设备云在线的情况下才能发起,且子设备处于配网状态。
@@ -181,38 +149,6 @@ RCT_EXPORT_METHOD(onDestory:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromis
   if (activatorInstance.promiseResolveBlock) {
     self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
   }
-}
-
-- (void)didDiscoveryDeviceWithDeviceInfo:(TYBLEAdvModel *)deviceInfo {
-  if (shouldActivate) {
-    [[TuyaSmartBLEWifiActivator sharedInstance] startConfigBLEWifiDeviceWithUUID:deviceInfo.uuid homeId:activationParamsInstance.homeId productId:activationParamsInstance.productId ssid:activationParamsInstance.ssid password:activationParamsInstance.password  timeout:100 success:^{
-        // Wait for activation
-      } failure:^{
-        if (activationParamsInstance.promiseRejectBlock) {
-          [TuyaRNUtils rejecterWithError:nil handler:activatorInstance.promiseRejectBlock];
-        }
-        return;
-      }];
-  } else {
-    // Resolve here
-    if (activationParamsInstance.promiseResolveBlock) {
-      self.promiseResolveBlock([deviceInfo yy_modelToJSONObject]);
-    }
-  }
-}
-
-- (void)bleWifiActivator:(TuyaSmartBLEWifiActivator *)activator didReceiveBLEWifiConfigDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error {
-  if (!error && deviceModel) {
-    if (activationParamsInstance.promiseResolveBlock) {
-      self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
-    }
-  }
-  if (error) {
-    if (activationParamsInstance.promiseRejectBlock) {
-      [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
-    }
-  }
-
 }
 
 @end

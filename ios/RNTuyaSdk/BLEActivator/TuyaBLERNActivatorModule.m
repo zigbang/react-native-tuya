@@ -7,6 +7,7 @@
 //
 
 #import "TuyaBLERNActivatorModule.h"
+#import <React/RCTBridgeModule.h>
 #import <TuyaSmartActivatorKit/TuyaSmartActivatorKit.h>
 #import <TuyaSmartBaseKit/TuyaSmartBaseKit.h>
 #import <TuyaSmartDeviceKit/TuyaSmartDeviceKit.h>
@@ -14,18 +15,13 @@
 #import "TuyaRNUtils+Network.h"
 #import "YYModel.h"
 
-@interface activationParams : NSObject
-@property(assign) long long homeId;
-@property(assign) NSString *deviceId;
-@property(assign) NSString *productId;
-@property(assign) NSString *ssid;
-@property(assign) NSString *password;
-@property(copy, nonatomic) RCTPromiseResolveBlock promiseResolveBlock;
-@property(copy, nonatomic) RCTPromiseRejectBlock promiseRejectBlock;
-@end
+#define kTuyaRNActivatorModuleHomeId @"homeId"
+#define kTuyaRNActivatorModuleDeviceId @"deviceId"
+#define kTuyaRNActivatorModuleProductId @"productId"
+#define kTuyaRNActivatorModuleSSID @"ssid"
+#define kTuyaRNActivatorModulePassword @"password"
 
 // Bluetooth Pairing
-static activationParams * activationParamsInstance = nil;
 static TuyaBLERNActivatorModule * activatorInstance = nil;
 
 @interface TuyaBLERNActivatorModule()<TuyaSmartBLEWifiActivatorDelegate>
@@ -39,20 +35,27 @@ static TuyaBLERNActivatorModule * activatorInstance = nil;
 
 RCT_EXPORT_MODULE(TuyaBLEActivatorModule)
 
-RCT_EXPORT_METHOD(initActivator:(activationParams *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
+RCT_EXPORT_METHOD(initActivator:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   if (activatorInstance == nil) {
     activatorInstance = [TuyaBLERNActivatorModule new];
   }
 
-  [TuyaSmartBLEWifiActivator sharedInstance].delegate = activatorInstance;
+  [TuyaSmartBLEWifiActivator sharedInstance].bleWifiDelegate = activatorInstance;
   activatorInstance.promiseResolveBlock = resolver;
   activatorInstance.promiseRejectBlock = rejecter;
 
-  [[TuyaSmartBLEWifiActivator sharedInstance] startConfigBLEWifiDeviceWithUUID:activationParamsInstance.deviceId homeId:activationParamsInstance.homeId productId:activationParamsInstance.productId ssid:activationParamsInstance.ssid password:activationParamsInstance.password  timeout:100 success:^{
+  NSNumber *homeId = params[kTuyaRNActivatorModuleHomeId];
+  NSString *deviceId = params[kTuyaRNActivatorModuleDeviceId];
+  NSString *productId = params[kTuyaRNActivatorModuleProductId];
+  NSString *ssid = params[kTuyaRNActivatorModuleSSID];
+  NSString *password = params[kTuyaRNActivatorModulePassword];
+  long long int homeIdValue = [homeId longLongValue];
+
+  [[TuyaSmartBLEWifiActivator sharedInstance] startConfigBLEWifiDeviceWithUUID:deviceId homeId:homeIdValue productId:productId ssid:ssid password:password  timeout:100 success:^{
       // Wait for activation
-    } failure:^(NSError *error) {
-      if (activationParamsInstance.promiseRejectBlock) {
-        [TuyaRNUtils rejecterWithError:error handler:rejecter];
+    } failure:^ {
+      if (activatorInstance.promiseRejectBlock) {
+        [TuyaRNUtils rejecterWithError:nil handler:rejecter];
       }
       return;
     }];
@@ -60,12 +63,12 @@ RCT_EXPORT_METHOD(initActivator:(activationParams *)params resolver:(RCTPromiseR
 
 - (void)bleWifiActivator:(TuyaSmartBLEWifiActivator *)activator didReceiveBLEWifiConfigDevice:(TuyaSmartDeviceModel *)deviceModel error:(NSError *)error {
   if (!error && deviceModel) {
-    if (activationParamsInstance.promiseResolveBlock) {
+    if (activatorInstance.promiseResolveBlock) {
       self.promiseResolveBlock([deviceModel yy_modelToJSONObject]);
     }
   }
   if (error) {
-    if (activationParamsInstance.promiseRejectBlock) {
+    if (activatorInstance.promiseRejectBlock) {
       [TuyaRNUtils rejecterWithError:error handler:activatorInstance.promiseRejectBlock];
     }
   }

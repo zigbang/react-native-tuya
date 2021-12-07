@@ -3,7 +3,8 @@ import { NativeModules, Platform } from 'react-native';
 import { DeviceDetailResponse } from './home';
 
 const tuya = NativeModules.TuyaActivatorModule;
-const tuyaBLE = NativeModules.TuyaBLEActivatorModule;
+const tuyaBLEActivator = NativeModules.TuyaBLEActivatorModule;
+const tuyaBLEScanner = NativeModules.TuyaBLEScannerModule;
 
 export function openNetworkSettings() {
   return tuya.openNetworkSettings({});
@@ -17,11 +18,16 @@ export type InitActivatorParams = {
   type: 'TY_EZ' | 'TY_AP' | 'TY_QR';
 };
 
-export type InitBluetoothActivatorParams = {
+export interface InitBluetoothActivatorParams {
   homeId: number;
   ssid: string;
   password: string;
-};
+}
+
+export interface InitBluetoothActivatorParamsIOS
+  extends InitBluetoothActivatorParams {
+  deviceUUID: string;
+}
 
 export function initActivator(
   params: InitActivatorParams
@@ -35,16 +41,18 @@ export function stopConfig() {
 
 export function startBluetoothScan() {
   if (Platform.OS === 'ios') {
-    return tuyaBLE.startBluetoothScan();
+    return tuyaBLEScanner.startBluetoothScan();
   }
   return tuya.startBluetoothScan();
 }
 
 export function initBluetoothDualModeActivator(
-  params: InitBluetoothActivatorParams
+  params: InitBluetoothActivatorParams | InitBluetoothActivatorParamsIOS
 ): Promise<DeviceBean> {
   if (Platform.OS === 'ios') {
-    return tuyaBLE.initBluetoothDualModeActivator();
+    return tuyaBLEActivator.initActivator(
+      params as InitBluetoothActivatorParamsIOS
+    );
   }
   return tuya.initBluetoothDualModeActivator(params);
 }
