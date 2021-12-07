@@ -19,14 +19,10 @@ export type InitActivatorParams = {
 };
 
 export interface InitBluetoothActivatorParams {
+  deviceId?: string;
   homeId: number;
   ssid: string;
   password: string;
-}
-
-export interface InitBluetoothActivatorParamsIOS
-  extends InitBluetoothActivatorParams {
-  deviceUUID: string;
 }
 
 export function initActivator(
@@ -47,12 +43,10 @@ export function startBluetoothScan() {
 }
 
 export function initBluetoothDualModeActivator(
-  params: InitBluetoothActivatorParams | InitBluetoothActivatorParamsIOS
+  params: InitBluetoothActivatorParams
 ): Promise<DeviceBean> {
   if (Platform.OS === 'ios') {
-    return tuyaBLEActivator.initActivator(
-      params as InitBluetoothActivatorParamsIOS
-    );
+    return tuyaBLEActivator.initActivator(params);
   }
   return tuya.initBluetoothDualModeActivator(params);
 }
