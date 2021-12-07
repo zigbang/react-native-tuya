@@ -60,9 +60,9 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
         TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE
         ) { bean ->
-          params.getString(HOMEID)?.let {
+          params.getString(HOMEID)?.toLong()?.let {
             TuyaHomeSdk.getActivatorInstance()
-              .getActivatorToken(it.toLong(), object : ITuyaActivatorGetToken {
+              .getActivatorToken(it, object : ITuyaActivatorGetToken {
                 override fun onSuccess(token: String) {
                       val multiModeActivatorBean = MultiModeActivatorBean();
                       multiModeActivatorBean.ssid = params.getString(SSID);
