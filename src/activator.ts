@@ -1,8 +1,9 @@
 import { DeviceBean } from 'device';
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import { DeviceDetailResponse } from './home';
 
 const tuya = NativeModules.TuyaActivatorModule;
+const tuyaBLE = NativeModules.TuyaBLEActivatorModule;
 
 export function openNetworkSettings() {
   return tuya.openNetworkSettings({});
@@ -33,12 +34,18 @@ export function stopConfig() {
 }
 
 export function startBluetoothScan() {
+  if (Platform.OS === 'ios') {
+    return tuyaBLE.startBluetoothScan();
+  }
   return tuya.startBluetoothScan();
 }
 
 export function initBluetoothDualModeActivator(
   params: InitBluetoothActivatorParams
 ): Promise<DeviceBean> {
+  if (Platform.OS === 'ios') {
+    return tuyaBLE.initBluetoothDualModeActivator();
+  }
   return tuya.initBluetoothDualModeActivator(params);
 }
 
