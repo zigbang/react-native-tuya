@@ -60,40 +60,42 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
         TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE
         ) { bean ->
-          TuyaHomeSdk.getActivatorInstance()
-            .getActivatorToken(params.getString(HOMEID).toLong(), object : ITuyaActivatorGetToken {
-              override fun onSuccess(token: String) {
-                val multiModeActivatorBean = MultiModeActivatorBean();
-                multiModeActivatorBean.ssid = params.getString(SSID);
-                multiModeActivatorBean.pwd = params.getString(PASSWORD);
+          params.getString(HOMEID)?.let {
+            TuyaHomeSdk.getActivatorInstance()
+              .getActivatorToken(it.toLong(), object : ITuyaActivatorGetToken {
+                override fun onSuccess(token: String) {
+                      val multiModeActivatorBean = MultiModeActivatorBean();
+                      multiModeActivatorBean.ssid = params.getString(SSID);
+                      multiModeActivatorBean.pwd = params.getString(PASSWORD);
 
-                multiModeActivatorBean.uuid = bean.getUuid();
-                multiModeActivatorBean.deviceType = bean.getDeviceType();
-                multiModeActivatorBean.mac = bean.getMac();
-                multiModeActivatorBean.address = bean.getAddress();
+                      multiModeActivatorBean.uuid = bean.getUuid();
+                      multiModeActivatorBean.deviceType = bean.getDeviceType();
+                      multiModeActivatorBean.mac = bean.getMac();
+                      multiModeActivatorBean.address = bean.getAddress();
 
 
-                multiModeActivatorBean.homeId = params.getString(HOMEID)?.toLong() ?: 0;
-                multiModeActivatorBean.token = token;
-                multiModeActivatorBean.timeout = 120000;
-                multiModeActivatorBean.phase1Timeout = 60000;
+                      multiModeActivatorBean.homeId = params.getString(HOMEID)?.toLong() ?: 0;
+                      multiModeActivatorBean.token = token;
+                      multiModeActivatorBean.timeout = 120000;
+                      multiModeActivatorBean.phase1Timeout = 60000;
 
-                TuyaHomeSdk.getActivator().newMultiModeActivator()
-                  .startActivator(multiModeActivatorBean, object : IMultiModeActivatorListener {
-                    override fun onSuccess(bean: DeviceBean) {
-                      promise.resolve(TuyaReactUtils.parseToWritableMap(bean));
-                    }
+                      TuyaHomeSdk.getActivator().newMultiModeActivator()
+                        .startActivator(multiModeActivatorBean, object : IMultiModeActivatorListener {
+                          override fun onSuccess(bean: DeviceBean) {
+                            promise.resolve(TuyaReactUtils.parseToWritableMap(bean));
+                          }
 
-                    override fun onFailure(code: Int, msg: String?, handle: Any?) {
-                      promise.reject(code.toString(), msg);
-                    }
-                  });
-              }
+                          override fun onFailure(code: Int, msg: String?, handle: Any?) {
+                            promise.reject(code.toString(), msg);
+                          }
+                        });
+                }
 
-              override fun onFailure(s: String, s1: String) {
-                promise.reject(s, s1);
-              }
-            })
+                override fun onFailure(s: String, s1: String) {
+                      promise.reject(s, s1);
+                }
+              })
+          }
         };
       }
     }
@@ -121,7 +123,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
     @ReactMethod
     fun initActivator(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID,SSID, PASSWORD,TIME,TYPE), params)){
-            TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
+            TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID)?.toLong(),object : ITuyaActivatorGetToken {
                 override fun onSuccess(token: String) {
                     mITuyaActivator= TuyaHomeSdk.getActivatorInstance().newActivator(ActivatorBuilder()
                             .setSsid(params.getString(SSID))
