@@ -5,6 +5,14 @@ import android.provider.Settings
 import android.util.Log
 import com.facebook.react.bridge.*
 import com.tuya.smart.android.common.utils.WiFiUtil
+
+import com.tuya.smart.android.ble.api.TyBleScanResponse
+import com.tuya.smart.android.ble.api.ScanType
+import com.tuya.smart.android.ble.api.ScanType.SINGLE
+import com.tuya.smart.android.ble.api.ScanDeviceBean
+import com.tuya.smart.android.ble.api.LeScanSetting
+import com.tuya.smart.android.ble.api.LeScanSetting.Builder
+
 import com.tuya.smart.home.sdk.TuyaHomeSdk
 import com.tuya.smart.home.sdk.builder.ActivatorBuilder
 import com.tuya.smart.rnsdk.utils.*
@@ -16,7 +24,9 @@ import com.tuya.smart.rnsdk.utils.Constant.TIME
 
 import com.tuya.smart.sdk.api.ITuyaActivator
 import com.tuya.smart.sdk.api.ITuyaSmartActivatorListener
+import com.tuya.smart.sdk.api.IMultiModeActivatorListener
 import com.tuya.smart.sdk.bean.DeviceBean
+import com.tuya.smart.sdk.bean.MultiModeActivatorBean
 import com.tuya.smart.sdk.enums.ActivatorModelEnum
 import com.tuya.smart.sdk.api.ITuyaActivatorGetToken
 import com.tuya.smart.home.sdk.builder.TuyaGwSubDevActivatorBuilder
@@ -31,6 +41,63 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
     override fun getName(): String {
         return "TuyaActivatorModule"
     }
+
+    @ReactMethod
+    fun startBluetoothScan(promise: Promise) {
+      TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE
+      ) { bean -> promise.resolve(TuyaReactUtils.parseToWritableMap(bean)) };
+    }
+
+    @ReactMethod
+    fun stopBluetoothScan() {
+      TuyaHomeSdk.getBleOperator().stopLeScan();
+    }
+
+
+    @ReactMethod
+    fun initBluetoothDualModeActivator(params: ReadableMap, promise: Promise) {
+      if (ReactParamsCheck.checkParams(arrayOf(HOMEID,SSID,PASSWORD), params)){
+
+        TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE
+        ) { bean ->
+          TuyaHomeSdk.getActivatorInstance()
+            .getActivatorToken(params.getString(HOMEID).toLong(), object : ITuyaActivatorGetToken {
+              override fun onSuccess(token: String) {
+                val multiModeActivatorBean = MultiModeActivatorBean();
+                multiModeActivatorBean.ssid = params.getString(SSID);
+                multiModeActivatorBean.pwd = params.getString(PASSWORD);
+
+                multiModeActivatorBean.uuid = bean.getUuid();
+                multiModeActivatorBean.deviceType = bean.getDeviceType();
+                multiModeActivatorBean.mac = bean.getMac();
+                multiModeActivatorBean.address = bean.getAddress();
+
+
+                multiModeActivatorBean.homeId = params.getString(HOMEID)?.toLong() ?: 0;
+                multiModeActivatorBean.token = token;
+                multiModeActivatorBean.timeout = 120000;
+                multiModeActivatorBean.phase1Timeout = 60000;
+
+                TuyaHomeSdk.getActivator().newMultiModeActivator()
+                  .startActivator(multiModeActivatorBean, object : IMultiModeActivatorListener {
+                    override fun onSuccess(bean: DeviceBean) {
+                      promise.resolve(TuyaReactUtils.parseToWritableMap(bean));
+                    }
+
+                    override fun onFailure(code: Int, msg: String?, handle: Any?) {
+                      promise.reject(code.toString(), msg);
+                    }
+                  });
+              }
+
+              override fun onFailure(s: String, s1: String) {
+                promise.reject(s, s1);
+              }
+            })
+        };
+      }
+    }
+
 
     @ReactMethod
     fun getCurrentWifi(params: ReadableMap, successCallback: Callback,

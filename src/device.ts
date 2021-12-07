@@ -3,6 +3,14 @@ import { addEvent, bridge, DEVLISTENER } from './bridgeUtils';
 
 const tuya = NativeModules.TuyaDeviceModule;
 
+export type DeviceBean = {
+  productId: string;
+  devId: string;
+  verSw: string;
+  name: string;
+  dps: DeviceDps;
+};
+
 export type DevListenerParams = {
   devId: string;
 };
