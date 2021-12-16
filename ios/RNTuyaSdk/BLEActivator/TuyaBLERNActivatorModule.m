@@ -51,7 +51,7 @@ RCT_EXPORT_METHOD(initActivator:(NSDictionary *)params resolver:(RCTPromiseResol
   NSString *password = params[kTuyaRNActivatorModulePassword];
   long long int homeIdValue = [homeId longLongValue];
 
-  [[TuyaSmartBLEWifiActivator sharedInstance] startConfigBLEWifiDeviceWithUUID:deviceId homeId:homeIdValue productId:productId ssid:ssid password:password  timeout:100 success:^{
+  [[TuyaSmartBLEWifiActivator sharedInstance] startConfigBLEWifiDeviceWithUUID:deviceId homeId:homeIdValue productId:productId ssid:ssid password:password  timeout:180 success:^{
       // Wait for activation
     } failure:^ {
       if (activatorInstance.promiseRejectBlock) {

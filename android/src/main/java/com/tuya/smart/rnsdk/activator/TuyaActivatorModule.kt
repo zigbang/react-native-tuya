@@ -76,7 +76,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
                       multiModeActivatorBean.homeId = params.getString(HOMEID)?.toLong() ?: 0;
                       multiModeActivatorBean.token = token;
-                      multiModeActivatorBean.timeout = 120000;
+                      multiModeActivatorBean.timeout = 180000;
                       multiModeActivatorBean.phase1Timeout = 60000;
 
                       TuyaHomeSdk.getActivator().newMultiModeActivator()
