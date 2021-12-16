@@ -59,43 +59,43 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
     if (ReactParamsCheck.checkParams(arrayOf(HOMEID, SSID, PASSWORD), params)) {
 
       TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE
-      ) { bean: ScanDeviceBean ->
+      ) { bean ->
+        params.getString(HOMEID)?.toLong()?.let {
+          TuyaHomeSdk.getActivatorInstance()
+            .getActivatorToken(it, object : ITuyaActivatorGetToken {
+              override fun onSuccess(token: String) {
+                val multiModeActivatorBean = MultiModeActivatorBean();
+                multiModeActivatorBean.ssid = params.getString(SSID);
+                multiModeActivatorBean.pwd = params.getString(PASSWORD);
 
-        val homeId = params.getDouble(HOMEID).toLong();
-
-        TuyaHomeSdk.getActivatorInstance().getActivatorToken(homeId, object : ITuyaActivatorGetToken {
-          override fun onSuccess(token: String) {
-            val multiModeActivatorBean = MultiModeActivatorBean();
-            multiModeActivatorBean.ssid = params.getString(SSID);
-            multiModeActivatorBean.pwd = params.getString(PASSWORD);
-
-            multiModeActivatorBean.uuid = bean.getUuid();
-            multiModeActivatorBean.deviceType = bean.getDeviceType();
-            multiModeActivatorBean.mac = bean.getMac();
-            multiModeActivatorBean.address = bean.getAddress();
-
-            multiModeActivatorBean.homeId = homeId;
-            multiModeActivatorBean.token = token;
-            multiModeActivatorBean.timeout = 180000;
-            multiModeActivatorBean.phase1Timeout = 60000;
-
-            TuyaHomeSdk.getActivator().newMultiModeActivator()
-              .startActivator(multiModeActivatorBean, object : IMultiModeActivatorListener {
-                override fun onSuccess(bean: DeviceBean) {
-                  promise.resolve(TuyaReactUtils.parseToWritableMap(bean));
-                }
-
-                override fun onFailure(code: Int, msg: String?, handle: Any?) {
-                  promise.reject(code.toString(), msg);
-                }
-              });
-          }
+                multiModeActivatorBean.uuid = bean.getUuid();
+                multiModeActivatorBean.deviceType = bean.getDeviceType();
+                multiModeActivatorBean.mac = bean.getMac();
+                multiModeActivatorBean.address = bean.getAddress();
 
 
-          override fun onFailure(s: String, s1: String) {
-            promise.reject(s, s1)
-          }
-        })
+                multiModeActivatorBean.homeId = params.getString(HOMEID)?.toLong() ?: 0;
+                multiModeActivatorBean.token = token;
+                multiModeActivatorBean.timeout = 180000;
+                multiModeActivatorBean.phase1Timeout = 60000;
+
+                TuyaHomeSdk.getActivator().newMultiModeActivator()
+                  .startActivator(multiModeActivatorBean, object : IMultiModeActivatorListener {
+                    override fun onSuccess(bean: DeviceBean) {
+                      promise.resolve(TuyaReactUtils.parseToWritableMap(bean));
+                    }
+
+                    override fun onFailure(code: Int, msg: String?, handle: Any?) {
+                      promise.reject(code.toString(), msg);
+                    }
+                  });
+              }
+
+              override fun onFailure(s: String, s1: String) {
+                promise.reject(s, s1);
+              }
+            })
+        }
       };
     }
   }
