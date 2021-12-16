@@ -60,7 +60,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
       TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE
       ) { bean ->
-        params.getString(HOMEID)?.toLong()?.let {
+        params.getDouble(HOMEID).toLong().let {
           TuyaHomeSdk.getActivatorInstance()
             .getActivatorToken(it, object : ITuyaActivatorGetToken {
               override fun onSuccess(token: String) {
@@ -74,7 +74,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                 multiModeActivatorBean.address = bean.getAddress();
 
 
-                multiModeActivatorBean.homeId = params.getString(HOMEID)?.toLong() ?: 0;
+                multiModeActivatorBean.homeId = params.getDouble(HOMEID).toLong();
                 multiModeActivatorBean.token = token;
                 multiModeActivatorBean.timeout = 180000;
                 multiModeActivatorBean.phase1Timeout = 60000;
