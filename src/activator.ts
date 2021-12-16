@@ -1,4 +1,4 @@
-import { DeviceBean } from 'device';
+import { DeviceBean } from './device';
 import { NativeModules, Platform } from 'react-native';
 import { DeviceDetailResponse } from './home';
 
