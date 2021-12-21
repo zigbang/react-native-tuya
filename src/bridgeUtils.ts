@@ -23,7 +23,7 @@ export function removeEvent(eventName: string) {
 }
 
 export function removeSubscribtion(subscription: EmitterSubscription) {
-  return eventEmitter.removeSubscription(subscription);
+  return subscription.remove();
 }
 
 export const bridge = (key: string, id: string | number) => `${key}//${id}`;
