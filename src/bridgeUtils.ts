@@ -14,16 +14,21 @@ export const SINGLETRANSFER = 'SingleTransfer';
 
 let eventEmitter = new NativeEventEmitter(NativeModules.TuyaRNEventEmitter);
 
-export function addEvent(eventName: string, callback: (data: any) => any) {
+export function addEvent(
+  eventName: string,
+  callback: (data: any) => any
+): EmitterSubscription {
   return eventEmitter.addListener(eventName, callback);
 }
 
-export function removeEvent(eventName: string) {
-  return eventEmitter.removeAllListeners(eventName);
+export function removeEvent(eventName: string): void {
+  eventEmitter.removeAllListeners(eventName);
+  return;
 }
 
-export function removeSubscribtion(subscription: EmitterSubscription) {
-  return subscription.remove();
+export function removeSubscribtion(subscription: EmitterSubscription): void {
+  subscription.remove();
+  return;
 }
 
 export const bridge = (key: string, id: string | number) => `${key}//${id}`;
