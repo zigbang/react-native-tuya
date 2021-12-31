@@ -15,8 +15,8 @@ TuyaSdkBridge 사용을 위한 초기화 수행<br><br>
 | -------------- | ------- | ------------------------------------------------------ |
 | isShowDebugLog | boolean | 디버그 정보 활용 여부 (true - 콘솔 출력 정보가 많아짐) |
 | pnu            | string  | 기기 등록시 활용되는 건물 정보                         |
-| dong           | string  | 기기 등록시 활용되는 동 정보                       |
-| ho             | string  | 기기 등록시 활용되는 호 정보                       |
+| dong           | string  | 기기 등록시 활용되는 동 정보                           |
+| ho             | string  | 기기 등록시 활용되는 호 정보                           |
 | user           | string  | 기기 등록시 활용되는 사용자 이름                       |
 | host           | string  | Tuya의 익명 로그인을 위한 서버 주소                    |
 
@@ -208,4 +208,52 @@ TuyaSdkBridge.startRegisterZigbeeSubDevice(
 setTimeout(() => {
   TuyaSdkBridge.stopRegisterZigbeeSubDevice()
 }, 100000)
+```
+
+## `removeDevice`
+
+`removeDevice(devId: TuyaNative.RemoveDeviceParams): Promise<boolean>`<br><br>
+투야 기기 삭제<br><br>
+
+- **Parameters**
+
+| 프로퍼티 | 타입   | 설명                                   |
+| -------- | ------ | -------------------------------------- |
+| devId    | string | 삭제하고자 하는 기기의 디바이스 아이디 |
+
+- **Return**
+
+| 프로퍼티 | 타입    | 설명                |
+| -------- | ------- | ------------------- |
+| Promise  | boolean | 함수 수행 정상 여부 |
+
+- **Sample**
+
+```
+const res = await TuyaSdkBridge.removeDevice({ devId: "ebc2e6912054fa2a03ws5h" })
+console.log(res)
+```
+
+## `resetDevice`
+
+`resetDevice(devId: TuyaNative.resetDeviceParams): Promise<boolean>`<br><br>
+투야 기기 공장초기화<br><br>
+
+- **Parameters**
+
+| 프로퍼티 | 타입   | 설명                                         |
+| -------- | ------ | -------------------------------------------- |
+| devId    | string | 공장초기화하고자 하는 기기의 디바이스 아이디 |
+
+- **Return**
+
+| 프로퍼티 | 타입    | 설명                |
+| -------- | ------- | ------------------- |
+| Promise  | boolean | 함수 수행 정상 여부 |
+
+- **Sample**
+
+```
+const res = await TuyaSdkBridge.resetDevice({ devId: "ebc2e6912054fa2a03ws5h" })
+console.log(res)
 ```
