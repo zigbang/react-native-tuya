@@ -107,7 +107,17 @@ RCT_EXPORT_METHOD(renameDevice:(NSDictionary *)params resolver:(RCTPromiseResolv
 RCT_EXPORT_METHOD(resetDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   self.smartDevice  = [self smartDeviceWithParams:params];
+    
+  NSError *error = [[NSError alloc] initWithDomain: @"com.universal.sdk" code: 200 userInfo:@{NSLocalizedDescriptionKey:@"device is removed"}];
+  
+  dispatch_block_t block = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS,
+                                     ^{[TuyaRNUtils rejecterWithError:error handler:rejecter];});
+
+  dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 2);
+  dispatch_after(delay, dispatch_get_main_queue(), block);
+    
   [self.smartDevice resetFactory:^{
+    dispatch_block_cancel(block);
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
@@ -138,7 +148,17 @@ RCT_EXPORT_METHOD(getDataPointStat:(NSDictionary *)params resolver:(RCTPromiseRe
 RCT_EXPORT_METHOD(removeDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   self.smartDevice  = [self smartDeviceWithParams:params];
+    
+  NSError *error = [[NSError alloc] initWithDomain: @"com.universal.sdk" code: 200 userInfo:@{NSLocalizedDescriptionKey:@"device is removed"}];
+    
+  dispatch_block_t block = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS,
+                                       ^{[TuyaRNUtils rejecterWithError:error handler:rejecter];});
+
+  dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 2);
+  dispatch_after(delay, dispatch_get_main_queue(), block);
+
   [self.smartDevice remove:^{
+    dispatch_block_cancel(block);
     [TuyaRNUtils resolverWithHandler:resolver];
   } failure:^(NSError *error) {
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
