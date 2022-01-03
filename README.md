@@ -212,14 +212,15 @@ setTimeout(() => {
 
 ## `removeDevice`
 
-`removeDevice(devId: TuyaNative.RemoveDeviceParams): Promise<boolean>`<br><br>
+`removeDevice(devId: TuyaNative.RemoveDeviceParams, reset: boolean): Promise<boolean>`<br><br>
 투야 기기 삭제<br><br>
 
 - **Parameters**
 
-| 프로퍼티 | 타입   | 설명                                   |
-| -------- | ------ | -------------------------------------- |
-| devId    | string | 삭제하고자 하는 기기의 디바이스 아이디 |
+| 프로퍼티 | 타입    | 설명                                   |
+| -------- | ------- | -------------------------------------- |
+| devId    | string  | 삭제하고자 하는 기기의 디바이스 아이디 |
+| reset    | boolean | 공장초기화 여부                        |
 
 - **Return**
 
@@ -230,30 +231,6 @@ setTimeout(() => {
 - **Sample**
 
 ```
-const res = await TuyaSdkBridge.removeDevice({ devId: "ebc2e6912054fa2a03ws5h" })
-console.log(res)
-```
-
-## `resetDevice`
-
-`resetDevice(devId: TuyaNative.resetDeviceParams): Promise<boolean>`<br><br>
-투야 기기 공장초기화<br><br>
-
-- **Parameters**
-
-| 프로퍼티 | 타입   | 설명                                         |
-| -------- | ------ | -------------------------------------------- |
-| devId    | string | 공장초기화하고자 하는 기기의 디바이스 아이디 |
-
-- **Return**
-
-| 프로퍼티 | 타입    | 설명                |
-| -------- | ------- | ------------------- |
-| Promise  | boolean | 함수 수행 정상 여부 |
-
-- **Sample**
-
-```
-const res = await TuyaSdkBridge.resetDevice({ devId: "ebc2e6912054fa2a03ws5h" })
+const res = await TuyaSdkBridge.removeDevice({ devId: "ebc2e6912054fa2a03ws5h" }, true)
 console.log(res)
 ```
