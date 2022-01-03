@@ -257,27 +257,3 @@ console.log(res)
 const res = await TuyaSdkBridge.resetDevice({ devId: "ebc2e6912054fa2a03ws5h" })
 console.log(res)
 ```
-
-## `logout`
-
-`logout(): Promise<boolean>`<br><br>
-투야 계정 로그아웃<br><br>
-
-- **Parameters**
-
-| 프로퍼티 | 타입 | 설명 |
-| -------- | ---- | ---- |
-|          |      |      |
-
-- **Return**
-
-| 프로퍼티 | 타입    | 설명                |
-| -------- | ------- | ------------------- |
-| Promise  | boolean | 함수 수행 정상 여부 |
-
--- **Sample**
-
-```
-const res = await TuyaSdkBridge.logout()
-console.log(res)
-```
