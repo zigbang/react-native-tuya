@@ -238,3 +238,38 @@ setTimeout(() => {
 const res = await TuyaSdkBridge.removeDevice({ devId: "ebc2e6912054fa2a03ws5h" }, true)
 console.log(res)
 ```
+
+### `Log Table`
+
+TuyaSdkBridge에서 콜백함수로 전달되는 디버그 코드 테이블<br><br>
+
+```
+export const enum debugCode {
+	INF_NO_SESSION, // 0, 로그인 세션이 없습니다
+	INF_EXIST_SESSION, // 1, 이미 로그인 세션이 존재합니다
+	INF_CREATE_ANONYMOUS_ACCOUNT, // 2, 익명 계정을 생성했습니다
+	INF_LOGIN, // 3, 로그인에 성공했습니다
+	INF_LOGOUT, // 4, 로그아웃에 성공했습니다
+	INF_HOMEDETAIL, // 5, 홈 정보를 불러오는데에 성공했습니다
+	INF_RENAME_GW, // 6, 게이트웨이 이름 변경에 성공했습니다
+	INF_RESET_DEVICE, // 7, 기기 공장초기화에 성공했습니다
+	INF_REMOVE_DEVICE, // 8, 기기 삭제에 성공했습니다
+	WARN_START_SEARCH_WIREDGW_FIRST, // 9, TuyaSdkBridge.startSearchWiredGw()가 호출되지 않았습니다
+	WARN_START_REGISTER_ZIGBEE_SUBDEVICE_FIRST, // 10, TuyaSdkBridge.startRegisterZigbeeSubDevice()가 호출되지 않았습니다
+	WARN_CUT_USERNAME, // 11, 사용자 이름을 축약합니다
+	ERR_INIT_FIRST, // 12, TuyaSdkBridge.Init()이 호출되지 않았습니다
+	ERR_LOGIN, // 13, 투야 로그인에 실패했습니다
+	ERR_SYNC, // 14, 투야 계정을 Cloud에 Sync하는데에 실패했습니다
+	ERR_GET_CURRENT_USER, // 15, 유저를 조회하는데 실패했습니다
+	ERR_CREATE_ANONYMOUS_ACCOUNT, // 16, 익명 계정 생성에 실패했습니다
+	ERR_HOMEDETAIL, // 17, 홈 정보를 불러오는데 실패했습니다
+	ERR_REGISTER_WIREDGW_ALREADY, // 18, TuyaSdkBridge.registerWiredGW()가 이미 호출되었습니다.
+	ERR_START_REGISTER_ZIGBEE_SUBDEVICE_ALREAY, // 19, TuyaSdkBridge.startRegisterZigbeeSubDevice()가 이미 호출되었습니다.
+	ERR_RENAME_GW, // 20, 게이트웨이 이름 변경에 실패했습니다
+	ERR_RESET_DEVICE, // 21, 기기 공장초기화에 실패했습니다
+	ERR_REMOVE_DEVICE, // 22, 기기 삭제에 실패했습니다
+	ERR_PNU_TOO_LONG, // 23, pnu가 너무 깁니다
+	ERR_DONG_TOO_LONG, // 24, 동의 글자수가 너무 깁니다
+	ERR_HO_TOO_LONG, // 25, 호의 글자수가 너무 깁니다
+}
+```
