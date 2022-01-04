@@ -6,19 +6,23 @@ react-native-tuya 모듈을 적절히 사용하고 있음.<br>
 
 ## `init`
 
-`init(isShowDebugLog: boolean, pnu: string, dong: string, ho: string, user: string, host: string): Promise<string>`<br><br>
-TuyaSdkBridge 사용을 위한 초기화 수행<br><br>
+`init(isShowDebugLog: boolean, pnu: string, dong: string, ho: string, user: string, host: string, homeID: number, token: string, logCallback: (code: any) => void): Promise<string>`<br><br>
+TuyaSdkBridge 사용을 위한 초기화 수행<br>
+logCallback 파라미터에 전달되는 콜백함수의 경우, 콜백함수의 동작이 끝날때까지 TuyaSdkBridge의 메소드 동작이 block 되므로, 긴 시간을 소요하지 않는 콜백함수를 전달해야 함<br><br>
 
 - **Parameters**
 
-| 프로퍼티       | 타입    | 설명                                                   |
-| -------------- | ------- | ------------------------------------------------------ |
-| isShowDebugLog | boolean | 디버그 정보 활용 여부 (true - 콘솔 출력 정보가 많아짐) |
-| pnu            | string  | 기기 등록시 활용되는 건물 정보                         |
-| dong           | string  | 기기 등록시 활용되는 동 정보                       |
-| ho             | string  | 기기 등록시 활용되는 호 정보                       |
-| user           | string  | 기기 등록시 활용되는 사용자 이름                       |
-| host           | string  | Tuya의 익명 로그인을 위한 서버 주소                    |
+| 프로퍼티       | 타입                | 설명                                                   |
+| -------------- | ------------------- | ------------------------------------------------------ |
+| isShowDebugLog | boolean             | 디버그 정보 활용 여부 (true - 콘솔 출력 정보가 많아짐) |
+| pnu            | string              | 기기 등록시 활용되는 건물 정보                         |
+| dong           | string              | 기기 등록시 활용되는 동 정보                           |
+| ho             | string              | 기기 등록시 활용되는 호 정보                           |
+| user           | string              | 기기 등록시 활용되는 사용자 이름                       |
+| host           | string              | Tuya의 익명 로그인을 위한 서버 주소                    |
+| homeID         | number              | 계정이 추가될 홈 번호                                  |
+| token          | string              | 직방 통합로그인 계정 access token                      |
+| logCallback    | (code: any) => void | TuyaSdkBridge의 로그를 전달받는 콜백함수               |
 
 - **Return**
 
@@ -29,7 +33,7 @@ TuyaSdkBridge 사용을 위한 초기화 수행<br><br>
 - **Sample**
 
 ```
-	TuyaSdkBridge.init(false, "1929129192919", "101동", "301호", "서진우", "10.200.18.212")
+	TuyaSdkBridge.init(false, "1929129192919", "101동", "301호", "서진우", "10.200.18.212", 5555555, "adfjekcjvlkekmdfkjen ...", (code) => {addDevDebugMessage(logTable[code])})
 ```
 
 ## `startSearchWiredGW`
@@ -208,4 +212,29 @@ TuyaSdkBridge.startRegisterZigbeeSubDevice(
 setTimeout(() => {
   TuyaSdkBridge.stopRegisterZigbeeSubDevice()
 }, 100000)
+```
+
+## `removeDevice`
+
+`removeDevice(devId: TuyaNative.RemoveDeviceParams, reset: boolean): Promise<boolean>`<br><br>
+투야 기기 삭제<br><br>
+
+- **Parameters**
+
+| 프로퍼티 | 타입    | 설명                                   |
+| -------- | ------- | -------------------------------------- |
+| devId    | string  | 삭제하고자 하는 기기의 디바이스 아이디 |
+| reset    | boolean | 공장초기화 여부                        |
+
+- **Return**
+
+| 프로퍼티 | 타입    | 설명                |
+| -------- | ------- | ------------------- |
+| Promise  | boolean | 함수 수행 정상 여부 |
+
+- **Sample**
+
+```
+const res = await TuyaSdkBridge.removeDevice({ devId: "ebc2e6912054fa2a03ws5h" }, true)
+console.log(res)
 ```
