@@ -3,14 +3,6 @@ import { addEvent, bridge, DEVLISTENER } from './bridgeUtils';
 
 const tuya = NativeModules.TuyaDeviceModule;
 
-export type DeviceBean = {
-  productId: string;
-  devId: string;
-  verSw: string;
-  name: string;
-  dps: DeviceDps;
-};
-
 export type DevListenerParams = {
   devId: string;
 };
@@ -33,7 +25,7 @@ export function registerDevListener(
   callback: (data: any) => void
 ) {
   tuya.registerDevListener(params);
-  const sub = addEvent(bridge(DEVLISTENER, params.devId), data => {
+  const sub = addEvent(bridge(DEVLISTENER, params.devId), (data) => {
     if (data.type === type) {
       callback(data);
     }
@@ -72,6 +64,12 @@ export type RenameDeviceParams = { devId: string; name: string };
 
 export function renameDevice(params: RenameDeviceParams): Promise<string> {
   return tuya.renameDevice(params);
+}
+
+export type resetDeviceParams = { devId: string };
+
+export function resetDevice(params: resetDeviceParams): Promise<string> {
+  return tuya.resetDevice(params);
 }
 
 export type GetDataPointStatsParams = {
