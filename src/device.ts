@@ -25,7 +25,7 @@ export function registerDevListener(
   callback: (data: any) => void
 ) {
   tuya.registerDevListener(params);
-  const sub = addEvent(bridge(DEVLISTENER, params.devId), (data) => {
+  const sub = addEvent(bridge(DEVLISTENER, params.devId), data => {
     if (data.type === type) {
       callback(data);
     }

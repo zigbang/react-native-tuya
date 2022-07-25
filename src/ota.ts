@@ -20,7 +20,7 @@ export function startOta(
   onProgress: (data: any) => void
 ) {
   tuya.startOta(params);
-  return addEvent(bridge(HARDWAREUPGRADELISTENER, params.devId), (data) => {
+  return addEvent(bridge(HARDWAREUPGRADELISTENER, params.devId), data => {
     if (data.type === 'onSuccess') {
       onSuccess(data);
     } else if (data.type === 'onFailure') {
