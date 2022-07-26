@@ -8,4 +8,4 @@ export * from './homeMember';
 export * from './ota';
 export * from './timer';
 export * from './user';
-export * from './TuyaSdkBridge';
+export * from './tuyaSdkBridge';
