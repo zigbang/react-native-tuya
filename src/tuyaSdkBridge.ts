@@ -57,8 +57,6 @@ export class TuyaSdkBridge {
 
   // for using access iot sdk
   private static homeId: number = 0;
-  private static basePath: string = '';
-  private static accessToken: string = '';
 
   // Event Name which is shared with Native Module
   private static readonly searchingGwDeviceEventName =
@@ -144,9 +142,7 @@ export class TuyaSdkBridge {
     dong: string,
     ho: string,
     user: string,
-    host: string,
     homeID: number, // avoid duplicate name in home
-    token: string,
     logCallback: (code: any) => void,
     loginCallback: (code: any) => Promise<boolean>
   ): Promise<string> {
@@ -155,8 +151,6 @@ export class TuyaSdkBridge {
     this.userLoginFunction = loginCallback;
     TuyaSdkBridge.isShowDebugLog = isShowDebugLog;
     TuyaSdkBridge.setInformation(pnu, dong, ho, user);
-    TuyaSdkBridge.basePath = host;
-    TuyaSdkBridge.accessToken = token;
     TuyaSdkBridge.homeId = homeID;
 
     let ErrorOccur = false;
@@ -280,7 +274,7 @@ export class TuyaSdkBridge {
               TuyaSdkBridge.debugLogEventFunctionPointer(
                 debugCode.INF_RENAME_GW
               );
-              RenameOkRes += ''; // avoid unused variable warning
+              returnValue = RenameOkRes;
             },
             (RenameNgRes: string) => {
               TuyaSdkBridge.debugLogEventFunctionPointer(
