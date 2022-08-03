@@ -1,4 +1,8 @@
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import {
+  NativeEventEmitter,
+  NativeModules,
+  EmitterSubscription,
+} from 'react-native';
 
 export const GROUPLISTENER = 'groupListener';
 export const HARDWAREUPGRADELISTENER = 'hardwareUpgradeListener';

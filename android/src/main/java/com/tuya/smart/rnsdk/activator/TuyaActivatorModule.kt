@@ -272,6 +272,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
         mITuyaActivator?.stop()
         mTuyaGWActivator?.stop()
     }
+
     @ReactMethod
     fun onDestory() {
         mITuyaActivator?.onDestroy()
