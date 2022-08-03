@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import { DeviceDetailResponse } from './home';
 
 const tuya = NativeModules.TuyaActivatorModule;
@@ -15,10 +15,104 @@ export type InitActivatorParams = {
   type: 'TY_EZ' | 'TY_AP' | 'TY_QR';
 };
 
+export type HgwBean = {
+  ip: string;
+  gwId: string;
+  active: number;
+  ability: number;
+  lastSeenTime: number;
+  mode: number;
+  encrypt: boolean;
+  productKey: string;
+  version: string;
+  token: boolean;
+  wf_cfg: boolean;
+};
+
+export type HgwInformation = {
+  gw_id: string;
+  product_id: string;
+};
+
+export type InitGwActivatorParams = {
+  homeId: number;
+  time: number;
+};
+
+export type SearchedGwActivatorParams = {
+  homeId: number;
+  time: number;
+  devId: string; // for android
+  gwId: string; // for iOS
+  productId?: string;
+};
+
+export type RegistSubForGwParams = {
+  devId: string;
+  time: number;
+};
+
+export type stopNewGwSubDevActivatorConfigParams = {
+  devId: string;
+};
+
 export function initActivator(
   params: InitActivatorParams
 ): Promise<DeviceDetailResponse> {
   return tuya.initActivator(params);
+}
+
+export function initWiredGwActivator(
+  params: InitGwActivatorParams
+): Promise<DeviceDetailResponse> {
+  return tuya.initWiredGwActivator(params);
+}
+
+export function startSearcingGwDevice() {
+  tuya.StartSearcingGwDevice();
+}
+
+export function initSearchedGwDevice(
+  params: SearchedGwActivatorParams
+): Promise<DeviceDetailResponse> {
+  return tuya.InitSearchedGwDevice(params);
+}
+
+export type initWiredGwActivatorByPaaSParams = {
+  token: string;
+  time: number;
+};
+
+export function initWiredGwActivatorByPaaS(
+  params: initWiredGwActivatorByPaaSParams
+): Promise<DeviceDetailResponse> {
+  return tuya.initWiredGwActivatorByPaaS(params);
+}
+
+export function startSearchWiredGW() {
+  return tuya.startSearchWiredGW();
+}
+
+export function newGwSubDevActivator(
+  params: RegistSubForGwParams
+): Promise<DeviceDetailResponse> {
+  return tuya.newGwSubDevActivator(params);
+}
+
+export function startGwSubDevActivator(
+  params: RegistSubForGwParams
+): Promise<boolean> {
+  if (Platform.OS == 'ios') {
+    return tuya.newGwSubDevActivator(params);
+  } else {
+    return tuya.StartGwSubDevActivator(params);
+  }
+}
+
+export function stopNewGwSubDevActivatorConfig(
+  params: stopNewGwSubDevActivatorConfigParams
+) {
+  return tuya.stopNewGwSubDevActivatorConfig(params);
 }
 
 export function stopConfig() {

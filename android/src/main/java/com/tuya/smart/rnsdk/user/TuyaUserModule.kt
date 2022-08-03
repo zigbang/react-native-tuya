@@ -9,6 +9,7 @@ import com.tuya.smart.rnsdk.utils.Constant.ACCESSTOKEN
 import com.tuya.smart.rnsdk.utils.Constant.CODE
 import com.tuya.smart.rnsdk.utils.Constant.COUNTRYCODE
 import com.tuya.smart.rnsdk.utils.Constant.EMAIL
+import com.tuya.smart.rnsdk.utils.Constant.USERNAME
 import com.tuya.smart.rnsdk.utils.Constant.FILEPATH
 import com.tuya.smart.rnsdk.utils.Constant.KEY
 import com.tuya.smart.rnsdk.utils.Constant.NEWPASSWORD
@@ -147,6 +148,17 @@ class TuyaUserModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
+    @ReactMethod
+    fun touristRegisterAndLogin(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(COUNTRYCODE, USERNAME), params)) {
+            TuyaHomeSdk.getUserInstance().touristRegisterAndLogin(
+                    params.getString(COUNTRYCODE),
+                    params.getString(USERNAME),
+                    getRegisterCallback(promise)
+            )
+        }
+    }
+
     /* 邮箱获取验证码 找密码 */
     @ReactMethod
     fun getEmailValidateCode(params: ReadableMap, promise: Promise) {
@@ -274,6 +286,18 @@ class TuyaUserModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
             TuyaHomeSdk.getUserInstance().loginByFacebook(
                     params.getString(COUNTRYCODE),
                     params.getString(TOKEN),
+                    getLoginCallback(promise))
+        }
+    }
+
+    @ReactMethod
+    fun loginByGoogle(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(COUNTRYCODE, TOKEN), params)) {
+            TuyaHomeSdk.getUserInstance().thirdLogin(
+                    params.getString(COUNTRYCODE),
+                    params.getString(TOKEN),
+                    "gg",
+                    "{\"pubVersion\":1}",
                     getLoginCallback(promise))
         }
     }

@@ -18,10 +18,44 @@ export function loginWithEmail(params: LoginWithEmailParams): Promise<any> {
   return tuya.loginWithEmail(params);
 }
 
+export function loginByGoogle(params: LoginByGoogleParams): Promise<any> {
+  return tuya.loginByGoogle(params);
+}
+
+export function loginWithEmailAndCode(
+  params: LoginWithEmailAndCodeParams
+): Promise<any> {
+  return tuya.loginWithEmailAndCode(params);
+}
+
+export function loginWithUid(
+  params: loginOrRegisterWithUidParams
+): Promise<any> {
+  return tuya.loginWithUid(params);
+}
+
+export function loginOrRegisterWithUid(
+  params: loginOrRegisterWithUidParams
+): Promise<any> {
+  return tuya.loginOrRegisterWithUid(params);
+}
+
+export function touristRegisterAndLogin(
+  params: TouristRegisterAndLoginParams
+): Promise<any> {
+  return tuya.touristRegisterAndLogin(params);
+}
+
 export function getEmailValidateCode(
   params: GetEmailValidateCodeParams
 ): Promise<any> {
   return tuya.getEmailValidateCode(params);
+}
+
+export function sendEmailBindingCode(
+  params: GetEmailValidateCodeParams
+): Promise<any> {
+  return tuya.sendEmailBindingCode(params);
 }
 
 export function resetEmailPassword(
@@ -37,7 +71,10 @@ export function logout(): Promise<string> {
 export async function getCurrentUser(): Promise<User | null> {
   const user = await tuya.getCurrentUser();
   // The iOS SDK returns an empty user model but the Android one doesn't.
-  return user && user.email ? user : null;
+
+  return new Promise(function (resolve, reject) {
+    resolve(user || user.email ? user : null);
+  });
 }
 
 export function cancelAccount(): Promise<string> {
@@ -69,10 +106,36 @@ export type GetEmailValidateCodeParams = {
   email: string;
 };
 
+export type LoginWithTicketParams = {
+  ticket: string;
+};
+
 export type LoginWithEmailParams = {
   email: string;
   password: string;
   countryCode: string;
+};
+
+export type LoginByGoogleParams = {
+  countryCode: string;
+  code: string;
+};
+
+export type LoginWithEmailAndCodeParams = {
+  email: string;
+  code: string;
+  countryCode: string;
+};
+
+export type loginOrRegisterWithUidParams = {
+  uid: string;
+  password: string;
+  countryCode: string;
+};
+
+export type TouristRegisterAndLoginParams = {
+  countryCode: string;
+  username: string;
 };
 
 export type ResetEmailPasswordParams = {
