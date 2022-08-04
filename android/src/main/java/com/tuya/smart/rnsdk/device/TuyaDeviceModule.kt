@@ -141,6 +141,13 @@ class TuyaDeviceModule(reactContext: ReactApplicationContext) : ReactContextBase
     }
 
     @ReactMethod
+    fun resetDevice(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(DEVID), params)) {
+            getDevice(params.getString(DEVID) as String)?.resetFactory(getIResultCallback(promise))
+        }
+    }
+
+    @ReactMethod
     fun getDataPointStat(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(DEVID, DATAPOINTTYPEENUM, NUMBER, DPID, STARTTIME), params)) {
             getDevice(params.getString(DEVID) as String)?.getDataPointStat(DataPointTypeEnum.valueOf(params.getString(DATAPOINTTYPEENUM) as String),

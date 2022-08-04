@@ -46,6 +46,7 @@ gradle
 npm-debug.log
 yarn-error.log
 package-lock.json
+node_modules/
 
 # BUCK
 buck-out/

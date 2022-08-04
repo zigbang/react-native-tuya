@@ -33,7 +33,7 @@ export function registerDevListener(
   callback: (data: any) => void
 ) {
   tuya.registerDevListener(params);
-  const sub = addEvent(bridge(DEVLISTENER, params.devId), data => {
+  const sub = addEvent(bridge(DEVLISTENER, params.devId), (data: any) => {
     if (data.type === type) {
       callback(data);
     }
@@ -72,6 +72,12 @@ export type RenameDeviceParams = { devId: string; name: string };
 
 export function renameDevice(params: RenameDeviceParams): Promise<string> {
   return tuya.renameDevice(params);
+}
+
+export type resetDeviceParams = { devId: string };
+
+export function resetDevice(params: resetDeviceParams): Promise<string> {
+  return tuya.resetDevice(params);
 }
 
 export type GetDataPointStatsParams = {

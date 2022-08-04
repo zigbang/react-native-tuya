@@ -109,7 +109,7 @@ import { loginWithEmail } from '@volst/react-native-tuya';
 await loginWithEmail({
   countryCode: '+1',
   email: 'you@example.com',
-  password: 'testtest'
+  password: 'testtest',
 });
 ```
 
