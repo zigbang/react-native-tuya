@@ -102,7 +102,7 @@ export function newGwSubDevActivator(
 export function startGwSubDevActivator(
   params: RegistSubForGwParams
 ): Promise<boolean> {
-  if (Platform.OS == 'ios') {
+  if (Platform.OS === 'ios') {
     return tuya.newGwSubDevActivator(params);
   } else {
     return tuya.StartGwSubDevActivator(params);
