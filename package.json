@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.4",
   "license": "MIT",
   "main": "src/index.ts",
   "typings": "dist/index.d.ts",
@@ -36,10 +36,10 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@zigbang/react-native-tuya",
+  "name": "@seojw/react-native-tuya",
   "description": "React Native bindings for the Tuya SDK",
-  "homepage": "https://github.com/zigbang/react-native-tuya#readme",
-  "author": "zigbang",
+  "homepage": "https://github.com/seojw/react-native-tuya#readme",
+  "author": "seojw",
   "module": "dist/react-native-tuya.esm.js",
   "devDependencies": {
     "@types/jest": "^25.1.2",
