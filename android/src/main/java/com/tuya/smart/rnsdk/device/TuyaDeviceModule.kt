@@ -133,6 +133,7 @@ class TuyaDeviceModule(reactContext: ReactApplicationContext) : ReactContextBase
         }
     }
 
+    // Checked by Using
     @ReactMethod
     fun renameDevice(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(DEVID, NAME), params)) {
@@ -140,6 +141,7 @@ class TuyaDeviceModule(reactContext: ReactApplicationContext) : ReactContextBase
         }
     }
 
+    // Checked by Using
     @ReactMethod
     fun resetDevice(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(DEVID), params)) {
@@ -159,6 +161,7 @@ class TuyaDeviceModule(reactContext: ReactApplicationContext) : ReactContextBase
         }
     }
 
+    // Checked by Using
     @ReactMethod
     fun removeDevice(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(DEVID), params)) {

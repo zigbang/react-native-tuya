@@ -41,6 +41,7 @@ export type GetHomeDetailResponse = {
   sharedGroupList: any[];
 };
 
+// Checked by Using
 export function getHomeDetail(
   params: GetHomeDetailParams
 ): Promise<GetHomeDetailResponse> {

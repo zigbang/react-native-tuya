@@ -56,18 +56,21 @@ export function send(params: object) {
 
 export type RemoveDeviceParams = { devId: string };
 
+// Checked by Using
 export function removeDevice(params: RemoveDeviceParams): Promise<string> {
   return tuya.removeDevice(params);
 }
 
 export type RenameDeviceParams = { devId: string; name: string };
 
+// Checked by Using
 export function renameDevice(params: RenameDeviceParams): Promise<string> {
   return tuya.renameDevice(params);
 }
 
 export type resetDeviceParams = { devId: string };
 
+// Checked by Using
 export function resetDevice(params: resetDeviceParams): Promise<string> {
   return tuya.resetDevice(params);
 }

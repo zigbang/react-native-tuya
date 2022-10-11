@@ -30,7 +30,8 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         return "TuyaHomeModule"
     }
 
-    /* 初始化家庭下的所有数据 */
+    /* 初始化家庭下的所有数据 - 홈 정보 준비 via Network */
+    // Checked by Using
     @ReactMethod
     fun getHomeDetail(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID), params)) {
@@ -38,7 +39,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
-    /* 获取本地缓存中的数据信息 */
+    /* 获取本地缓存中的数据信息 - 홈 정보 준비 via 캐시 */
     @ReactMethod
     fun getHomeLocalCache(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID), params)) {
@@ -46,7 +47,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
-    /* 更新家庭信息 */
+    /* 更新家庭信息 - 홈 정보 업데이트 */
     @ReactMethod
     fun updateHome(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, NAME, LON, LAT, GEONAME), params)) {
@@ -54,7 +55,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
-    /* 解散家庭 */
+    /* 解散家庭 - 홈 정보 삭제 */
     @ReactMethod
     fun dismissHome(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID), params)) {
@@ -62,7 +63,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
-    /* 添加房间 */
+    /* 添加房间 - 방 추가 */
     @ReactMethod
     fun addRoom(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, NAME), params)) {
@@ -70,7 +71,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
-    /* 移除房间 */
+    /* 移除房间 - 방 삭제 */
     @ReactMethod
     fun removeRoom(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, ROOMID), params)) {
@@ -90,7 +91,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
-    /* 排序房间 */
+    /* 排序房间 - 홈 정렬 */
     @ReactMethod
     fun sortHome(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, IDLIST), params)) {
@@ -104,7 +105,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
     }
 
 
-    /* 查询房间列表 */
+    /* 查询房间列表 - 방 목록 요청 */
     @ReactMethod
     fun queryRoomList(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID), params)) {
@@ -112,7 +113,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
-    /* 创建群组 */
+    /* 创建群组 - 그룹 생성 */
     @ReactMethod
     fun createGroup(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, PRODUCTID, NAME, DEVIDLIST), params)) {
@@ -139,7 +140,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
     }
 
 
-    /* 监听家庭下面信息(设备的新增或者删除)变更的监听 */
+    /* 监听家庭下面信息(设备的新增或者删除)变更的监听 - 홈에 속한 기기 정보 변경(장비 추가/삭제) 모니터링 */
     @ReactMethod
     fun registerHomeStatusListener(params: ReadableMap) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID), params)) {
@@ -186,7 +187,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
             })
         }
     }
-    /* 注销家庭下面信息变更的监听 */
+    /* 注销家庭下面信息变更的监听 - 홈정보 변경 모니터링 취소 */
     @ReactMethod
     fun unRegisterHomeStatusListener(params: ReadableMap) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID), params)) {
@@ -194,7 +195,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
-    /* 查询用户下面相同产品且支持群组的设备列表 */
+    /* 查询用户下面相同产品且支持群组的设备列表 - 동일 제품을 가진 장치 목록 조회 (?) */
     @ReactMethod
     fun queryDeviceListToAddGroup(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, PRODUCTID), params)) {
@@ -213,7 +214,7 @@ class TuyaHomeModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
-    /* 查询用户下面相同产品且支持群组的设备列表 */
+    /* 查询用户下面相同产品且支持群组的设备列表 - ? */
     @ReactMethod
     fun onDestroy(params: ReadableMap) {
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID), params)) {

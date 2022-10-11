@@ -14,6 +14,7 @@ export const SINGLETRANSFER = 'SingleTransfer';
 
 let eventEmitter = new NativeEventEmitter(NativeModules.TuyaRNEventEmitter);
 
+// Checked by Using
 export function addEvent(
   eventName: string,
   callback: (data: any) => any
@@ -21,11 +22,13 @@ export function addEvent(
   return eventEmitter.addListener(eventName, callback);
 }
 
+// Checked by Using
 export function removeEvent(eventName: string): void {
   eventEmitter.removeAllListeners(eventName);
   return;
 }
 
+// Checked by Using
 export function removeSubscribtion(subscription: EmitterSubscription): void {
   subscription.remove();
   return;

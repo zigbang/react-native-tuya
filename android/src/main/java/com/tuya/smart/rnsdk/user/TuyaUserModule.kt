@@ -148,6 +148,7 @@ class TuyaUserModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
+    // Checked by Using
     @ReactMethod
     fun touristRegisterAndLogin(params: ReadableMap, promise: Promise) {
         if (ReactParamsCheck.checkParams(arrayOf(COUNTRYCODE, USERNAME), params)) {
@@ -302,6 +303,7 @@ class TuyaUserModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         }
     }
 
+    // Checked by Using
     @ReactMethod
     fun getCurrentUser(promise: Promise) {
         if (TuyaHomeSdk.getUserInstance().user != null) {

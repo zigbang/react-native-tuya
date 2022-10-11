@@ -106,6 +106,7 @@ RCT_EXPORT_METHOD(initWiredGwActivator:(NSDictionary *)params resolver:(RCTPromi
   }];
 }
 
+// Checked by Using
 RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   NSNumber *homeId = params[kTuyaRNActivatorModuleHomeId];
   NSString *gwId = params[kTuyaRNActivatorModuleGWId];
@@ -134,6 +135,7 @@ RCT_EXPORT_METHOD(InitSearchedGwDevice:(NSDictionary *)params resolver:(RCTPromi
   }];
 }
 
+// Checked by Using
 RCT_EXPORT_METHOD(StartSearcingGwDevice) {
   TuyaSmartActivatorNotificationFindGatewayDevice;
 }
@@ -144,7 +146,7 @@ RCT_EXPORT_METHOD(stopConfig:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromi
 }
 
 //ZigBee子设备配网需要ZigBee网关设备云在线的情况下才能发起,且子设备处于配网状态。
-
+// Checked by Using
 RCT_EXPORT_METHOD(newGwSubDevActivator:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
   NSString *deviceId = params[kTuyaRNActivatorModuleDeviceId];
@@ -162,6 +164,7 @@ RCT_EXPORT_METHOD(newGwSubDevActivator:(NSDictionary *)params resolver:(RCTPromi
   
 }
 
+// Checked by Using
 RCT_EXPORT_METHOD(stopNewGwSubDevActivatorConfig:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   
   NSString *deviceId = params[kTuyaRNActivatorModuleDeviceId];

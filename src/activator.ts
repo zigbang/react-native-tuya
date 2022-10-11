@@ -15,6 +15,25 @@ export type InitActivatorParams = {
   type: 'TY_EZ' | 'TY_AP' | 'TY_QR';
 };
 
+export type newWifiEzActivatorParams = {
+  homeId: number;
+  ssid: string;
+  password: string;
+  time: number;
+};
+
+export type GetTokenParams = {
+  homeId: number;
+};
+
+export type newWifiApActivatorParams = {
+  homeId: number;
+  ssid: string;
+  password: string;
+  time: number;
+  token: string;
+};
+
 export type HgwBean = {
   ip: string;
   gwId: string;
@@ -62,16 +81,37 @@ export function initActivator(
   return tuya.initActivator(params);
 }
 
+// Add new for Wifi Ez Device
+export function newWifiEzActivator(
+  params: newWifiEzActivatorParams
+): Promise<DeviceDetailResponse> {
+  return tuya.initWifiEzDeviceActivator(params);
+}
+
+// Add new for get Token (Wifi Ap Device)
+export function getTokenForActivator(params: GetTokenParams): Promise<string> {
+  return tuya.getTokenForActivator(params);
+}
+
+// Add new for Wifi Ap Device
+export function newWifiApActivator(
+  params: newWifiApActivatorParams
+): Promise<DeviceDetailResponse> {
+  return tuya.initWifiApDeviceActivator(params);
+}
+
 export function initWiredGwActivator(
   params: InitGwActivatorParams
 ): Promise<DeviceDetailResponse> {
   return tuya.initWiredGwActivator(params);
 }
 
+// Checked by Using
 export function startSearcingGwDevice() {
   tuya.StartSearcingGwDevice();
 }
 
+// Checked by Using
 export function initSearchedGwDevice(
   params: SearchedGwActivatorParams
 ): Promise<DeviceDetailResponse> {
@@ -99,6 +139,7 @@ export function newGwSubDevActivator(
   return tuya.newGwSubDevActivator(params);
 }
 
+// Checked by Using
 export function startGwSubDevActivator(
   params: RegistSubForGwParams
 ): Promise<boolean> {
@@ -109,7 +150,26 @@ export function startGwSubDevActivator(
   }
 }
 
+// Checked by Using (iOS only)
 export function stopNewGwSubDevActivatorConfig(
+  params: stopNewGwSubDevActivatorConfigParams
+) {
+  return tuya.stopNewGwSubDevActivatorConfig(params);
+}
+
+// Checked by Using
+export function startWifiDevActivator(
+  params: RegistSubForGwParams
+): Promise<boolean> {
+  if (Platform.OS === 'ios') {
+    return tuya.startWifiDevActivator(params); // ? not sure
+  } else {
+    return tuya.startWifiDevActivator(params);
+  }
+}
+
+// Checked by Using
+export function stopWifiDevActivatorConfig(
   params: stopNewGwSubDevActivatorConfigParams
 ) {
   return tuya.stopNewGwSubDevActivatorConfig(params);

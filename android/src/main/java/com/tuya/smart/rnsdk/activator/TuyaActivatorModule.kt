@@ -13,6 +13,7 @@ import com.tuya.smart.rnsdk.utils.Constant.HOMEID
 import com.tuya.smart.rnsdk.utils.Constant.PASSWORD
 import com.tuya.smart.rnsdk.utils.Constant.SSID
 import com.tuya.smart.rnsdk.utils.Constant.TIME
+import com.tuya.smart.rnsdk.utils.Constant.TOKEN
 
 import com.tuya.smart.sdk.api.ITuyaActivator
 import com.tuya.smart.sdk.api.ITuyaSmartActivatorListener
@@ -35,6 +36,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
 
     var mITuyaActivator: ITuyaActivator?=null
     var mTuyaGWActivator: ITuyaActivator?=null
+    var mTuyaWifiActivator: ITuyaActivator?=null
     // companion object {
     //     val SearchedDevices : MutableMap<String, HgwBean> = mutableMapOf()        
     // }
@@ -76,14 +78,68 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                     mITuyaActivator?.start()
                 }
 
+                override fun onFailure(s: String, s1: String) {
+                    promise.reject(s,s1)
+                }
+            })
+        }
+    }
+
+    // Checked by Using
+    @ReactMethod
+    fun initWifiEzDeviceActivator(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(HOMEID, SSID, PASSWORD, TIME), params)){
+            TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
+                override fun onSuccess(token: String) {
+                    mITuyaActivator= TuyaHomeSdk.getActivatorInstance().newActivator(ActivatorBuilder()
+                            .setSsid(params.getString(SSID))
+                            .setContext(reactApplicationContext.applicationContext)
+                            .setPassword(params.getString(PASSWORD))
+                            .setActivatorModel(ActivatorModelEnum.TY_EZ)
+                            .setTimeOut(params.getInt(TIME).toLong())
+                            .setToken(token).setListener(getITuyaSmartActivatorListenerForGW(promise)))
+                    mITuyaActivator?.start()
+                }
 
                 override fun onFailure(s: String, s1: String) {
                     promise.reject(s,s1)
                 }
             })
         }
-
     }
+
+    // Checked by Using
+    @ReactMethod
+    fun getTokenForActivator(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(HOMEID), params)){
+            TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
+                override fun onSuccess(token: String) {
+                    promise.resolve(token)
+                }
+
+                override fun onFailure(s: String, s1: String) {
+                    promise.reject(s,s1)
+                }
+            })
+        }
+    }
+
+
+    // Checked by Using
+    @ReactMethod
+    fun initWifiApDeviceActivator(params: ReadableMap, promise: Promise) {
+        if (ReactParamsCheck.checkParams(arrayOf(HOMEID, SSID, PASSWORD, TIME, TOKEN), params)){            
+            mITuyaActivator = TuyaHomeSdk.getActivatorInstance().newActivator(ActivatorBuilder()
+                .setSsid(params.getString(SSID))
+                .setContext(reactApplicationContext.applicationContext)
+                .setPassword(params.getString(PASSWORD))
+                .setActivatorModel(ActivatorModelEnum.TY_AP)
+                .setTimeOut(params.getInt(TIME).toLong())
+                .setToken(params.getString(TOKEN)).setListener(getITuyaSmartActivatorListenerForGW(promise)))
+            mITuyaActivator?.start()
+        }
+    }
+
 
     @ReactMethod
     fun initWiredGwActivator(params: ReadableMap, promise: Promise) {
@@ -92,7 +148,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
             //TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
             val mTuyaGwSearcher : ITuyaGwSearcher = TuyaHomeSdk.getActivatorInstance().newTuyaGwActivator().newSearcher()
 
-		    mTuyaGwSearcher.registerGwSearchListener(object : IGwSearchListener {
+            mTuyaGwSearcher.registerGwSearchListener(object : IGwSearchListener {
                 override fun onDevFind(hgwBean:HgwBean) {
                     Log.d("initWiredGwActivator", " hgwBean:" + hgwBean)
                     TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
@@ -110,10 +166,11 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
                         }
                     })
                 }
-		    })
+            })
         }
     }
 
+    // Checked by Using
     @ReactMethod
     fun StartSearcingGwDevice() {
         Log.d("[Log]TuyaActivatorModule.kt", "게이트웨이 서치 시작")
@@ -133,17 +190,16 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
         })
     }
     
+    // Checked by Using
     @ReactMethod
     fun InitSearchedGwDevice(params: ReadableMap, promise: Promise) {
-        Log.d("initWiredGwActivator1", " 11")
 
         if (ReactParamsCheck.checkParams(arrayOf(HOMEID, TIME, DEVID), params)){
             var DeviceID = params.getString(DEVID)
-            Log.d("initWiredGwActivator2", " 22")
 
             if( SearchedDevices.containsKey(DeviceID) )
             {
-                Log.d("initWiredGwActivator3", params.getDouble(HOMEID).toLong().toString())
+                Log.d("initWiredGwActivator", params.getDouble(HOMEID).toLong().toString())
                 TuyaHomeSdk.getActivatorInstance().getActivatorToken(params.getDouble(HOMEID).toLong(),object : ITuyaActivatorGetToken {
                     override fun onSuccess(token: String) {
                         Log.d("initWiredGwActivator", " token:" + token)
@@ -212,6 +268,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
      * ZigBee 하위 장치 네트워크 구성은 ZigBee 게이트웨이 장치 클라우드가 온라인 상태이고 
      * 하위 장치가 네트워크 구성 상태인 경우에만 시작할 수 있습니다.
      */
+     // Checked by Using
     @ReactMethod
     fun StartGwSubDevActivator(params: ReadableMap, promise: Promise) {
         var ErrorOccur :Boolean = true
@@ -267,16 +324,19 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) : ReactContextB
         }
     }
 
+    // Checked by Using
     @ReactMethod
     fun stopConfig() {
         mITuyaActivator?.stop()
         mTuyaGWActivator?.stop()
+        mTuyaWifiActivator?.stop()
     }
 
     @ReactMethod
     fun onDestory() {
         mITuyaActivator?.onDestroy()
         mTuyaGWActivator?.onDestroy()
+        mTuyaWifiActivator?.onDestroy()
     }
 
     @ReactMethod

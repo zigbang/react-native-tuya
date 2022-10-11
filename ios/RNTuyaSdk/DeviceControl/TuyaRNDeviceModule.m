@@ -93,6 +93,7 @@ RCT_EXPORT_METHOD(getDp:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)
 /**
  设备重命名
  */
+// Checked by Using
 RCT_EXPORT_METHOD(renameDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   self.smartDevice  = [self smartDeviceWithParams:params];
@@ -104,6 +105,7 @@ RCT_EXPORT_METHOD(renameDevice:(NSDictionary *)params resolver:(RCTPromiseResolv
   }];
 }
 
+// Checked by Using
 RCT_EXPORT_METHOD(resetDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   self.smartDevice  = [self smartDeviceWithParams:params];
@@ -123,19 +125,6 @@ RCT_EXPORT_METHOD(resetDevice:(NSDictionary *)params resolver:(RCTPromiseResolve
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
 }
-
-// 更新单个设备信息:
-//RCT_EXPORT_METHOD(getDp:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-//    TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:params[@"devId"]];
-//    [device syncWithCloud:^{
-//      if (resolver) {
-//        resolver(@"syncWithCloud success");
-//      }
-//    } failure:^(NSError *error) {
-//        [TuyaRNUtils rejecterWithError:error handler:rejecter];
-//    }];
-//}
-
 
 RCT_EXPORT_METHOD(getDataPointStat:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   self.smartDevice  = [self smartDeviceWithParams:params];
@@ -164,19 +153,6 @@ RCT_EXPORT_METHOD(removeDevice:(NSDictionary *)params resolver:(RCTPromiseResolv
     [TuyaRNUtils rejecterWithError:error handler:rejecter];
   }];
 }
-
-// 设备重命名：已验证
-//RCT_EXPORT_METHOD(renameDevice:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
-//
-//    TuyaSmartDevice *device = [TuyaSmartDevice deviceWithDeviceId:params[@"devId"]];
-//    [device updateName:params[@"name"] success:^{
-//      if (resolver) {
-//        resolver(@"rename success");
-//      }
-//    } failure:^(NSError *error) {
-//        [TuyaRNUtils rejecterWithError:error handler:rejecter];
-//    }];
-//}
 
 
 RCT_EXPORT_METHOD(onDestroy:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {

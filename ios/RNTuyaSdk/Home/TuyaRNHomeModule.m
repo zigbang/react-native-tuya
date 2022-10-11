@@ -36,6 +36,7 @@
 
 RCT_EXPORT_MODULE(TuyaHomeModule)
 
+// Checked by Using
 RCT_EXPORT_METHOD(getHomeDetail:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   self.currentHome = [self smartHomeWithParams:params];

@@ -40,6 +40,7 @@ export function loginOrRegisterWithUid(
   return tuya.loginOrRegisterWithUid(params);
 }
 
+// Checked by Using
 export function touristRegisterAndLogin(
   params: TouristRegisterAndLoginParams
 ): Promise<any> {
@@ -64,10 +65,12 @@ export function resetEmailPassword(
   return tuya.resetEmailPassword(params);
 }
 
+// Checked by Using
 export function logout(): Promise<string> {
   return tuya.logout();
 }
 
+// Checked by Using
 export async function getCurrentUser(): Promise<User | null> {
   const user = await tuya.getCurrentUser();
   // The iOS SDK returns an empty user model but the Android one doesn't.

@@ -278,6 +278,7 @@ RCT_EXPORT_METHOD(loginWithEmailAndCode:(NSDictionary *)params resolver:(RCTProm
 * touristRegisterAndLogin
 * @param nickname
 */
+// Checked by Using
 RCT_EXPORT_METHOD(touristRegisterAndLogin:(NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   NSString *countryCode = params[kTuyaRNUserModuleCountryCode];
@@ -341,6 +342,7 @@ RCT_EXPORT_METHOD(resetEmailPassword:(NSDictionary *)params resolver:(RCTPromise
   }];
 }
 
+// Checked by Using
 RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
 
   [[TuyaSmartUser sharedInstance] loginOut:^{
@@ -500,7 +502,7 @@ RCT_EXPORT_METHOD(loginByGoogle:(NSDictionary *)params resolver:(RCTPromiseResol
   }];
 }
 
-
+// Checked by Using
 RCT_EXPORT_METHOD(getCurrentUser:(RCTPromiseResolveBlock)resolver rejecter:(RCTPromiseRejectBlock)rejecter) {
   TuyaSmartUser *user = [TuyaSmartUser sharedInstance];
   if (resolver) {
